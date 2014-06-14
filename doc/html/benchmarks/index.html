@@ -1,0 +1,621 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Benchmarks &mdash; SMCP</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+        <link rel="copyright" title="Copyright" href="../copyright.html"/>
+    <link rel="top" title="SMCP" href="../index.html"/>
+        <link rel="prev" title="Test problems" href="../testproblems/index.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> SMCP</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright and license</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download and installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../download/index.html#installation-from-source">Installation from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../download/index.html#installation-with-pip">Installation with pip</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/index.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#the-chordal-sdp-solvers">The chordal SDP solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#solver-interfaces">Solver interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#the-sdp-object">The SDP object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#auxiliary-routines">Auxiliary routines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#analysis-routines">Analysis routines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#random-problem-generators">Random problem generators</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../testproblems/index.html">Test problems</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Benchmarks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sdp-solvers">SDP solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#error-measures">Error measures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#experimental-setup">Experimental setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sdps-with-band-structure">SDPs with band structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matrix-norm-minimization">Matrix norm minimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overlapping-cliqes">Overlapping cliqes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sdplib-problems">SDPLIB problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nonchordal-sparsity-patterns">Nonchordal sparsity patterns</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">SMCP</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Benchmarks</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <script type="text/javascript">
+/* <![CDATA[ */
+/***********************************************
+* Dynamic Ajax Content- © Dynamic Drive DHTML code library (www.dynamicdrive.com)
+* This notice MUST stay intact for legal use
+* Visit Dynamic Drive at http://www.dynamicdrive.com/ for full source code
+***********************************************/
+
+var bustcachevar=1 //bust potential caching of external pages after initial request? (1=yes, 0=no)
+var loadedobjects=""
+var rootdomain="http://"+window.location.hostname
+var bustcacheparameter=""
+
+function ajaxpage(url, containerid){
+var page_request = false
+if (window.XMLHttpRequest) // if Mozilla, Safari etc
+page_request = new XMLHttpRequest()
+else if (window.ActiveXObject){ // if IE
+try {
+page_request = new ActiveXObject("Msxml2.XMLHTTP")
+}
+catch (e){
+try{
+page_request = new ActiveXObject("Microsoft.XMLHTTP")
+}
+catch (e){}
+}
+}
+else
+return false
+page_request.onreadystatechange=function(){
+loadpage(page_request, containerid)
+}
+if (bustcachevar) //if bust caching of external page
+bustcacheparameter=(url.indexOf("?")!=-1)? "&"+new Date().getTime() : "?"+new Date().getTime()
+page_request.open('GET', url+bustcacheparameter, true)
+page_request.send(null)
+}
+
+function loadpage(page_request, containerid){
+if (page_request.readyState == 4 && (page_request.status==200 || window.location.href.indexOf("http")==-1))
+document.getElementById(containerid).innerHTML=page_request.responseText
+}
+
+function loadobjs(){
+if (!document.getElementById)
+return
+for (i=0; i<arguments.length; i++){
+var file=arguments[i]
+var fileref=""
+if (loadedobjects.indexOf(file)==-1){ //Check to see if this object has not already been added to page before proceeding
+if (file.indexOf(".js")!=-1){ //If object is a js file
+fileref=document.createElement('script')
+fileref.setAttribute("type","text/javascript");
+fileref.setAttribute("src", file);
+}
+else if (file.indexOf(".css")!=-1){ //If object is a css file
+fileref=document.createElement("link")
+fileref.setAttribute("rel", "stylesheet");
+fileref.setAttribute("type", "text/css");
+fileref.setAttribute("href", file);
+}
+}
+if (fileref!=""){
+document.getElementsByTagName("head").item(0).appendChild(fileref)
+loadedobjects+=file+" " //Remember this object as being already added to page
+}
+}
+}
+/* ]]> */
+</script><div class="section" id="benchmarks">
+<h1>Benchmarks<a class="headerlink" href="#benchmarks" title="Permalink to this headline">¶</a></h1>
+<p>To assess the performance of our preliminary implementation of SMCP, we have conducted a series of numerical experiments.</p>
+<div class="section" id="sdp-solvers">
+<h2>SDP solvers<a class="headerlink" href="#sdp-solvers" title="Permalink to this headline">¶</a></h2>
+<p>The following interior-point solvers were used in our experiments:</p>
+<ul class="simple">
+<li>Method <strong>M1</strong>   (SMCP 0.3a, feasible start solver with <cite>kktsolver=&#8217;chol&#8217;</cite>)</li>
+<li>Method <strong>M1c</strong>  (SMCP 0.3a, feasible start solver with <cite>kktsolver=&#8217;chol&#8217;</cite> and <cite>solvers.options[&#8216;cholmod&#8217;]=True</cite>)</li>
+<li>Method <strong>M2</strong>   (SMCP 0.3a, feasible start solver with <cite>kktsolver=&#8217;qr&#8217;</cite>)</li>
+<li>CSDP 6.0.1</li>
+<li>DSDP 5.8</li>
+<li>SDPA 7.3.1</li>
+<li>SDPA-C 6.2.1 (binary dist.)</li>
+<li>SDPT3 4.0b (64-bit Matlab)</li>
+<li>SeDuMi 1.2 (64-bit Matlab)</li>
+</ul>
+</div>
+<div class="section" id="error-measures">
+<h2>Error measures<a class="headerlink" href="#error-measures" title="Permalink to this headline">¶</a></h2>
+<p>We report DIMACS error measures when available. The six error measures are defined as:</p>
+<div class="math">
+<p><img src="../_images/math/b4f7fe2a9087b339565f4244b6a5263c0b4d2032.png" alt="\epsilon_1(X,y,S) &amp;= \frac{\|\mathcal{A}(X) - b\|_2}{1+\|b\|_\infty} \\
+\epsilon_2(X,y,S) &amp;= \max\left\{0,\frac{-\lambda_{\min}(X)}{1+\|b\|_\infty } \right\} \\
+\epsilon_3(X,y,S) &amp;= \frac{\|\mathcal{A}^{\rm adj}(y)+S-C \|_F}{1+\|C\|_{\max}} \\
+\epsilon_4(X,y,S) &amp;= \max\left\{0, \frac{-\lambda_{\min}(S)}{1+\|C\|_{\max}} \right\} \\
+\epsilon_5(X,y,S) &amp;= \frac{C \bullet X - b^Ty}{1+|C\bullet X|+|b^Ty|} \\
+\epsilon_6(X,y,S) &amp;= \frac{S\bullet X}{1+|C\bullet X|+|b^Ty|}"/></p>
+</div><p>Here <img class="math" src="../_images/math/6324b1b4bcf6ba04a4b0f7f7f469b1e55aa49c39.png" alt="\|C\|_{\max} = \max_{i,j} |C_{ij}|"/>, and <img class="math" src="../_images/math/036b689855ed227235257ca32c6b4ea1ea9162bd.png" alt="C\bullet X = \mathbf{tr}(C^TX)"/>.</p>
+<p>Note that <img class="math" src="../_images/math/f30175598ea0a11e999f9bff605f2532535cb0f1.png" alt="\epsilon_2(X,y,S)=0"/> and <img class="math" src="../_images/math/e04ed6b378a3e7620fea642b8c6fc41baa51971b.png" alt="\epsilon_4(X,y,S)=0"/>
+since all iterates <img class="math" src="../_images/math/5b7f746cbfa429b567e135f75155c9d34d13d497.png" alt="(X,y,S)"/> satisfy <img class="math" src="../_images/math/2de208254b1874b03b310a0d8157d88dbc79545b.png" alt="X \in
+\mathbf{S}_{V,c++}^n"/> and <img class="math" src="../_images/math/10aebc1e427ae0c5ff7a573f52cae7460ef5bfba.png" alt="S \in \mathbf{S}_{V,++}^n"/>.</p>
+</div>
+<div class="section" id="experimental-setup">
+<h2>Experimental setup<a class="headerlink" href="#experimental-setup" title="Permalink to this headline">¶</a></h2>
+<p>The following experiments were conducted on a desktop computer with an
+Intel Core 2 Quad Q6600 CPU (2.4 GHz), 4 GB of RAM, and running Ubuntu
+9.10 (64 bit).</p>
+<p>The problem instances used in the experiments are available for
+download <a class="reference internal" href="../testproblems/index.html"><em>here</em></a> and the SDPLIB problems are
+available <a class="reference external" href="http://www.nmt.edu/~borchers/sdplib">here</a>.</p>
+<p>We use the least-norm solution to the set of equations <img class="math" src="../_images/math/2b070f3115be6ad3d640160d818a425688594180.png" alt="A_i
+\bullet X, i=1,\ldots,m,"/> as starting point when it is strictly
+feasible, and otherwise we solve the phase I problem</p>
+<div class="math">
+<p><img src="../_images/math/b0138512f4798c1ee6ae96443a952663c2b87b6e.png" alt="\begin{array}{ll}
+\mbox{minimize}   &amp; s        \\
+\mbox{subject to} &amp; A_i \bullet X = b_i, \quad i=1,\ldots,m, \\
+&amp; \mathbf{tr}(X) \leq M  \\
+&amp; X + (s-\epsilon) I \succeq_{\rm c} 0, s \geq 0.
+\end{array}"/></p>
+</div><p>Here <img class="math" src="../_images/math/19bc0073dde1bcd1a8e6a32b251e80cced668f04.png" alt="\epsilon"/> is a small constant, and the constraint
+<img class="math" src="../_images/math/ba4a8378dd3284663ebc6f20032457dab7238fb3.png" alt="\mathbf{tr}(X) \leq M"/> is added to bound the feasible set.</p>
+</div>
+<div class="section" id="sdps-with-band-structure">
+<h2>SDPs with band structure<a class="headerlink" href="#sdps-with-band-structure" title="Permalink to this headline">¶</a></h2>
+<p>We consider a family of SDP instances where the data matrices
+<img class="math" src="../_images/math/8a865f4e8dcd57fb6ada7380551829231f52cfd8.png" alt="C,A_1,\ldots,A_m"/> are of order <img class="math" src="../_images/math/413f8a8e40062a9090d9d50b88bc7b551b314c26.png" alt="n"/> and banded with a
+common bandwidth <img class="math" src="../_images/math/7fe6069aa7e741b99f6b7fe911ad086a274d3ec3.png" alt="2w+1"/>.</p>
+<div class="section" id="experiment-1">
+<h3>Experiment 1<a class="headerlink" href="#experiment-1" title="Permalink to this headline">¶</a></h3>
+<p><img class="math" src="../_images/math/87773b62a76517bd84e3e8db4ac122a2e8ac1721.png" alt="m=100"/> constraints, bandwidth <img class="math" src="../_images/math/37d6147c60f7096c0d6102f0b4d9f0b222015d18.png" alt="11"/> (<img class="math" src="../_images/math/bd5c8f6c32ceddd936c69991fd54cc4eb1a96946.png" alt="w=5"/>), and variable order <img class="math" src="../_images/math/413f8a8e40062a9090d9d50b88bc7b551b314c26.png" alt="n"/></p>
+<h4> Results </h4>
+<table><tr>
+<td> Show: </td>
+<td> <select onchange="ajaxpage('band_ex2_'+this.value+'.html','contentarea_2')">
+<option value="timeperiter">Avg. time per iteration</option>
+<option value="iterations">Iterations</option>
+<option value="time">Total time (seconds)</option>
+<option value="dimacs1">DIMACS error (1)</option>
+<option value="dimacs2">DIMACS error (2)</option>
+<option value="dimacs3">DIMACS error (3)</option>
+<option value="dimacs4">DIMACS error (4)</option>
+<option value="dimacs5">DIMACS error (5)</option>
+<option value="dimacs6">DIMACS error (6)</option>
+</select> </td>
+</tr></table>
+<div id="contentarea_2"></div>
+<script type="text/javascript">
+   ajaxpage("band_ex2_timeperiter.html","contentarea_2")
+</script></div>
+<div class="section" id="experiment-2">
+<h3>Experiment 2<a class="headerlink" href="#experiment-2" title="Permalink to this headline">¶</a></h3>
+<p>order <img class="math" src="../_images/math/6ca3cf957420b38233052d129c3cb37a337a8f03.png" alt="n = 500"/>, bandwidth <img class="math" src="../_images/math/1bf8f5b0beaf478c9994b0f613b68fc429625de4.png" alt="7"/> (<img class="math" src="../_images/math/53c59522c2bbbb97fda0b255ce324d7e49ca25ad.png" alt="w=3"/>), and variable number of constraints <img class="math" src="../_images/math/c4bb40dd65eae6c11b325989b14e0b8d35e4e3ef.png" alt="m"/></p>
+<h4> Results </h4>
+<table><tr>
+<td> Show: </td>
+<td> <select onchange="ajaxpage('band_ex3_'+this.value+'.html','contentarea_3')">
+<option value="timeperiter">Avg. time per iteration</option>
+<option value="iterations">Iterations</option>
+<option value="time">Total time (seconds)</option>
+<option value="dimacs1">DIMACS error (1)</option>
+<option value="dimacs2">DIMACS error (2)</option>
+<option value="dimacs3">DIMACS error (3)</option>
+<option value="dimacs4">DIMACS error (4)</option>
+<option value="dimacs5">DIMACS error (5)</option>
+<option value="dimacs6">DIMACS error (6)</option>
+</select> </td>
+</tr></table>
+<div id="contentarea_3"></div>
+<script type="text/javascript">
+       ajaxpage("band_ex3_timeperiter.html","contentarea_3")
+</script><p>The problem <cite>band_n500_m800_w3</cite> required a phase I (M1 311.5 sec.; M2 47.8 sec.).</p>
+</div>
+<div class="section" id="experiment-3">
+<h3>Experiment 3<a class="headerlink" href="#experiment-3" title="Permalink to this headline">¶</a></h3>
+<p>order <img class="math" src="../_images/math/691c7f856f3cd4ed6bc1a607011db3d8fe40b76a.png" alt="n = 200"/>, <img class="math" src="../_images/math/87773b62a76517bd84e3e8db4ac122a2e8ac1721.png" alt="m=100"/> constraints, and variable bandwidth <img class="math" src="../_images/math/7fe6069aa7e741b99f6b7fe911ad086a274d3ec3.png" alt="2w+1"/></p>
+<h4> Results </h4>
+<table><tr>
+<td> Show: </td>
+<td> <select onchange="ajaxpage('band_ex1_'+this.value+'.html','contentarea_1')">
+<option value="timeperiter">Avg. time per iteration</option>
+<option value="iterations">Iterations</option>
+<option value="time">Total time (seconds)</option>
+<option value="dimacs1">DIMACS error (1)</option>
+<option value="dimacs2">DIMACS error (2)</option>
+<option value="dimacs3">DIMACS error (3)</option>
+<option value="dimacs4">DIMACS error (4)</option>
+<option value="dimacs5">DIMACS error (5)</option>
+<option value="dimacs6">DIMACS error (6)</option>
+</select> </td>
+</tr></table>
+<div id="contentarea_1"></div>
+<script type="text/javascript">
+       ajaxpage("band_ex1_timeperiter.html","contentarea_1")
+</script><p>Two problems required a phase I: <cite>band_n200_m100_w0</cite> (M1 1.12 sec.; M2 0.53 sec.) and <cite>band_n200_m100_w1</cite> (M1 3.18 sec.; M2 1.45 sec.).</p>
+</div>
+</div>
+<div class="section" id="matrix-norm-minimization">
+<h2>Matrix norm minimization<a class="headerlink" href="#matrix-norm-minimization" title="Permalink to this headline">¶</a></h2>
+<p>We consider the matrix norm minimization problem</p>
+<div class="math">
+<p><img src="../_images/math/686f33e0a49d1890582cc727ae2334d5435453fd.png" alt="\mbox{minimize} \ \| F(x) + G \|_2"/></p>
+</div><p>where <img class="math" src="../_images/math/2e8d55760e8cdbcb49de2eb02c6b32ce41c8b9c0.png" alt="F(x) = x_1 F_1 + \cdots + x_r F_r"/> and <img class="math" src="../_images/math/6343a8b1544ccd0a7b4de9e5325b86526928daaf.png" alt="G,F_i \in
+\mathbf{R}^{p \times q}"/> are the problem data. The problem can be
+formulated as an SDP:</p>
+<div class="math">
+<p><img src="../_images/math/ff2ecd1e0de3bb1c2c2d7da7964c037314cf24c8.png" alt="\begin{array}{ll}
+   \mbox{minimize} &amp; t \\
+   \mbox{subject to} &amp;
+   \begin{bmatrix} t I &amp; F(x) +G \\
+   (F(x)+G)^T &amp; tI
+   \end{bmatrix} \succeq 0.
+\end{array}"/></p>
+</div><p>This SDP has dimensions <img class="math" src="../_images/math/e99e9e64fe4ab2546f6dea730c6732556f4250a8.png" alt="m=r+1"/> and <img class="math" src="../_images/math/5fd341436fa8caf9132e52c2809de3b45b5b2b69.png" alt="n = p + q"/>.  We
+generate <img class="math" src="../_images/math/b92c09a649305a0aef3239729d93cdf941e0e5cf.png" alt="G"/> as a dense <img class="math" src="../_images/math/45df5cd8f9c2725710d983d29abd7424e3a1ced3.png" alt="p\times q"/> matrix, and the
+matrices <img class="math" src="../_images/math/d07b4c16d04b6739df29c10f32dfc4b946061922.png" alt="F_i"/> are generated such that the number of nonzero
+entries in each matrix is given by <img class="math" src="../_images/math/84903966f493f2ae1158c95d9b3c0429f5cb3b21.png" alt="\max (1,dpq)"/> where the
+parameter <img class="math" src="../_images/math/63c895e6ed137e52a997795bfa5173593f9fbca4.png" alt="d \in [0,1]"/> determines sparsity. The locations of
+nonzero entries in <img class="math" src="../_images/math/d07b4c16d04b6739df29c10f32dfc4b946061922.png" alt="F_i"/> are random. Thus, the problem family is
+parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e9ddac46fc44ea781c122bfa9f3.png" alt="(p,q,r,d)"/>.</p>
+<div class="section" id="experiment-4">
+<h3>Experiment 4<a class="headerlink" href="#experiment-4" title="Permalink to this headline">¶</a></h3>
+<p>variable number of rows <img class="math" src="../_images/math/3eca8557203e86160952e1c0f735f7417f3285b1.png" alt="p"/>, <img class="math" src="../_images/math/0a6c1f9ae7bb2ec5c0baf6e182d44c923a5e84ff.png" alt="q=10"/> columns, <img class="math" src="../_images/math/9b126dae94455cfb66c9bc8a3a2d7b487824a72b.png" alt="r=100"/> variables, and density <img class="math" src="../_images/math/c0c4677937214de046e792bf58aff56583ba536f.png" alt="d=1"/></p>
+<h4> Results </h4>
+<table><tr>
+<td> Show: </td>
+<td> <select onchange="ajaxpage('mtxnorm_ex1_'+this.value+'.html','contentarea_4')">
+<option value="timeperiter">Avg. time per iteration</option>
+<option value="iterations">Iterations</option>
+<option value="time">Total time (seconds)</option>
+<option value="dimacs1">DIMACS error (1)</option>
+<option value="dimacs2">DIMACS error (2)</option>
+<option value="dimacs3">DIMACS error (3)</option>
+<option value="dimacs4">DIMACS error (4)</option>
+<option value="dimacs5">DIMACS error (5)</option>
+<option value="dimacs6">DIMACS error (6)</option>
+</select> </td>
+</tr></table>
+<div id="contentarea_4"></div>
+<script type="text/javascript">
+       ajaxpage("mtxnorm_ex1_timeperiter.html","contentarea_4")
+</script></div>
+<div class="section" id="experiment-5">
+<h3>Experiment 5<a class="headerlink" href="#experiment-5" title="Permalink to this headline">¶</a></h3>
+<p><img class="math" src="../_images/math/8e612c87dd3685b9f00730d761f8fc41a99c609f.png" alt="p=400"/> rows, <img class="math" src="../_images/math/0a6c1f9ae7bb2ec5c0baf6e182d44c923a5e84ff.png" alt="q=10"/> columns, <img class="math" src="../_images/math/2e24d42cd40a597d436eb201e19157538ae03d57.png" alt="r=200"/> variables, and variable density</p>
+<h4> Results </h4>
+<table><tr>
+<td> Show: </td>
+<td> <select onchange="ajaxpage('mtxnorm_ex2_'+this.value+'.html','contentarea_5')">
+<option value="timeperiter">Avg. time per iteration</option>
+<option value="iterations">Iterations</option>
+<option value="time">Total time (seconds)</option>
+<option value="dimacs1">DIMACS error (1)</option>
+<option value="dimacs2">DIMACS error (2)</option>
+<option value="dimacs3">DIMACS error (3)</option>
+<option value="dimacs4">DIMACS error (4)</option>
+<option value="dimacs5">DIMACS error (5)</option>
+<option value="dimacs6">DIMACS error (6)</option>
+</select> </td>
+</tr></table>
+<div id="contentarea_5"></div>
+<script type="text/javascript">
+       ajaxpage("mtxnorm_ex2_timeperiter.html","contentarea_5")
+</script></div>
+<div class="section" id="experiment-6">
+<h3>Experiment 6:<a class="headerlink" href="#experiment-6" title="Permalink to this headline">¶</a></h3>
+<p><img class="math" src="../_images/math/8e612c87dd3685b9f00730d761f8fc41a99c609f.png" alt="p=400"/> rows, <img class="math" src="../_images/math/0a6c1f9ae7bb2ec5c0baf6e182d44c923a5e84ff.png" alt="q=10"/> columns, variable number of variables <img class="math" src="../_images/math/2ede365ad144ab396916ec60458da03860803078.png" alt="r"/>, and density <img class="math" src="../_images/math/c0c4677937214de046e792bf58aff56583ba536f.png" alt="d=1"/></p>
+<h4> Results </h4>
+<table><tr>
+<td> Show: </td>
+<td> <select onchange="ajaxpage('mtxnorm_ex3_'+this.value+'.html','contentarea_6')">
+<option value="timeperiter">Avg. time per iteration</option>
+<option value="iterations">Iterations</option>
+<option value="time">Total time (seconds)</option>
+<option value="dimacs1">DIMACS error (1)</option>
+<option value="dimacs2">DIMACS error (2)</option>
+<option value="dimacs3">DIMACS error (3)</option>
+<option value="dimacs4">DIMACS error (4)</option>
+<option value="dimacs5">DIMACS error (5)</option>
+<option value="dimacs6">DIMACS error (6)</option>
+</select> </td>
+</tr></table>
+<div id="contentarea_6"></div>
+<script type="text/javascript">
+       ajaxpage("mtxnorm_ex3_timeperiter.html","contentarea_6")
+</script></div>
+<div class="section" id="experiment-7">
+<h3>Experiment 7:<a class="headerlink" href="#experiment-7" title="Permalink to this headline">¶</a></h3>
+<p><img class="math" src="../_images/math/359b50abb42fb20da7098a9b0418a23d3b453cc3.png" alt="p + q=1000"/>, <img class="math" src="../_images/math/b379f11972594f3a23d0bd31f8bca8b26d33fec6.png" alt="r=10"/> variables, and density <img class="math" src="../_images/math/d07229dd2f213aa8472c46bfff475469b6d40291.png" alt="d = 1"/></p>
+<h4> Results </h4>
+<table><tr>
+<td> Show: </td>
+<td> <select onchange="ajaxpage('mtxnorm_ex4_'+this.value+'.html','contentarea_7')">
+<option value="timeperiter">Avg. time per iteration</option>
+<option value="iterations">Iterations</option>
+<option value="time">Total time (seconds)</option>
+<option value="dimacs1">DIMACS error (1)</option>
+<option value="dimacs2">DIMACS error (2)</option>
+<option value="dimacs3">DIMACS error (3)</option>
+<option value="dimacs4">DIMACS error (4)</option>
+<option value="dimacs5">DIMACS error (5)</option>
+<option value="dimacs6">DIMACS error (6)</option>
+</select> </td>
+</tr></table>
+<div id="contentarea_7"></div>
+<script type="text/javascript">
+       ajaxpage("mtxnorm_ex4_timeperiter.html","contentarea_7")
+</script></div>
+</div>
+<div class="section" id="overlapping-cliqes">
+<h2>Overlapping cliqes<a class="headerlink" href="#overlapping-cliqes" title="Permalink to this headline">¶</a></h2>
+<p>We consider a family of SDPs which have an aggregate sparsity patterns <img class="math" src="../_images/math/c99df7a209495334da442b1ec998abaabfa320d8.png" alt="V"/> with <img class="math" src="../_images/math/d99efde75c84ef402a92cd4497530d2366fb112f.png" alt="l"/> cliques of order <img class="math" src="../_images/math/75e27f04188974063be3230dca208cd495b77ce1.png" alt="N"/>. The cliques are given by</p>
+<div class="math">
+<p><img src="../_images/math/d46f367024050a11b2a468246799bf689c674e1d.png" alt="W_i = \{ (i-1)(N-u)+1,\ldots, (i-1)(N-u)+1+u \}, \quad i =1 ,\ldots, l"/></p>
+</div><p>where <img class="math" src="../_images/math/e5fc41b391867da81606413e3389c7efc73abaf0.png" alt="u"/> (<img class="math" src="../_images/math/c9f586e1b3189459a9d0c606b205298b82a64755.png" alt="0 \leq u \leq N-1"/>) is the overlap between neighboring cliques. The sparsity pattern is illustrated below:</p>
+<img alt="../_images/cliqueoverlap.png" class="align-center" src="../_images/cliqueoverlap.png" />
+<p>Note that <img class="math" src="../_images/math/608ff1cecc0399c33688fd14eb52fe97a45139a0.png" alt="u=0"/> corresponds to a block diagonal sparsity pattern and <img class="math" src="../_images/math/ec6743b73c0fa65fdb117156752153739e9bb56c.png" alt="u=N-1"/> corresponds to a band pattern.</p>
+<div class="section" id="experiment-8">
+<h3>Experiment 8<a class="headerlink" href="#experiment-8" title="Permalink to this headline">¶</a></h3>
+<p><img class="math" src="../_images/math/519d81c3938357e1245409fd881c6bd874f7e4f4.png" alt="m = 100"/> constraints, clique size <img class="math" src="../_images/math/7fc523a302aa6e999035be23223185c06525a456.png" alt="N=16"/>, and variable overlap <img class="math" src="../_images/math/e5fc41b391867da81606413e3389c7efc73abaf0.png" alt="u"/></p>
+<h4> Results </h4>
+<table><tr>
+<td> Show: </td>
+<td> <select onchange="ajaxpage('cliqueoverlap_'+this.value+'.html','contentarea_8')">
+<option value="timeperiter">Avg. time per iteration</option>
+<option value="iterations">Iterations</option>
+<option value="time">Total time (seconds)</option>
+<option value="dimacs1">DIMACS error (1)</option>
+<option value="dimacs2">DIMACS error (2)</option>
+<option value="dimacs3">DIMACS error (3)</option>
+<option value="dimacs4">DIMACS error (4)</option>
+<option value="dimacs5">DIMACS error (5)</option>
+<option value="dimacs6">DIMACS error (6)</option>
+</select> </td>
+</tr></table>
+<div id="contentarea_8"></div>
+<script type="text/javascript">
+       ajaxpage("cliqueoverlap_timeperiter.html","contentarea_8")
+</script></div>
+</div>
+<div class="section" id="sdplib-problems">
+<h2>SDPLIB problems<a class="headerlink" href="#sdplib-problems" title="Permalink to this headline">¶</a></h2>
+<p>The following experiment is based on problem instances from <span class="raw-html"><a href="http://www.nmt.edu/~sdplib/">SDPLIB</a></span>.</p>
+<div class="section" id="experiment-9">
+<h3>Experiment 9<a class="headerlink" href="#experiment-9" title="Permalink to this headline">¶</a></h3>
+<p>SDPLIB problems with <img class="math" src="../_images/math/a141163ec8dcd3eadfb5318b1e197e1d76e3416c.png" alt="n \geq 500"/></p>
+<h4> Results </h4>
+<table><tr>
+<td> Show: </td>
+<td> <select onchange="ajaxpage('sdplib_'+this.value+'.html','contentarea_9')">
+<option value="timeperiter">Avg. time per iteration</option>
+<option value="iterations">Iterations</option>
+<option value="time">Total time (seconds)</option>
+<option value="dimacs1">DIMACS error (1)</option>
+<option value="dimacs2">DIMACS error (2)</option>
+<option value="dimacs3">DIMACS error (3)</option>
+<option value="dimacs4">DIMACS error (4)</option>
+<option value="dimacs5">DIMACS error (5)</option>
+<option value="dimacs6">DIMACS error (6)</option>
+</select> </td>
+</tr></table>
+<div id="contentarea_9"></div>
+<script type="text/javascript">
+       ajaxpage("sdplib_timeperiter.html","contentarea_9")
+</script><p>Three problems required a phase I: <cite>thetaG11</cite> (M1 227.2 sec.; M1c 184.4 sec.), <cite>thetaG51</cite> (M1 64.8 sec.: M1c 58.0 sec.), and <cite>truss8</cite> (M1 17.9 sec.; M1c 17.9 sec.).</p>
+</div>
+</div>
+<div class="section" id="nonchordal-sparsity-patterns">
+<h2>Nonchordal sparsity patterns<a class="headerlink" href="#nonchordal-sparsity-patterns" title="Permalink to this headline">¶</a></h2>
+<p>The following problems are based on sparsity patterns from the <a class="reference external" href="http://www.cise.ufl.edu/research/sparse/matrices">University of Florida Sparse Matrix Collection</a> (UFSMC). We use as problem identifier the name <cite>rsX</cite> where <cite>X</cite> is the ID number of a sparsity pattern from UFSMC. Each problem instance has <img class="math" src="../_images/math/c4bb40dd65eae6c11b325989b14e0b8d35e4e3ef.png" alt="m"/> constraints and the number of nonzeros in the lower triangle of <img class="math" src="../_images/math/121e299726ed162074fcd7fe348b154ad4be1073.png" alt="A_i"/> is <img class="math" src="../_images/math/9dd1b3c70063cc1d107791e1af7e19a70a4fe210.png" alt="\max\{1,\mathrm{round}(0.005 |V|)\}"/> where <img class="math" src="../_images/math/81de438050c542efad1976c42389c728ff03f8f6.png" alt="|V|"/> is the number of nonzeros in the lower triangle of the aggregate sparsity pattern <img class="math" src="../_images/math/c99df7a209495334da442b1ec998abaabfa320d8.png" alt="V"/>, and <img class="math" src="../_images/math/2bcc65482aa8e15cd4c9e9f2542451fb4e971a91.png" alt="C"/> has <img class="math" src="../_images/math/81de438050c542efad1976c42389c728ff03f8f6.png" alt="|V|"/> nonzeros.</p>
+<div class="section" id="experiment-10">
+<h3>Experiment 10<a class="headerlink" href="#experiment-10" title="Permalink to this headline">¶</a></h3>
+<h4> Results </h4>
+<table><tr>
+<td> Show: </td>
+<td> <select onchange="ajaxpage('ufsmc_'+this.value+'.html','contentarea_10')">
+<option value="timeperiter">Avg. time per iteration</option>
+<option value="iterations">Iterations</option>
+<option value="time">Total time (seconds)</option>
+<option value="dimacs1">DIMACS error (1)</option>
+<option value="dimacs2">DIMACS error (2)</option>
+<option value="dimacs3">DIMACS error (3)</option>
+<option value="dimacs4">DIMACS error (4)</option>
+<option value="dimacs5">DIMACS error (5)</option>
+<option value="dimacs6">DIMACS error (6)</option>
+</select> </td>
+</tr></table>
+<div id="contentarea_10"></div>
+<script type="text/javascript">
+       ajaxpage("ufsmc_timeperiter.html","contentarea_10")
+</script>
+
+<script type="text/javascript">
+   var style = document.createElement('style');
+   style.type = 'text/css';
+   style.innerHTML = '.data { text-align:right; padding-left:  4px; padding-right: 4px; min-width: 68px;}';
+   document.getElementsByTagName('head')[0].appendChild(style);
+
+   var style2 = document.createElement('style');
+   style2.type = 'text/css';
+   style2.innerHTML = '.datacaption { text-align:left; padding-right: 14px; min-width: 150px;}';
+   document.getElementsByTagName('head')[0].appendChild(style2);
+
+   var style3 = document.createElement('style');
+   style3.type = 'text/css';
+   style3.innerHTML = '.nodata { text-align:right; padding-left:  4px; padding-right: 4px; min-width: 68px;}';
+   document.getElementsByTagName('head')[0].appendChild(style3);
+
+   var style4 = document.createElement('style');
+   style4.type = 'text/css';
+   style4.innerHTML = 'table.results {font-family:Monaco;border-bottom:1px solid black;margin-top:20px; margin-bottom:30px;font-size:70%;}';
+   document.getElementsByTagName('head')[0].appendChild(style4);
+
+   var style5 = document.createElement('style');
+   style5.type = 'text/css';
+   style5.innerHTML = 'tr.toprow td {border-top:2px solid black;border-bottom:1px solid black;}';
+   document.getElementsByTagName('head')[0].appendChild(style5);
+
+   var style6 = document.createElement('style');
+   style6.type = 'text/css';
+   style6.innerHTML = '.col1caption { text-align:left;}';
+   document.getElementsByTagName('head')[0].appendChild(style6);
+
+   var style7 = document.createElement('style');
+   style7.type = 'text/css';
+   style7.innerHTML = '.colcaption { text-align:right;}';
+   document.getElementsByTagName('head')[0].appendChild(style7);
+
+</script></div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../testproblems/index.html" class="btn btn-neutral" title="Test problems"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="../copyright.html">Copyright</a> Martin S. Andersen and Lieven Vandenberghe.
+      Last updated on Jun 14, 2014.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.3.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+    <div class="footer">
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+</body>
+</html>

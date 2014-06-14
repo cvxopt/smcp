@@ -1,0 +1,212 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Download and installation &mdash; SMCP</title>
+  
+
+  
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+        <link rel="copyright" title="Copyright" href="../copyright.html"/>
+    <link rel="top" title="SMCP" href="../index.html"/>
+        <link rel="next" title="Documentation" href="../documentation/index.html"/>
+        <link rel="prev" title="Copyright and license" href="../copyright.html"/> 
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-nav-search">
+        <a href="../index.html" class="fa fa-home"> SMCP</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+        
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright and license</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">Download and installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#installation-from-source">Installation from source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installation-with-pip">Installation with pip</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/index.html">Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#the-chordal-sdp-solvers">The chordal SDP solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#solver-interfaces">Solver interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#the-sdp-object">The SDP object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#auxiliary-routines">Auxiliary routines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#analysis-routines">Analysis routines</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#random-problem-generators">Random problem generators</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../testproblems/index.html">Test problems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarks/index.html">Benchmarks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#sdp-solvers">SDP solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#error-measures">Error measures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#experimental-setup">Experimental setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#sdps-with-band-structure">SDPs with band structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#matrix-norm-minimization">Matrix norm minimization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#overlapping-cliqes">Overlapping cliqes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#sdplib-problems">SDPLIB problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#nonchordal-sparsity-patterns">Nonchordal sparsity patterns</a></li>
+</ul>
+</li>
+</ul>
+
+        
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">SMCP</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> &raquo;</li>
+      
+    <li>Download and installation</li>
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            
+  <div class="section" id="download-and-installation">
+<h1>Download and installation<a class="headerlink" href="#download-and-installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="installation-from-source">
+<h2>Installation from source<a class="headerlink" href="#installation-from-source" title="Permalink to this headline">¶</a></h2>
+<p>The package requires Python version 2.7 or newer. To build the
+package from source, the Python header files and libraries must be
+installed, as well as the core binaries. SMCP also requires the Python
+extension modules <a class="reference external" href="http://cvxopt.org">CVXOPT 1.1.7</a> or
+later and <a class="reference external" href="http://cvxopt.github.io/chompack">CHOMPACK 2.0</a> or later.</p>
+<p>The entire source package is available <a class="reference external" href="https://github.com/cvxopt/smcp">here</a>, and it includes
+documentation, installation instructions, and examples.</p>
+</div>
+<div class="section" id="installation-with-pip">
+<h2>Installation with pip<a class="headerlink" href="#installation-with-pip" title="Permalink to this headline">¶</a></h2>
+<p>SMCP can be installed via pip using the following command:</p>
+<div class="highlight-bash"><div class="highlight"><pre>pip install smcp --user
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../documentation/index.html" class="btn btn-neutral float-right" title="Documentation">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../copyright.html" class="btn btn-neutral" title="Copyright and license"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; <a href="../copyright.html">Copyright</a> Martin S. Andersen and Lieven Vandenberghe.
+      Last updated on Jun 14, 2014.
+    </p>
+  </div>
+
+  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.3.1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  false
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+    <div class="footer">
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+    </div>
+
+</body>
+</html>

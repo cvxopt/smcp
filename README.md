@@ -3,4 +3,4 @@ smcp
 
 Solver for sparse matrix cone programs
 
-Documentation available at http://cvxopt.github.io/smcp
+Documentation available at http://smcp.rtfd.org
