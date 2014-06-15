@@ -130,8 +130,10 @@ on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 if not on_rtd: # only import and set the theme if we're building docs locally
     html_theme = "sphinx_rtd_theme"
     html_theme_path = ["_themes", ]
-# otherwise, readthedocs.org uses their theme by default, so no need to specify it
-
+else:
+    # use MathJax on RTD 
+    extensions.remove('sphinx.ext.pngmath')
+    extensions.append('sphinx.ext.mathjax')
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
