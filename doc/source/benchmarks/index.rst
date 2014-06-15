@@ -173,7 +173,7 @@ Experiment 1
      <h4> Results </h4>
      <table><tr>
      <td> Show: </td>
-     <td> <select onchange="ajaxpage('band_ex2_'+this.value+'.html','contentarea_2')">
+     <td> <select onchange="ajaxpage('../_static/benchmarks/band_ex2_'+this.value+'.html','contentarea_2')">
      <option value="timeperiter">Avg. time per iteration</option>
      <option value="iterations">Iterations</option>
      <option value="time">Total time (seconds)</option>
@@ -187,7 +187,7 @@ Experiment 1
      </tr></table>
      <div id="contentarea_2"></div>
      <script type="text/javascript">
-	ajaxpage("band_ex2_timeperiter.html","contentarea_2")
+	ajaxpage("../_static/benchmarks/band_ex2_timeperiter.html","contentarea_2")
      </script>
 
 Experiment 2
@@ -200,7 +200,7 @@ order :math:`n = 500`, bandwidth :math:`7` (:math:`w=3`), and variable number of
      <h4> Results </h4>
      <table><tr>
      <td> Show: </td>
-     <td> <select onchange="ajaxpage('band_ex3_'+this.value+'.html','contentarea_3')">
+     <td> <select onchange="ajaxpage('../_static/benchmarks/band_ex3_'+this.value+'.html','contentarea_3')">
      <option value="timeperiter">Avg. time per iteration</option>
      <option value="iterations">Iterations</option>
      <option value="time">Total time (seconds)</option>
@@ -214,7 +214,7 @@ order :math:`n = 500`, bandwidth :math:`7` (:math:`w=3`), and variable number of
      </tr></table>
      <div id="contentarea_3"></div>
      <script type="text/javascript">
-            ajaxpage("band_ex3_timeperiter.html","contentarea_3")
+            ajaxpage("../_static/benchmarks/band_ex3_timeperiter.html","contentarea_3")
      </script>
 
 
@@ -230,7 +230,7 @@ order :math:`n = 200`, :math:`m=100` constraints, and variable bandwidth :math:`
      <h4> Results </h4>
      <table><tr>
      <td> Show: </td>
-     <td> <select onchange="ajaxpage('band_ex1_'+this.value+'.html','contentarea_1')">
+     <td> <select onchange="ajaxpage('../_static/benchmarks/band_ex1_'+this.value+'.html','contentarea_1')">
      <option value="timeperiter">Avg. time per iteration</option>
      <option value="iterations">Iterations</option>
      <option value="time">Total time (seconds)</option>
@@ -244,7 +244,7 @@ order :math:`n = 200`, :math:`m=100` constraints, and variable bandwidth :math:`
      </tr></table>
      <div id="contentarea_1"></div>
      <script type="text/javascript">
-            ajaxpage("band_ex1_timeperiter.html","contentarea_1")
+            ajaxpage("../_static/benchmarks/band_ex1_timeperiter.html","contentarea_1")
      </script>
 
 
@@ -292,7 +292,7 @@ variable number of rows :math:`p`, :math:`q=10` columns, :math:`r=100` variables
      <h4> Results </h4>
      <table><tr>
      <td> Show: </td>
-     <td> <select onchange="ajaxpage('mtxnorm_ex1_'+this.value+'.html','contentarea_4')">
+     <td> <select onchange="ajaxpage('../_static/benchmarks/mtxnorm_ex1_'+this.value+'.html','contentarea_4')">
      <option value="timeperiter">Avg. time per iteration</option>
      <option value="iterations">Iterations</option>
      <option value="time">Total time (seconds)</option>
@@ -306,7 +306,7 @@ variable number of rows :math:`p`, :math:`q=10` columns, :math:`r=100` variables
      </tr></table>
      <div id="contentarea_4"></div>
      <script type="text/javascript">
-            ajaxpage("mtxnorm_ex1_timeperiter.html","contentarea_4")
+            ajaxpage("../_static/benchmarks/mtxnorm_ex1_timeperiter.html","contentarea_4")
      </script>
 
 
@@ -320,7 +320,7 @@ Experiment 5
      <h4> Results </h4>
      <table><tr>
      <td> Show: </td>
-     <td> <select onchange="ajaxpage('mtxnorm_ex2_'+this.value+'.html','contentarea_5')">
+     <td> <select onchange="ajaxpage('../_static/benchmarks/mtxnorm_ex2_'+this.value+'.html','contentarea_5')">
      <option value="timeperiter">Avg. time per iteration</option>
      <option value="iterations">Iterations</option>
      <option value="time">Total time (seconds)</option>
@@ -334,7 +334,7 @@ Experiment 5
      </tr></table>
      <div id="contentarea_5"></div>
      <script type="text/javascript">
-            ajaxpage("mtxnorm_ex2_timeperiter.html","contentarea_5")
+            ajaxpage("../_static/benchmarks/mtxnorm_ex2_timeperiter.html","contentarea_5")
      </script>
 
 
@@ -348,7 +348,7 @@ Experiment 6:
      <h4> Results </h4>
      <table><tr>
      <td> Show: </td>
-     <td> <select onchange="ajaxpage('mtxnorm_ex3_'+this.value+'.html','contentarea_6')">
+     <td> <select onchange="ajaxpage('../_static/benchmarks/mtxnorm_ex3_'+this.value+'.html','contentarea_6')">
      <option value="timeperiter">Avg. time per iteration</option>
      <option value="iterations">Iterations</option>
      <option value="time">Total time (seconds)</option>
@@ -362,7 +362,7 @@ Experiment 6:
      </tr></table>
      <div id="contentarea_6"></div>
      <script type="text/javascript">
-            ajaxpage("mtxnorm_ex3_timeperiter.html","contentarea_6")
+            ajaxpage("../_static/benchmarks/mtxnorm_ex3_timeperiter.html","contentarea_6")
      </script>
 
 
@@ -376,7 +376,7 @@ Experiment 7:
      <h4> Results </h4>
      <table><tr>
      <td> Show: </td>
-     <td> <select onchange="ajaxpage('mtxnorm_ex4_'+this.value+'.html','contentarea_7')">
+     <td> <select onchange="ajaxpage('../_static/benchmarks/mtxnorm_ex4_'+this.value+'.html','contentarea_7')">
      <option value="timeperiter">Avg. time per iteration</option>
      <option value="iterations">Iterations</option>
      <option value="time">Total time (seconds)</option>
@@ -390,7 +390,7 @@ Experiment 7:
      </tr></table>
      <div id="contentarea_7"></div>
      <script type="text/javascript">
-            ajaxpage("mtxnorm_ex4_timeperiter.html","contentarea_7")
+            ajaxpage("../_static/benchmarks/mtxnorm_ex4_timeperiter.html","contentarea_7")
      </script>
 
 Overlapping cliqes
@@ -419,7 +419,7 @@ Experiment 8
      <h4> Results </h4>
      <table><tr>
      <td> Show: </td>
-     <td> <select onchange="ajaxpage('cliqueoverlap_'+this.value+'.html','contentarea_8')">
+     <td> <select onchange="ajaxpage('../_static/benchmarks/cliqueoverlap_'+this.value+'.html','contentarea_8')">
      <option value="timeperiter">Avg. time per iteration</option>
      <option value="iterations">Iterations</option>
      <option value="time">Total time (seconds)</option>
@@ -433,7 +433,7 @@ Experiment 8
      </tr></table>
      <div id="contentarea_8"></div>
      <script type="text/javascript">
-            ajaxpage("cliqueoverlap_timeperiter.html","contentarea_8")
+            ajaxpage("../_static/benchmarks/cliqueoverlap_timeperiter.html","contentarea_8")
      </script>
 
 
@@ -453,7 +453,7 @@ SDPLIB problems with :math:`n \geq 500`
      <h4> Results </h4>
      <table><tr>
      <td> Show: </td>
-     <td> <select onchange="ajaxpage('sdplib_'+this.value+'.html','contentarea_9')">
+     <td> <select onchange="ajaxpage('../_static/benchmarks/sdplib_'+this.value+'.html','contentarea_9')">
      <option value="timeperiter">Avg. time per iteration</option>
      <option value="iterations">Iterations</option>
      <option value="time">Total time (seconds)</option>
@@ -467,7 +467,7 @@ SDPLIB problems with :math:`n \geq 500`
      </tr></table>
      <div id="contentarea_9"></div>
      <script type="text/javascript">
-            ajaxpage("sdplib_timeperiter.html","contentarea_9")
+            ajaxpage("../_static/benchmarks/sdplib_timeperiter.html","contentarea_9")
      </script>
 
 
@@ -486,7 +486,7 @@ Experiment 10
      <h4> Results </h4>
      <table><tr>
      <td> Show: </td>
-     <td> <select onchange="ajaxpage('ufsmc_'+this.value+'.html','contentarea_10')">
+     <td> <select onchange="ajaxpage('../_static/benchmarks/ufsmc_'+this.value+'.html','contentarea_10')">
      <option value="timeperiter">Avg. time per iteration</option>
      <option value="iterations">Iterations</option>
      <option value="time">Total time (seconds)</option>
@@ -500,7 +500,7 @@ Experiment 10
      </tr></table>
      <div id="contentarea_10"></div>
      <script type="text/javascript">
-            ajaxpage("ufsmc_timeperiter.html","contentarea_10")
+            ajaxpage("../_static/benchmarks/ufsmc_timeperiter.html","contentarea_10")
      </script>
      
      <script type="text/javascript">

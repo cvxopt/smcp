@@ -2,7 +2,6 @@
 
 html:
 	sphinx-build  -b html source build/html	
-	cp source/benchmarks/*.html build/html/benchmarks/
 
 linkcheck:
 	mkdir -p build/linkcheck 
