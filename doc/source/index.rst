@@ -1,5 +1,5 @@
 ###########################################################
-SMCP --- Python extension for Sparse Matric Cone Programs
+SMCP --- Python extension for Sparse Matrix Cone Programs
 ###########################################################
 
 .. title:: Home
