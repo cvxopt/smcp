@@ -914,7 +914,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                 # [ -(1/t Hphid(s))^-1   A^T ][ nu ] = [-s ]
                 # [        A              0  ][ dy ] = [ b ]
                 bx = S.copy()
-                blas.scal(-1.0, bx.blkcal)
+                blas.scal(-1.0, bx.blkval)
                 by = b
                 nu,dy = f(bx,by)
                 # iterative refinement
@@ -1219,7 +1219,9 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
         DIMACS_err[0] = blas.nrm2(Amap(X) - b)/(1.0+max(abs(b)))
         DIMACS_err[1] = 0.0
         R = Aadj(y) + S - C
-        DIMACS_err[2] = sqrt(dot(R,R))/(1.0+max(abs(c)))
+        c_abs = abs(c)
+        if len(c_abs) == 0: c_abs = [0.0]
+        DIMACS_err[2] = sqrt(dot(R,R))/(1.0+max(c_abs))
         DIMACS_err[3] = 0.0
         DIMACS_err[4] = (pcost - dcost)/(1 + abs(pcost) + abs(dcost))
         DIMACS_err[5] = gap/(1 + abs(pcost) + abs(dcost))
@@ -2256,7 +2258,9 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         DIMACS_err[1] = 0.0
         R = Aadj(y) + S; blas.scal(1.0/tau,R.blkval);
         R -= C
-        DIMACS_err[2] = sqrt(dot(R,R))/(1+max(abs(c)))
+        c_abs = abs(c)
+        if len(c_abs) == 0: c_abs = [0.0]
+        DIMACS_err[2] = sqrt(dot(R,R))/(1+max(c_abs))
         DIMACS_err[3] = 0.0
         DIMACS_err[4] = (pcost - dcost)/(1 + abs(pcost) + abs(dcost))
         DIMACS_err[5] = gap/(1 + abs(pcost) + abs(dcost))

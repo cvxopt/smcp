@@ -35,7 +35,7 @@ misc = Extension('misc',
                  sources = ['src/C/misc.c'])
 
 setup(name="smcp",
-      version="0.4",
+      version="0.4.1",
       description="Python extension for solving sparse matrix cone programs",
       author="Martin S. Andersen and Lieven Vandenberghe",
       author_email="martin.skovgaard.andersen@gmail.com, vandenbe@ee.ucla.edu",
@@ -45,4 +45,4 @@ setup(name="smcp",
       package_dir = {'smcp':'src/python'},
       ext_package = "smcp",
       ext_modules = [misc],
-      requires = ["cvxopt (>=1.1.6)","chompack (>=2.0)"])
+      requires = ["cvxopt (>=1.1.6)","chompack (>=2.1.1)"])
