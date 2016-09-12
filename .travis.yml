@@ -7,15 +7,17 @@ before_install:
 - sudo apt-get install libblas-dev
 - sudo apt-get install liblapack-dev
 - sudo apt-get install libatlas-dev
+- pip install git+https://github.com/cvxopt/cvxopt@dev
+#- pip install coveralls
 language: python
 python:
 - '2.7'
 - '3.5'
 install:
-#- pip install coveralls
-- pip install git+https://github.com/cvxopt/smcp
 - python setup.py -q install
-#script: nosetests --with-coverage --cover-package=smcp
+script: 
+- python example.py
+#- nosetests --with-coverage --cover-package=smcp
 #after_success:
 #  - coveralls
 deploy:
