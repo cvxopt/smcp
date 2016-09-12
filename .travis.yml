@@ -8,6 +8,7 @@ before_install:
 - sudo apt-get install liblapack-dev
 - sudo apt-get install libatlas-dev
 - pip install git+https://github.com/cvxopt/cvxopt@dev
+- pip install chompack
 #- pip install coveralls
 language: python
 python:
