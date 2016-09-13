@@ -78,13 +78,13 @@ class SDP(object):
     def n(self):
         """Order of matrices""" 
         if self._A is not None: return int(sqrt(self._A.size[0]))
-        else: raise AttributeError, "SDP object has not been initialized"
+        else: raise AttributeError("SDP object has not been initialized")
 
     @property
     def m(self):
         """Number of constraints"""
         if self._A is not None :return self._A.size[1]-1
-        else: raise AttributeError, "SDP object has not been initialized"
+        else: raise AttributeError("SDP object has not been initialized")
 
     @property 
     def V(self):
@@ -115,7 +115,7 @@ class SDP(object):
     def b(self):
         """SDP data: vector b"""
         if self._b is not None: return self._b
-        else: raise AttributeError, "SDP object has not been initialized"
+        else: raise AttributeError("SDP object has not been initialized")
 
     @property
     def ischordal(self):
@@ -136,8 +136,8 @@ class SDP(object):
             if isinstance(v,float): I = [r/self.n]; J = [r%self.n]
             else: I,J = misc.ind2sub(self.n,r)
             return spmatrix(v,I,J,(self.n,self.n))
-        elif self._A: raise ValueError, "index is out of range"
-        else: raise AttributeError, "SDP object has not been initialized"
+        elif self._A: raise ValueError("index is out of range")
+        else: raise AttributeError("SDP object has not been initialized")
     A = property(get_A,doc="SDP data: sparse matrix with columns A0,A1,..,Am")
 
     def _read_sdpa(self,fname):
@@ -171,11 +171,11 @@ class SDP(object):
         if compress:
             if not os.path.isfile(fname) and not os.path.isfile(fname+".bz2"):
                 f = open(fname,'w')
-            elif os.path.isfile(fname): raise IOError, "file %s already exists" % (fname)
-            else: raise IOError, "file %s already exists" % (fname+".bz2")
+            elif os.path.isfile(fname): raise IOError("file %s already exists" % (fname))
+            else: raise IOError("file %s already exists" % (fname+".bz2"))
         elif not os.path.isfile(fname):
             f = open(fname,'w')
-        else: raise IOError, "file %s already exists" % (fname)
+        else: raise IOError("file %s already exists" % (fname))
         misc.sdpa_write(f,self._A,matrix(self._b),self._blockstruct,neg=True)
         f.close()
         if compress:
@@ -186,22 +186,22 @@ class SDP(object):
             
     def _load(self,fname):
         """Load SDP data from 'pickle' file"""
-        import bz2, cPickle
+        import bz2, pickle
         fp,ext = os.path.splitext(fname)
         if ext == '.bz2': 
-            D = cPickle.loads(bz2.decompress(open(fname).read()))
+            D = pickle.loads(bz2.decompress(open(fname).read()))
         elif ext == '.pkl': 
             f = open(fname,'r')
-            D = cPickle.load(f)
+            D = pickle.load(f)
             f.close()
         else:
-            raise IOError, "unknown extension '%s' " % (ext)
+            raise IOError("unknown extension '%s' " % (ext))
         self._A = D['A']; self._b = D['b']; self._X0 = D['X0']
         self._y0 = D['y0']; self._S0 = D['S0']; self._pname = D['pname']
 
     def save(self,fname=None,compress=False):
         """Save SDP data to 'pickle' file"""
-        import bz2, cPickle
+        import bz2, pickle
         if fname is None:
             fname = self._pname
         
@@ -212,41 +212,41 @@ class SDP(object):
         
         if not os.path.isfile(fname):
             f = open(fname,'w')
-        else: raise IOError, "file %s already exists" % (fname)
+        else: raise IOError("file %s already exists" % (fname))
 
         D = {'A':self._A,'b':self._b,'X0':self._X0,
              'y0':self._y0,'S0':self._S0,'pname':self._pname}
         if not compress:
-            cPickle.dump(D,f)
+            pickle.dump(D,f)
         else:
-            f.write(bz2.compress(cPickle.dumps(D)))
+            f.write(bz2.compress(pickle.dumps(D)))
         f.close()
 
     def _agg_sparsity(self):
         """Generates aggregate sparsity vector for problem data"""
         if self._A: self._I = matrix(list(set(self._A.I)))
-        else: raise AttributeError, "SDP object has not been initialized"
+        else: raise AttributeError("SDP object has not been initialized")
 
     def get_nnz(self,i=None):
         """Returns (m+1)-by-1 vector with number of nonzeros in lower triangle of A0,...,Am"""
         if self._A: cptr = self._A.CCS[0]
-        else: raise AttributeError, "SDP object has no data"
+        else: raise AttributeError("SDP object has no data")
         if i == None:
             u = matrix(0,(len(cptr)-1,1))
-            for i in xrange(len(cptr)-1):
+            for i in range(len(cptr)-1):
                 u[i] = cptr[i+1] - cptr[i]
             return u
         elif i>=0 and i<= self.m: return cptr[i+1]-cptr[i]
-        else: raise ValueError, "index out of range"
+        else: raise ValueError("index out of range")
     nnzs = property(get_nnz,doc="Vector with number of nonzeros in lower triangle of A0,A1,...,Am")
         
     def get_nzcols(self,i=None):
         """Returns (m+1)-by-1 vector with the number of nonzero columns in A1,...,Am"""
         if self._A: nzc = misc.nzcolumns(self._A)
-        else: raise AttributeError, "SDP object has no data"
+        else: raise AttributeError("SDP object has no data")
         if i == None: return nzc
         elif i>0 and i<= self.m: return nzc[i-1]
-        else: raise ValueError, "index out of range"
+        else: raise ValueError("index out of range")
     nzcols = property(get_nzcols,doc="Vector with number of nonzero columns in A1,..,Am")
 
     def solve_esd(self,kktsolver='chol',scaling='primal',primalstart=None,dualstart=None,p=None):
@@ -347,7 +347,7 @@ class SDP(object):
             t = (tMIN+tMAX)/2.0
             #Xt = chompack.copy(Xc)
             #chompack.axpy(E,Xt,t)
-            Xt = Xc.copy() + spmatrix(t,range(self.n),range(self.n))
+            Xt = Xc.copy() + spmatrix(t,list(range(self.n)),list(range(self.n)))
             
             try:
                 # L = chompack.completion(Xt)
@@ -361,7 +361,7 @@ class SDP(object):
                 tMIN = t
                 
         tt = t + 1.0
-        U = X0 + spmatrix(tt,range(self.n,),range(self.n))
+        U = X0 + spmatrix(tt,list(range(self.n,)),list(range(self.n)))
         trU = sum(U[:][Id])
         
         Z0 = spdiag([U,spmatrix([tt+k,MM-trU],[0,1],[0,1],(2,2))])
@@ -375,7 +375,7 @@ class SDP(object):
             sol.pop('y')
             sol.pop('s')
             X0 = sol.pop('x')[:self.n,:self.n]\
-                - spmatrix(s,range(self.n),range(self.n))
+                - spmatrix(s,list(range(self.n)),list(range(self.n)))
             return X0,sol
 
     def solve_cvxopt(self,primalstart=None,dualstart=None,\
@@ -392,7 +392,7 @@ class SDP(object):
 
         from cvxopt import solvers
         if options:
-            for key in options.keys():
+            for key in list(options.keys()):
                 solvers.options[key] = options[key]
                 
         if primalstart: 
@@ -420,7 +420,7 @@ def mk_rand(V,cone='posdef',seed=0):
     - U is completable if cone is 'completable'.
     """
     if not (cone=='posdef' or cone=='completable'):
-        raise ValueError, "cone must be 'posdef' (default) or 'completable' "
+        raise ValueError("cone must be 'posdef' (default) or 'completable' ")
 
     from cvxopt import amd
     setseed(seed)
@@ -428,7 +428,7 @@ def mk_rand(V,cone='posdef',seed=0):
 
     U = +V
     U.V *= 0.0
-    for i in xrange(n):
+    for i in range(n):
         u = normal(n,1)/sqrt(n)
         base.syrk(u,U,beta=1.0,partial=True)
 
@@ -456,7 +456,7 @@ def mk_rand(V,cone='posdef',seed=0):
             U = +Ut
             break
         except:
-            Ut = U + spmatrix(t,xrange(n),xrange(n),(n,n))        
+            Ut = U + spmatrix(t,range(n),range(n),(n,n))        
             t*=2.0
     return U
 
@@ -485,7 +485,7 @@ class band_SDP(SDP):
     def __init__(self,n,m,bw,seed=0):
         SDP.__init__(self)
         if type(seed) is not int:
-            raise ValueError, "seed must be an integer"
+            raise ValueError("seed must be an integer")
         self._bw = bw
         self._gen_bandsdp(n,m,bw,seed)
         self._pname = "band_n%i_m%i_bw%i" % (n,m,bw)
@@ -499,11 +499,11 @@ class band_SDP(SDP):
         """Random data generator for SDP with band structure"""
         setseed(seed)
 
-        I = matrix([ i for j in xrange(n) for i in xrange(j,min(j+bw+1,n))])
-        J = matrix([ j for j in xrange(n) for i in xrange(j,min(j+bw+1,n))])
+        I = matrix([ i for j in range(n) for i in range(j,min(j+bw+1,n))])
+        J = matrix([ j for j in range(n) for i in range(j,min(j+bw+1,n))])
         V = spmatrix(0.,I,J,(n,n))
         Il = misc.sub2ind((n,n),I,J)
-        Id = matrix([i for i in xrange(len(Il)) if I[i]==J[i]])
+        Id = matrix([i for i in range(len(Il)) if I[i]==J[i]])
 
         # generate random y with norm 1
         y0 = normal(m,1)
@@ -525,8 +525,8 @@ class band_SDP(SDP):
         blas.gemv(A_[:,1:],x,self._b,trans='T',alpha=2.0)
         # form A
         self._A = spmatrix(A_[:],
-                     [i for j in xrange(m+1) for i in Il],
-                     [j for j in xrange(m+1) for i in Il],(n**2,m+1))
+                     [i for j in range(m+1) for i in Il],
+                     [j for j in range(m+1) for i in Il],(n**2,m+1))
 
         self._X0 = X0; self._y0 = y0; self._S0 = S0
 
@@ -575,14 +575,14 @@ class mtxnorm_SDP(SDP):
         SDP.__init__(self)
         
         if type(density) is float:
-            if density > 1 or density <= 0: raise ValueError, "density must be between 0 and 1"
+            if density > 1 or density <= 0: raise ValueError("density must be between 0 and 1")
             if density == 1.0: self._pname = "mtxnorm_p%i_q%i_r%i" % (p,q,r)
             else: self._pname = "mtxnorm_p%i_q%i_r%i_d%i" % (p,q,r,int(density*1000))
         elif type(density) is list:
             self._pname = "mtxnorm_p%i_q%i_r%i_vd" % (p,q,r)
         else:
-            raise TypeError, "density must be a float between 0 and 1 or a list of m+1 floats"
-        if type(seed) is not int: raise ValueError, "seed must be an integer"
+            raise TypeError("density must be a float between 0 and 1 or a list of m+1 floats")
+        if type(seed) is not int: raise ValueError("seed must be an integer")
         self._p = p; self._q = q; self._density = density
         self._gen_mtxnormsdp(p,q,r,density,seed)
         self._agg_sparsity()
@@ -617,7 +617,7 @@ class mtxnorm_SDP(SDP):
                                       [i for j in range(r) for i in random.sample(Il,nz[j])],
                                       [j for j in range(r) for i in range(nz[j])],(n**2,r))]])
         else: raise TypeError
-        self._A = sparse([[A],[spmatrix(-1.,range(0,n**2,n+1),[0 for i in range(n)],(n**2,1))]])
+        self._A = sparse([[A],[spmatrix(-1.,list(range(0,n**2,n+1)),[0 for i in range(n)],(n**2,1))]])
     
         self._b = matrix(0.,(r+1,1))
         self._b[-1] = -1.
@@ -635,7 +635,7 @@ class robustLS_SDP(SDP):
         if pname is None:
             self._pname = "robustLS_p%i_q%i_r%i" % (Al[0].size[0],Al[0].size[1],self._r)
         elif type(pname) is str: self._pname = pname
-        else: raise TypeError, "pname must be a string"
+        else: raise TypeError("pname must be a string")
         self._agg_sparsity()
 
 def robustLS_toep(q,r,delta=None,seed=0):
@@ -683,8 +683,8 @@ def robustLS_toep(q,r,delta=None,seed=0):
     if delta is None:
         delta = 1./r
 
-    for i in xrange(r):
-        Alist.append(spmatrix(delta,xrange(i,min(p,q+i)),xrange(min(q,p-i)),(p,q)))
+    for i in range(r):
+        Alist.append(spmatrix(delta,range(i,min(p,q+i)),range(min(q,p-i)),(p,q)))
      
     return robustLS_SDP(Alist, b)
 
@@ -698,7 +698,7 @@ class rand_SDP(SDP):
         self._n = V.size[0]
         self._m = m
         if type(seed) is not int:
-            raise ValueError, "seed must be an integer"
+            raise ValueError("seed must be an integer")
         self._gen_randsdp(V,m,density,seed)
         self._pname = "rand_n%i_m%i" % (self._n,m)
         self._agg_sparsity()
@@ -713,7 +713,7 @@ class rand_SDP(SDP):
         N = len(V)
         I = V.I; J = V.J
         Il = misc.sub2ind((n,n),I,J)
-        Id = matrix([i for i in xrange(len(Il)) if I[i]==J[i]])
+        Id = matrix([i for i in range(len(Il)) if I[i]==J[i]])
                 
         # generate random y with norm 1
         y0 = normal(m,1)
@@ -726,23 +726,23 @@ class rand_SDP(SDP):
         # generate random A1,...,Am
         if type(d) is float:
             nz = min(max(1, int(round(d*N))), N)
-            A = sparse([[spmatrix(normal(N,1),Il,[0 for i in xrange(N)],(n**2,1))],
+            A = sparse([[spmatrix(normal(N,1),Il,[0 for i in range(N)],(n**2,1))],
                         [spmatrix(normal(nz*m,1), 
-                                  [i for j in xrange(m) for i in random.sample(Il,nz)],
-                                  [j for j in xrange(m) for i in xrange(nz)],(n**2,m))]])
+                                  [i for j in range(m) for i in random.sample(Il,nz)],
+                                  [j for j in range(m) for i in range(nz)],(n**2,m))]])
         elif type(d) is list:
             if len(d) == m:
                 nz = [min(max(1, int(round(v*N))), N) for v in d]
                 nnz = sum(nz)
-                A = sparse([[spmatrix(normal(N,1),Il,[0 for i in xrange(N)],(n**2,1))],
+                A = sparse([[spmatrix(normal(N,1),Il,[0 for i in range(N)],(n**2,1))],
                             [spmatrix(normal(nnz,1),
-                                      [i for j in xrange(m) for i in random.sample(Il,nz[j])],
-                                      [j for j in xrange(m) for i in xrange(nz[j])],(n**2,m))]])
+                                      [i for j in range(m) for i in random.sample(Il,nz[j])],
+                                      [j for j in range(m) for i in range(nz[j])],(n**2,m))]])
         else: raise TypeError
 
         # compute A0
         u = +S0.V
-        for k in xrange(m):
+        for k in range(m):
             base.gemv(A[:,k+1][Il],matrix(y0[k]),u,beta=1.0,trans='N')
         A[Il,0] = u
         self._A = A
@@ -751,7 +751,7 @@ class rand_SDP(SDP):
         X0[Il[Id]] *= 0.5        
         self._b = matrix(0.,(m,1)) 
         u = matrix(0.)
-        for k in xrange(m):
+        for k in range(m):
             base.gemv(A[:,k+1][Il],X0.V,u,trans='T',alpha=2.0)
             self._b[k] = u
 

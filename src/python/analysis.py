@@ -20,17 +20,17 @@ import chompack
 from cvxopt import matrix, spmatrix, sparse
 
 def embed_SDP(P,order="AMD",cholmod=False):
-    if not isinstance(P,SDP): raise ValueError, "not an SDP object"
+    if not isinstance(P,SDP): raise ValueError("not an SDP object")
     if order=='AMD':
         from cvxopt.amd import order
     elif order=='METIS':
         from cvxopt.metis import order
-    else: raise ValueError, "unknown ordering: %s " %(order)
+    else: raise ValueError("unknown ordering: %s " %(order))
     p = order(P.V)
 
     if cholmod:
         from cvxopt import cholmod
-        V = +P.V + spmatrix([float(i+1) for i in xrange(P.n)],xrange(P.n),xrange(P.n))
+        V = +P.V + spmatrix([float(i+1) for i in range(P.n)],range(P.n),range(P.n))
         F = cholmod.symbolic(V,p=p)
         cholmod.numeric(V,F)
         f = cholmod.getfactor(F)
@@ -66,7 +66,7 @@ if _PYLAB:
             V = chompack.symmetrize(chompack.tril(P))
             n = V.size[0]
         else:
-            if not P._A: raise AttributeError, "SDP data missing"
+            if not P._A: raise AttributeError("SDP data missing")
             n = +P.n; 
             if i == None: V = chompack.symmetrize(P.V)
             elif i>=0 and i<=P.m and P._A:
@@ -74,7 +74,7 @@ if _PYLAB:
                 if type(r) is int: I = [r%n]; J = [r/n]
                 else: I,J = misc.ind2sub(n,r)
                 V = chompack.symmetrize(spmatrix(0.,I,J,(n,n)))
-            else: raise ValueError, "index out of range"
+            else: raise ValueError("index out of range")
 
         from math import floor
         msize = max(1,int(floor(100./n)))
@@ -122,7 +122,7 @@ if _PYLAB:
         if file: pylab.savefig(P._pname + "_nnz_hist.png")
 
     def clique_hist(P,file=None):
-        if not P.ischordal: raise TypeError, "Nonchordal"
+        if not P.ischordal: raise TypeError("Nonchordal")
         if file==None: pylab.ion()
         else: pylab.ioff()
         V = +P.V 

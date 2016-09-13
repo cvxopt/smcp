@@ -20,8 +20,8 @@ Python extension for chordal matrix cone programs.
 
 __version = "SMCP 0.4"
 
-import solvers
-from base import SDP, mtxnorm_SDP, band_SDP, completion
+from . import solvers
+from .base import SDP, mtxnorm_SDP, band_SDP, completion
 from cvxopt import matrix, spmatrix, sparse
 
 __all__ = ['solvers','SDP','mtxnorm_SDP','band_SDP','completion',\
