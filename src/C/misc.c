@@ -1,4 +1,4 @@
-// Copyright 2010 M. S. Andersen & L. Vandenberghe
+// Copyright 2010-2016 M. S. Andersen & L. Vandenberghe
 //
 // This file is part of SMCP.
 //
@@ -16,27 +16,27 @@
 // along with SMCP.  If not, see <http://www.gnu.org/licenses/>.
 
 //#define DEBUG
-#include "cvxopt.h"
-
-#include <string.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include "Python.h"
+#include "cvxopt.h"
 
 #define PY_ERR(E,str) { PyErr_SetString(E, str); return NULL; }
 #define PY_ERR_INT(E,str) { PyErr_SetString(E, str); return -1; }
 #define PY_ERR_TYPE(str) PY_ERR(PyExc_TypeError, str)
 
 #ifdef _OPENMP
-#include <omp.h>
+#include "omp.h"
 #endif
 
 
 PyDoc_STRVAR(misc__doc__,
-    "Miscellaneous routines."); 
+    "Miscellaneous routines.");
 
 static char doc_sdpa_readhead[] =
   "Reads sparse SDPA data file header.\n"
-  "\n"  
+  "\n"
   "n,m,bstruct = sdpa_readhead(f)\n"
   "\n"
   "PURPOSE\n"
@@ -57,39 +57,51 @@ static PyObject* sdpa_readhead
 (PyObject *self, PyObject *args)
 {
   int i,j,t;
-  int_t m,n,nblocks;
-  PyObject *f;  
+  int_t m=0,n=0,nblocks=0;
+  matrix *bstruct = NULL;
+  PyObject *f;
 
   char buf[2048];  // buffer
   char *info;
-  
+
   if (!PyArg_ParseTuple(args,"O",&f)) return NULL;
-  if (!PyFile_Check(f)) PY_ERR_TYPE("f must be File object");
-  
-  FILE *fp = PyFile_AsFile(f);
+#if PY_MAJOR_VERSION >= 3
+    if (PyUnicode_Check(f)) {
+      const char* fname = PyUnicode_AsUTF8AndSize(f,NULL);
+#else
+    if (PyString_Check(f)) {
+      const char* fname = PyString_AsString(f);
+#endif
+      FILE *fp = fopen(fname,"r");
+      if (!fp) {
+        Py_DECREF(f);
+        return NULL;
+      }
+      /* Skip comments and read m */
+      while (1) {
+        info = fgets(buf,1024,fp);
+        if (buf[0] != '*' && buf[0] != '"') {
+          sscanf(buf,"%d",&i);
+          break;
+        }
+      }
+      m = (int_t) i;
 
-  /* Skip comments and read m */
-  while (1) {
-    info = fgets(buf,1024,fp);
-    if (buf[0] != '*' && buf[0] != '"') {
-      sscanf(buf,"%d",&i);
-      break;
-    }
-  }
-  m = (int_t) i;
+      /* read nblocks */
+      j = fscanf(fp,"%d",&i);
+      nblocks = (int_t) i;
 
-  /* read nblocks */
-  j = fscanf(fp,"%d",&i);
-  nblocks = (int_t) i;
-
-  /* read blockstruct and compute block offsets*/
-  matrix *bstruct = Matrix_New(nblocks,1,INT);
-  if (!bstruct) return PyErr_NoMemory();
-  n = 0;
-  for (i=0; i<nblocks; i++) {
-    j = fscanf(fp,"%*[^0-9+-]%d",&t);
-    MAT_BUFI(bstruct)[i] = (int_t) t;
-    n += abs(MAT_BUFI(bstruct)[i]);
+      /* read blockstruct and compute block offsets*/
+      bstruct = Matrix_New(nblocks,1,INT);
+      if (!bstruct) return PyErr_NoMemory();
+      n = 0;
+      for (i=0; i<nblocks; i++) {
+        j = fscanf(fp,"%*[^0-9+-]%d",&t);
+        MAT_BUFI(bstruct)[i] = (int_t) t;
+        n += (int_t) labs(MAT_BUFI(bstruct)[i]);
+      }
+      fclose(fp);
+      Py_DECREF(f);
   }
 
   return Py_BuildValue("iiN",n,m,bstruct);
@@ -98,7 +110,7 @@ static PyObject* sdpa_readhead
 
 static char doc_sdpa_read[] =
   "Reads sparse SDPA data file (dat-s).\n"
-  "\n"  
+  "\n"
   "A,b,bstruct = sdpa_read(f[,neg=False])\n"
   "\n"
   "PURPOSE\n"
@@ -138,18 +150,25 @@ static PyObject* sdpa_read
   int_t k,m,n,nblocks,nlines;
   double v;
   long fpos;
-  PyObject *f;  
+  PyObject *f;
   PyObject *neg = Py_False;
   char *info;
+  const char* fname;
   int_t* boff;     // block offset
   char buf[2048];  // buffer
   char *kwlist[] = {"f","neg",NULL};
-  
+
   if (!PyArg_ParseTupleAndKeywords(args,kwrds,"O|O",kwlist,&f,&neg)) return NULL;
-  if (!PyFile_Check(f)) PY_ERR_TYPE("f must be File object");
-
-  FILE *fp = PyFile_AsFile(f);
-
+  #if PY_MAJOR_VERSION >= 3
+  if (PyUnicode_Check(f)) fname = PyUnicode_AsUTF8AndSize(f,NULL);
+  #elif PY_MAJOR_VERSION == 2
+  if (PyString_Check(f)) fname = PyString_AsString(f);
+  #endif
+  FILE *fp = fopen(fname,"r");
+  if (!fp) {
+    Py_DECREF(f);
+    return NULL;
+  }
   /* Skip comments and read m */
   while (1) {
     info = fgets(buf,1024,fp);
@@ -173,26 +192,26 @@ static PyObject* sdpa_read
   for (i=0; i<nblocks; i++) {
     j = fscanf(fp,"%*[^0-9+-]%d",&t);
     MAT_BUFI(bstruct)[i] = (int_t) t;
-    n += abs(MAT_BUFI(bstruct)[i]);
+    n += (int_t) labs(MAT_BUFI(bstruct)[i]);
     boff[i+1] = n;
   }
-  
+
   /* read vector b */
   matrix *b = Matrix_New(m,1,DOUBLE);
   if (!b) return PyErr_NoMemory();
   for (i=0;i<m;i++) {
     j = fscanf(fp,"%*[^0-9+-]%lf",&MAT_BUFD(b)[i]);
     if (neg == Py_True)
-      MAT_BUFD(b)[i] *= -1; 
+      MAT_BUFD(b)[i] *= -1;
   }
-  
+
   /* count remaining lines */
   fpos = ftell(fp);
-  for (nlines = 0; fgets(buf, 1023, fp) != NULL; nlines++); 
+  for (nlines = 0; fgets(buf, 1023, fp) != NULL; nlines++);
   //nlines--;
   fseek(fp,fpos,SEEK_SET);
 
-  /* Create data matrix A */ 
+  /* Create data matrix A */
   spmatrix *A = SpMatrix_New(n*n,m+1,nlines,DOUBLE);
   if (!A) return PyErr_NoMemory();
 
@@ -204,7 +223,7 @@ static PyObject* sdpa_read
     if (fscanf(fp,"%*[^0-9+-]%d",&ii) <=0 ) break;
     if (fscanf(fp,"%*[^0-9+-]%d",&jj) <=0 ) break;
     if (fscanf(fp,"%*[^0-9+-]%lf",&v) <=0 ) break;
-    
+
     // check that value is nonzero
     if (v != 0) {
       // add block offset
@@ -229,6 +248,9 @@ static PyObject* sdpa_read
   while (m+1 > j)
     SP_COL(A)[++j] = i;
 
+  Py_DECREF(f);
+  fclose(fp);
+
   // free temp. memory
   free(boff);
 
@@ -242,7 +264,7 @@ static char doc_sdpa_write[] =
   "sdpa_write(f,A,b,bstruct[,neg=False])\n"
   "\n"
   "PURPOSE\n"
-  "Converts and writes problem data associated with the\n" 
+  "Converts and writes problem data associated with the\n"
   "pair of semidefinite programming problems\n"
   "\n"
   "  (P)  minimize    <A0,X>\n"
@@ -279,14 +301,23 @@ static PyObject* sdpa_write
   int_t n;
   spmatrix *A;
   matrix *b,*bstruct;
-  PyObject *f;  
+  PyObject *f;
   PyObject *neg = Py_False;
   char *kwlist[] = {"f","A","b","bstruct","neg",NULL};
+  const char* fname;
   double v;
 
   if (!PyArg_ParseTupleAndKeywords(args,kwrds, "OOOO|O", kwlist, &f, &A, &b, &bstruct,&neg)) return NULL;
-  if (!PyFile_Check(f)) PY_ERR_TYPE("f must be File object");
-  FILE *fp = PyFile_AsFile(f);
+  #if PY_MAJOR_VERSION >= 3
+  if (PyUnicode_Check(f)) fname = PyUnicode_AsUTF8AndSize(f,NULL);
+  #elif PY_MAJOR_VERSION == 2
+  if (PyString_Check(f)) fname = PyString_AsString(f);
+  #endif
+  FILE *fp = fopen(fname,"r");
+  if (!fp) {
+    Py_DECREF(f);
+    return NULL;
+  }
 
   fprintf(fp,"* sparse SDPA data file (created by SMCP)\n");
   fprintf(fp,"%i = m\n",(int) MAT_NROWS(b));
@@ -295,24 +326,24 @@ static PyObject* sdpa_write
   n = 0;
   for (i=0;i<MAT_NROWS(bstruct);i++) {
     fprintf(fp,"%i ", (int) MAT_BUFI(bstruct)[i]);
-    n += abs(MAT_BUFI(bstruct)[i]);
+    n += (int_t) labs(MAT_BUFI(bstruct)[i]);
   }
   fprintf(fp,"\n");
 
   // write vector b
   if (neg == Py_True) {
-    for (i=0;i<MAT_NROWS(b);i++) 
+    for (i=0;i<MAT_NROWS(b);i++)
       fprintf(fp,"%.12g ",-MAT_BUFD(b)[i]);
   }
   else {
-    for (i=0;i<MAT_NROWS(b);i++) 
+    for (i=0;i<MAT_NROWS(b);i++)
       fprintf(fp,"%.12g ",MAT_BUFD(b)[i]);
   }
   fprintf(fp,"\n");
 
   // Write data matrices A0,A1,A2,...,Am
   for (Ml=0;Ml<=MAT_NROWS(b);Ml++) {
-    for (i=0;i<SP_COL(A)[Ml+1]-SP_COL(A)[Ml];i++){	
+    for (i=0;i<SP_COL(A)[Ml+1]-SP_COL(A)[Ml];i++){
 
       Jl = 1 + SP_ROW(A)[SP_COL(A)[Ml]+i] / n;
       Il = 1 + SP_ROW(A)[SP_COL(A)[Ml]+i] % n;
@@ -322,20 +353,20 @@ static PyObject* sdpa_write
 	PyErr_Warn(PyExc_Warning,"Ignored strictly upper triangular element.");
 
       Bl = 1;
-      while ((Il > abs(MAT_BUFI(bstruct)[Bl-1])) && (Jl > abs(MAT_BUFI(bstruct)[Bl-1]))) {
-	Il -= abs(MAT_BUFI(bstruct)[Bl-1]);
-	Jl -= abs(MAT_BUFI(bstruct)[Bl-1]);
-	Bl += 1;	
+      while ((Il > labs(MAT_BUFI(bstruct)[Bl-1])) && (Jl > labs(MAT_BUFI(bstruct)[Bl-1]))) {
+	Il -= (int_t) labs(MAT_BUFI(bstruct)[Bl-1]);
+	Jl -= (int_t) labs(MAT_BUFI(bstruct)[Bl-1]);
+	Bl += 1;
       }
       /* Error check */
-      if ((Il > abs(MAT_BUFI(bstruct)[Bl-1])) || (Jl > abs(MAT_BUFI(bstruct)[Bl-1])))
+      if ((Il > labs(MAT_BUFI(bstruct)[Bl-1])) || (Jl > labs(MAT_BUFI(bstruct)[Bl-1])))
 	printf("Error: Matrix contains elements outside blocks!\n");
-      
+
       // print upper triangle entries:
       //   <matno> <blkno> <i> <j> <entry>
       v = SP_VALD(A)[SP_COL(A)[Ml]+i];
       if ( v != 0.0) {
-	if (neg == Py_True) 
+	if (neg == Py_True)
 	  fprintf(fp,"%i %i %i %i %.12g\n",
 		  (int) Ml,(int) Bl,(int) Jl,(int) Il, -v);
 	else
@@ -344,17 +375,19 @@ static PyObject* sdpa_write
       }
     }
   }
-  
+
+  fclose(fp);
+  Py_DECREF(f);
   Py_RETURN_NONE;
 }
 
-static char doc_ind2sub[] = 
+static char doc_ind2sub[] =
   "Converts vector of absolute indices to row and column indices.\n"
   "\n"
   "I,J = ind2sub(siz,IND)\n"
   "\n"
   "PURPOSE\n"
-  "Returns the matrices I and J containing the equivalent row and\n" 
+  "Returns the matrices I and J containing the equivalent row and\n"
   "column subscripts corresponding to each linear index in the matrix\n"
   "IND for a matrix of size siz.\n"
   "\n"
@@ -369,14 +402,14 @@ static char doc_ind2sub[] =
   "J         CVXOPT dense integer matrix\n";
 
 static PyObject *ind2sub
-(PyObject *self, PyObject *args) 
+(PyObject *self, PyObject *args)
 {
   matrix *Im;
   int_t i;
   int_t n;
 
   if (!PyArg_ParseTuple(args, "nO", &n, &Im)) return NULL;
-  
+
   matrix *Il = Matrix_New(MAT_NROWS(Im),1,INT);
   if (!Il) return PyErr_NoMemory();
   matrix *Jl = Matrix_New(MAT_NROWS(Im),1,INT);
@@ -386,11 +419,11 @@ static PyObject *ind2sub
     MAT_BUFI(Il)[i] = MAT_BUFI(Im)[i] % n;
     MAT_BUFI(Jl)[i] = MAT_BUFI(Im)[i] / n;
   }
-  
+
   return Py_BuildValue("NN", Il, Jl);
 }
 
-static char doc_sub2ind[] = 
+static char doc_sub2ind[] =
   "Converts subscripts to linear index vector.\n"
   "\n"
   "Ind = sub2ind(siz,I,J)\n"
@@ -410,7 +443,7 @@ static char doc_sub2ind[] =
   "Ind       CVXOPT integer matrix\n";
 
 static PyObject *sub2ind
-(PyObject *self, PyObject *args) 
+(PyObject *self, PyObject *args)
 {
   matrix *Im,*Jm;
   PyObject *siz;
@@ -419,7 +452,7 @@ static PyObject *sub2ind
 
   if (!PyArg_ParseTuple(args, "OOO", &siz, &Im, &Jm)) return NULL;
   if (!PyArg_ParseTuple(siz, "nn", &m, &n)) return NULL;
-  
+
   matrix *Ind = Matrix_New(MAT_NROWS(Im),1,INT);
   if (!Ind) return PyErr_NoMemory();
 
@@ -430,7 +463,7 @@ static PyObject *sub2ind
   return Py_BuildValue("N", Ind);
 }
 
-static char doc_Av_to_spmatrix[] = 
+static char doc_Av_to_spmatrix[] =
  "Converts column from sparse matrix to a sparse matrix.\n"
  "\n"
  "Aj = spvec2spmatrix(Av,Ip,Jp,j,n[,scale=False])\n"
@@ -457,15 +490,15 @@ static char doc_Av_to_spmatrix[] =
  "Aj        CVXOPT spmatrix, n-by-n\n";
 
 static PyObject *Av_to_spmatrix
-(PyObject *self, PyObject *args, PyObject *kwrds) 
+(PyObject *self, PyObject *args, PyObject *kwrds)
 {
   PyObject *scale = Py_False;
   spmatrix *Av,*Ip,*Jp;
   int_t i,j,n,nnz,c,ci,p,q;
   char *kwlist[] = {"Av","Ip","Jp","j","n","scale",NULL};
 
-  if (!PyArg_ParseTupleAndKeywords(args, kwrds, "OOOnn|O", 
-				   kwlist, &Av,&Ip,&Jp,&j,&n, &scale)) 
+  if (!PyArg_ParseTupleAndKeywords(args, kwrds, "OOOnn|O",
+				   kwlist, &Av,&Ip,&Jp,&j,&n, &scale))
     return NULL;
 
   p = SP_COL(Av)[j];
@@ -481,10 +514,10 @@ static PyObject *Av_to_spmatrix
       SP_ROW(Aj)[i] = MAT_BUFI(Ip)[q];
       c = MAT_BUFI(Jp)[q];
       SP_VALD(Aj)[i] = SP_VALD(Av)[p+i];
-      while (ci < c) 
+      while (ci < c)
 	SP_COL(Aj)[++ci] = i;
     }
-    while (ci < n) 
+    while (ci < n)
       SP_COL(Aj)[++ci] = nnz;
   }
   else {
@@ -494,18 +527,18 @@ static PyObject *Av_to_spmatrix
       c = MAT_BUFI(Jp)[q];
       SP_VALD(Aj)[i] = SP_VALD(Av)[p+i];
       if (c == SP_ROW(Aj)[i]) SP_VALD(Aj)[i] *= 0.5; // scale diag. element
-      while (ci < c) 
+      while (ci < c)
 	SP_COL(Aj)[++ci] = i;
     }
-    while (ci < n) 
+    while (ci < n)
       SP_COL(Aj)[++ci] = nnz;
   }
-  
+
   return (PyObject *) Aj;
 }
 
 
-static char doc_scal_diag[] = 
+static char doc_scal_diag[] =
   "Scales diagonal elements of sparse matrix.\n"
   "\n"
   "scal_diag(V,Id,t)\n"
@@ -524,7 +557,7 @@ static char doc_scal_diag[] =
   "t         Python float (optional, default is 0.5)\n";
 
 static PyObject *scal_diag
-(PyObject *self, PyObject *args) 
+(PyObject *self, PyObject *args)
 {
   PyObject *Vp,*Id;
   int_t i,n;
@@ -534,14 +567,14 @@ static PyObject *scal_diag
   n = MAT_NROWS(Id);
 
   for (i=0;i<n;i++){
-    SP_VALD(Vp)[MAT_BUFI(Id)[i]] *= t; 
+    SP_VALD(Vp)[MAT_BUFI(Id)[i]] *= t;
   }
 
   Py_RETURN_NONE;
 }
 
 
-static char doc_SCMcolumn[] = 
+static char doc_SCMcolumn[] =
  "Computes column of the Schur complement matrix.\n"
  "\n"
  "SCMcolumn(H,Av,V,Ip,Jp,j)\n"
@@ -568,21 +601,21 @@ static char doc_SCMcolumn[] =
  "j         Integer between 0 and m-1\n";
 
 static PyObject *SCMcolumn
-(PyObject *self, PyObject *args) 
+(PyObject *self, PyObject *args)
 {
   PyObject *H,*Av,*Ip,*Jp,*V;
   int_t m,n,K;
   int_t i,j,k,l,p,q,r,c;
-  
+
   if(!PyArg_ParseTuple(args,"OOOOOn",&H,&Av,&V,&Ip,&Jp,&j)) return NULL;
-  
+
   m = MAT_NCOLS(H);
   n = MAT_NROWS(V);
   K = MAT_NCOLS(V)/2;
 
   //#pragma omp parallel for shared(m,n,K,Av,Ip,Jp,H,V,j) private(i,l,k,r,c,q,p)
   for (i=j;i<m;i++) {
-    p = SP_COL(Av)[i]; 
+    p = SP_COL(Av)[i];
     MAT_BUFD(H)[j*m+i] = 0;
     for (l=0;l<SP_COL(Av)[i+1]-p;l++) {
       q = SP_ROW(Av)[p+l];
@@ -591,26 +624,26 @@ static PyObject *SCMcolumn
       for (k=0;k<K;k++) {
 	MAT_BUFD(H)[j*m+i] += SP_VALD(Av)[p+l]*
 	  MAT_BUFD(V)[k*n+r]*MAT_BUFD(V)[(K+k)*n+c];
-	if (r != c) 
+	if (r != c)
 	  MAT_BUFD(H)[j*m+i] += SP_VALD(Av)[p+l]*
 	    MAT_BUFD(V)[k*n+c]*MAT_BUFD(V)[(K+k)*n+r];
       }
-    }	
+    }
   }
-  
+
   Py_RETURN_NONE;
 }
 
 static PyObject *SCMcolumn2
-(PyObject *self, PyObject *args) 
+(PyObject *self, PyObject *args)
 {
   PyObject *H,*Av,*Ip,*Jp,*V,*Kl;
   int_t m,n;
   int_t i,j,k,p,q,r,c,r1,c1,pj,pi;
   double alpha,beta;
-  
+
   if(!PyArg_ParseTuple(args,"OOOOOOn",&H,&Av,&V,&Ip,&Jp,&Kl,&j)) return NULL;
-  
+
   m = MAT_NCOLS(H);
   n = MAT_NROWS(V);
 
@@ -626,8 +659,8 @@ static PyObject *SCMcolumn2
     if (r!=c) alpha*=2;
     // look up columns in V
     r = MAT_BUFI(Kl)[r];
-    c = MAT_BUFI(Kl)[c]; 
-   
+    c = MAT_BUFI(Kl)[c];
+
     for(i=j;i<m;i++) {
       pi = SP_COL(Av)[i];
       for (q=0;q<SP_COL(Av)[i+1]-pi;q++) {
@@ -635,19 +668,19 @@ static PyObject *SCMcolumn2
 	k = SP_ROW(Av)[pi+q];
 	r1 = MAT_BUFI(Ip)[k];
 	c1 = MAT_BUFI(Jp)[k];
-     
+
 	MAT_BUFD(H)[j*m+i] += alpha*beta*MAT_BUFD(V)[n*r+r1]*MAT_BUFD(V)[n*c+c1];
 	if (r1!=c1)
 	  MAT_BUFD(H)[j*m+i] += alpha*beta*MAT_BUFD(V)[n*r+c1]*MAT_BUFD(V)[n*c+r1];
       }
     }
   }
-  
+
   Py_RETURN_NONE;
 }
 
 
-static char doc_nzcolumns[] = 
+static char doc_nzcolumns[] =
   "Computes number of nonzero columns in matrices\n"
   "A1,...,Am.\n"
   "\n"
@@ -664,7 +697,7 @@ static char doc_nzcolumns[] =
 
 
 static PyObject *nzcolumns
-(PyObject *self, PyObject *args) 
+(PyObject *self, PyObject *args)
 {
   PyObject *A;
   matrix *Nz;
@@ -683,19 +716,19 @@ static PyObject *nzcolumns
   if (!tmp) return PyErr_NoMemory();
 
   // erase workspace
-  for (i=0;i<n;i++) tmp[i] = 0; 
+  for (i=0;i<n;i++) tmp[i] = 0;
 
   for (j=0;j<m;j++){
     p = SP_COL(A)[j+1];
     nnz = SP_COL(A)[j+2]-p;
-    if (nnz) { 
+    if (nnz) {
       // Find nonzero cols
       for (i=0;i<nnz;i++) {
 	tmp[SP_ROW(A)[p+i] % n] += 1;
 	tmp[SP_ROW(A)[p+i] / n] += 1;
       }
       // Count nonzero cols and reset workspace
-      MAT_BUFI(Nz)[j] = 0; 
+      MAT_BUFI(Nz)[j] = 0;
       sum = 0;
 #pragma omp parallel for shared(tmp,Nz,j,n) private(i) reduction(+:sum)
       for (i=0;i<n;i++) {
@@ -704,12 +737,12 @@ static PyObject *nzcolumns
 	  sum++;
 	}
       }
-      MAT_BUFI(Nz)[j] = sum; 
+      MAT_BUFI(Nz)[j] = sum;
     }
   }
-  
+
   free(tmp);
-  
+
   return (PyObject*) Nz;
 }
 
@@ -732,7 +765,7 @@ static char doc_matperm[] =
   "Ns        Integer\n";
 
 static PyObject *matperm
-(PyObject *self, PyObject *args) 
+(PyObject *self, PyObject *args)
 {
   PyObject *nzc;
   matrix *pm;
@@ -748,7 +781,7 @@ static PyObject *matperm
 
   Ns = 0; Nd = 0;
   for (i=0;i<m;i++){
-    if(MAT_BUFI(nzc)[i] > Nmax) 
+    if(MAT_BUFI(nzc)[i] > Nmax)
       MAT_BUFI(pm)[Nd++] = i;
     else
       MAT_BUFI(pm)[m-1-Ns++] = i;
@@ -756,7 +789,7 @@ static PyObject *matperm
   return Py_BuildValue("Nn",pm,Ns);
 }
 
-static char doc_toeplitz[] = 
+static char doc_toeplitz[] =
   "Generates Toeplitz matrix.\n"
   "\n"
   "T = toeplitz(c[,r])\n"
@@ -774,11 +807,11 @@ static char doc_toeplitz[] =
 
 static PyObject *toeplitz
 (PyObject *self, PyObject *args, PyObject *kwrds) {
-  
+
   PyObject *r=NULL, *c=NULL;
   int_t m,n,i,j;
   char *kwlist[] = {"c","r",NULL};
-  
+
   if (!PyArg_ParseTupleAndKeywords(args,kwrds,"O|O",kwlist,&c,&r)) return NULL;
 
   if (!Matrix_Check(c))
@@ -787,7 +820,7 @@ static PyObject *toeplitz
     r = c;
   else if (!Matrix_Check(r))
     return NULL;
-  
+
   if (MAT_ID(r) != DOUBLE || MAT_ID(c) != DOUBLE)
     return NULL;
 
@@ -837,16 +870,16 @@ static char doc_robustLS_to_sdp[] =
   "\n"
   "bs        CVXOPT sparse matrix\n";
 
-static PyObject *robustLS_to_sdp 
+static PyObject *robustLS_to_sdp
 (PyObject *self, PyObject *args, PyObject *kwrds) {
-  
+
   PyObject *Alist,*bt, *Ai;
   spmatrix *A,*b;
   int_t m,n,mp,np,pt,i,j,k,N,nnz=0,ri=0;
   char *kwlist[] = {"Alist","bt",NULL};
 
   if(!PyArg_ParseTupleAndKeywords(args,kwrds,"OO",kwlist,&Alist,&bt)) return NULL;
-  
+
   if(!PyList_Check(Alist)) {
     PyErr_SetString(PyExc_TypeError,"Alist must be a list of matrices");
     return NULL;
@@ -854,7 +887,7 @@ static PyObject *robustLS_to_sdp
 
   // get pt = p + 1
   pt = PyList_Size(Alist);
-  
+
   // get size of bt
   if(Matrix_Check(bt)){
     m = MAT_NROWS(bt);
@@ -895,12 +928,12 @@ static PyObject *robustLS_to_sdp
       mp = MAT_NROWS(Ai);
       np = MAT_NCOLS(Ai);
       nnz += m*n;
-    } 
+    }
     else if (SpMatrix_Check(Ai)) {
       mp = SP_NROWS(Ai);
       np = SP_NCOLS(Ai);
       nnz += SP_NNZ(Ai);
-    } 
+    }
     else {
       PyErr_SetString(PyExc_TypeError,"only spmatrix and matrix types allowed");
       return NULL;
@@ -924,7 +957,7 @@ static PyObject *robustLS_to_sdp
 
   // generate A
   N = m+pt;
-  A = SpMatrix_New(N*N,n+3,nnz,DOUBLE);  
+  A = SpMatrix_New(N*N,n+3,nnz,DOUBLE);
   if (!A) return PyErr_NoMemory();
 
   // build A0
@@ -932,7 +965,7 @@ static PyObject *robustLS_to_sdp
   for(i=0;i<m;i++){
     if(SpMatrix_Check(bt)){
       SP_VALD(A)[ri] = -SP_VALD(bt)[i];
-      SP_ROW(A)[ri++] = pt+i; 
+      SP_ROW(A)[ri++] = pt+i;
     }
     else{
       SP_VALD(A)[ri] = -MAT_BUFD(bt)[i];
@@ -982,19 +1015,19 @@ static PyObject *robustLS_to_sdp
   return Py_BuildValue("NN",A,b);
 }
 
-static char doc_phase1_sdp[] = 
+static char doc_phase1_sdp[] =
   "";
 
-static PyObject *phase1_sdp 
+static PyObject *phase1_sdp
 (PyObject *self, PyObject *args, PyObject *kwrds) {
-  
+
   matrix *u;
   spmatrix *Ai,*Ao;
   int_t k,i,j,n,m,nnz,nz,col;
-  
+
 
   if(!PyArg_ParseTuple(args,"OO",&Ai,&u)) return NULL;
-  n = (int_t) sqrt((double)SP_NROWS(Ai));  
+  n = (int_t) sqrt((double)SP_NROWS(Ai));
   m = SP_NCOLS(Ai) - 1;
   nnz = SP_NNZ(Ai) - SP_COL(Ai)[1] + 1 + m + n + 1;
 
@@ -1006,7 +1039,7 @@ static PyObject *phase1_sdp
   SP_ROW(Ao)[0] = n*(n+2)+n;
   SP_COL(Ao)[0] = 0;
   SP_COL(Ao)[1] = 1;
-  
+
   // A_i, i=1,..,m
   for (i=1;i<=m;i++){
     k = SP_COL(Ao)[i];
@@ -1038,60 +1071,79 @@ static PyObject *phase1_sdp
 }
 
 
-static PyMethodDef misc_functions[] = { 
+static PyMethodDef misc_functions[] = {
 
-  {"sdpa_readhead", (PyCFunction)sdpa_readhead, 
-   METH_VARARGS, doc_sdpa_readhead},  
-  
-  {"sdpa_read", (PyCFunction)sdpa_read, 
-   METH_VARARGS|METH_KEYWORDS, doc_sdpa_read},  
-   
-  {"sdpa_write", (PyCFunction)sdpa_write, 
+  {"sdpa_readhead", (PyCFunction)sdpa_readhead,
+   METH_VARARGS, doc_sdpa_readhead},
+
+  {"sdpa_read", (PyCFunction)sdpa_read,
+   METH_VARARGS|METH_KEYWORDS, doc_sdpa_read},
+
+  {"sdpa_write", (PyCFunction)sdpa_write,
    METH_VARARGS|METH_KEYWORDS, doc_sdpa_write},
 
-  {"ind2sub", (PyCFunction)ind2sub, 
+  {"ind2sub", (PyCFunction)ind2sub,
    METH_VARARGS, doc_ind2sub},
-  
-  {"sub2ind", (PyCFunction)sub2ind, 
+
+  {"sub2ind", (PyCFunction)sub2ind,
    METH_VARARGS, doc_sub2ind},
-  
-  {"scal_diag", (PyCFunction)scal_diag, 
+
+  {"scal_diag", (PyCFunction)scal_diag,
    METH_VARARGS, doc_scal_diag},
-  
-  {"SCMcolumn", (PyCFunction)SCMcolumn, 
+
+  {"SCMcolumn", (PyCFunction)SCMcolumn,
    METH_VARARGS, doc_SCMcolumn},
-  
-  {"SCMcolumn2", (PyCFunction)SCMcolumn2, 
+
+  {"SCMcolumn2", (PyCFunction)SCMcolumn2,
    METH_VARARGS, doc_SCMcolumn},
-   
-  {"Av_to_spmatrix", (PyCFunction)Av_to_spmatrix, 
+
+  {"Av_to_spmatrix", (PyCFunction)Av_to_spmatrix,
    METH_VARARGS|METH_KEYWORDS, doc_Av_to_spmatrix},
-  
-  {"nzcolumns", (PyCFunction)nzcolumns, 
+
+  {"nzcolumns", (PyCFunction)nzcolumns,
    METH_VARARGS, doc_nzcolumns},
-  
-  {"matperm", (PyCFunction)matperm, 
+
+  {"matperm", (PyCFunction)matperm,
    METH_VARARGS, doc_matperm},
-  
-  {"toeplitz", (PyCFunction)toeplitz, 
+
+  {"toeplitz", (PyCFunction)toeplitz,
    METH_VARARGS|METH_KEYWORDS, doc_toeplitz},
-  
-  {"robustLS_to_sdp", (PyCFunction)robustLS_to_sdp, 
+
+  {"robustLS_to_sdp", (PyCFunction)robustLS_to_sdp,
    METH_VARARGS|METH_KEYWORDS, doc_robustLS_to_sdp},
 
-  {"phase1_sdp",  (PyCFunction)phase1_sdp, 
+  {"phase1_sdp",  (PyCFunction)phase1_sdp,
    METH_VARARGS, doc_phase1_sdp},
-  
+
   {NULL}  /* Sentinel */
 };
 
-PyMODINIT_FUNC
-initmisc(void)
-{
-  PyObject *m;
 
+#if PY_MAJOR_VERSION >= 3
+// Python 3.x
+static PyModuleDef misc_module = {
+    PyModuleDef_HEAD_INIT,
+    "misc",
+    misc__doc__,
+    -1,
+    misc_functions,
+    NULL, NULL, NULL, NULL
+};
+PyMODINIT_FUNC PyInit_misc(void) {
+  PyObject *misc_mod;
+  misc_mod = PyModule_Create(&misc_module);
+  if (misc_mod == NULL)
+    return NULL;
+  if (import_cvxopt() < 0)
+    return NULL;
+  return misc_mod;
+}
+#else
+// Python 2.x
+PyMODINIT_FUNC initmisc(void) {
+  PyObject *m;
   m = Py_InitModule3("misc", misc_functions, misc__doc__);
-  
   if (import_cvxopt() < 0)
     return;
 }
+#endif

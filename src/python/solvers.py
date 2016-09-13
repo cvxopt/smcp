@@ -45,27 +45,27 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                        scaling='primal',kktsolver='chol',p=None):
     """
     Chordal SDP solver:
-    
+
     sol = chordalsolver_feas(A,b[,primalstart[,dualstart[,scaling[,kktsolver]]]])
 
     PURPOSE
     Solves a pair of primal and dual cone programs
-    
+
          minimize   c'*x        maximize   b'*y
          subject to A*x = b     subject to A'*y + s = c
                     x in C                 s in K.
 
-    Here C is the cone of symmetric matrices with sparsity 
-    pattern V that have a positive semidefinite completion, 
+    Here C is the cone of symmetric matrices with sparsity
+    pattern V that have a positive semidefinite completion,
     and K is the cone of positive semidefinite matrices with
     sparsity pattern V.
 
     ARGUMENTS
-    A         CVXOPT spmatrix with doubles 
+    A         CVXOPT spmatrix with doubles
     b         CVXOPT matrix with doubles
 
     RETURNS
-    sol       dictionary 
+    sol       dictionary
 
     """
 
@@ -76,14 +76,14 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
     from chompack import cspmatrix, symbolic, tril, perm, symmetrize, dot, peo,\
         hessian, completion, cholesky, projected_inverse, llt, trsm, maxcardsearch, merge_size_fill
     from smcp import __version, misc
-    
+
     from sys import platform
     if platform.startswith('win'):
         from time import clock as time
         def cputime():
             return 0.0
     else:
-        from time import time 
+        from time import time
         from resource import getrusage, RUSAGE_SELF
         def cputime():
             return (getrusage(RUSAGE_SELF).ru_utime
@@ -172,7 +172,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             "options['abstol'] must be positive")
 
     FEASTOL = options['feastol']
-    if (type(FEASTOL) is not float and type(FEASTOL) is not int):    
+    if (type(FEASTOL) is not float and type(FEASTOL) is not int):
         raise TypeError("options['feastol'] must be a positive "\
             "scalar")
     elif FEASTOL <= 0.0:
@@ -202,20 +202,20 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
         raise ValueError("options['refinement'] must be nonnegative ")
 
     TNZCOLS = options['tnzcols']
-    if type(TNZCOLS) is not float: 
+    if type(TNZCOLS) is not float:
         raise TypeError("tnzcols must be a float between 0.0 and 1.0")
-    elif TNZCOLS > 1 or TNZCOLS < 0: 
+    elif TNZCOLS > 1 or TNZCOLS < 0:
         raise ValueError("tnzcols must be between 0.0 and 1.0")
     else:
         TNZCOLS = int(n*TNZCOLS)
-        
+
     DIMACS = options['dimacs']
-    if type(DIMACS) is not bool: 
+    if type(DIMACS) is not bool:
         raise TypeError("dimacs must be a bool")
 
     if not (scaling=='primal' or scaling=='dual'):
         raise ValueError("scaling must be 'primal' or 'dual'")
-       
+
     def iperm(p):
         """
         Returns inverse permutation vector.
@@ -233,12 +233,12 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
     Ia, Ja = misc.ind2sub(n,LIa)
     Va = tril(spmatrix(0.,Ia,Ja,(n,n)))
     del Ia,Ja,LIa
-        
+
     if kktsolver=='chol':
         ### Find permutation
         Nz = misc.nzcolumns(A)
         pm,Ns = misc.matperm(Nz,TNZCOLS)
-        # Permute first part of pm (Decorate-Sort-Undecorate)        
+        # Permute first part of pm (Decorate-Sort-Undecorate)
         if (Ns < m):
             L = list(zip(A.CCS[0][pm[:m-Ns]+2] - A.CCS[0][pm[:m-Ns]+1],pm[:m-Ns]))
             L.sort(reverse=True)
@@ -275,7 +275,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
         symb = symbolic(Vp)
         Vp.V = matrix([float(v) for v in range(len(Vp))])
         Ve = tril(perm(symmetrize(Vp),ip))
-        lp = iperm([int(v) for v in Ve.V])        
+        lp = iperm([int(v) for v in Ve.V])
         CHORDAL = False
     else:
         pmcs = maxcardsearch(Va)
@@ -290,7 +290,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
         Ve = symb.sparsity_pattern(reordered=False, symmetric=False)
         Ve.V = matrix([float(v) for v in range(len(Ve))])
         Vp = tril(perm(symmetrize(Ve),p))
-        lp = matrix([int(v) for v in Vp.V])        
+        lp = matrix([int(v) for v in Vp.V])
         symb = symbolic(Vp)
         ip = iperm(p)
 
@@ -301,7 +301,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
     # Extract Av and c
     # c = A[LI[lp],0] ## <-- unpacks A[:,0]
     c = A[:,0][LI[lp]] ## <-- does not unpack A[:,0]
-    # Av = A[LI[lp],pm+1] 
+    # Av = A[LI[lp],pm+1]
     if len(A) < 0.005*len(Va)*m or n > 15000: # do not unpack A
         Ve.V = matrix([float(v) for v in iperm(lp)])
         IJV = []; tmp = 0
@@ -364,7 +364,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
 
         Omega(X,S) = phip(X) + phid(S) + n log(<X,S>/n) + n
 
-        where Ls is the Cholesky factor of S and Lsh is the Cholesky 
+        where Ls is the Cholesky factor of S and Lsh is the Cholesky
         factor of Shat = X^-1.
         """
         return 2.0*sum(log(Lsh.diag())) - 2.0*sum(log(Ls.diag())) + n*log(gap/n)
@@ -384,9 +384,9 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             blas.scal(-t,r.blkval)
         r += Aadj(y)-bx
         return r, Amap(x)-by
-          
+
     def kkt_qr(L,Y):
-	Ac_ = [Aj.copy() for Aj in Ac]
+        Ac_ = [Aj.copy() for Aj in Ac]
         hessian(L,Y,Ac_)
         for j in range(len(Ac_)):
             Aj = Ac_[j].spmatrix(reordered=False, symmetric=False)
@@ -396,7 +396,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
 
         # compute QR factorization of At
         try:
-            lapack.geqrf(At,tq)  
+            lapack.geqrf(At,tq)
         except ArithmeticError:
             print("*** Factorization failed")
             status = 'unknown'
@@ -423,18 +423,18 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             r1 = r1.spmatrix(reordered=False, symmetric=False).V
             r1[Id] /= sqrt(2.0)
             x = +r1
-            
+
             lapack.ormqr(At,tq,x,trans='T')
             x[m:] = 0.
 
             r2 = +by
             lapack.trtrs(At[:m,:],r2,uplo='U',trans='T')
-            x[:m] += 0.5*kk*r2 
+            x[:m] += 0.5*kk*r2
             y = +x[:m]
-            lapack.trtrs(At[:m,:],y,uplo='U')            
+            lapack.trtrs(At[:m,:],y,uplo='U')
 
             lapack.ormqr(At,tq,x)
-            Vp.V = x-r1 
+            Vp.V = x-r1
             misc.scal_diag(Vp,Id,sqrt(2.0))
             x = cspmatrix(symb) + Vp
             hessian(L,Y,[x],adj=True)
@@ -477,7 +477,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             print("*** Factorization failed")
             status = 'unknown'
             return None
-   
+
         def solve_(bx,by, tt = None):
             """
             Solves the system:
@@ -511,7 +511,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                 r1 = sqrt(dot(r,r))/max(1,sqrt(dot(bx,bx)))
                 r2 = blas.nrm2(rr)/max(1,blas.nrm2(by))
                 print("\033[1;33m KKTsolver: %.2e  %.2e \033[0m" % (r1,r2))
-            return x,y    
+            return x,y
         return solve_
 
     if kktsolver == 'chol':
@@ -543,8 +543,8 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
         print("%-20s Barrier method, %s scaling (%s)" % (__version,scaling,SolvStr))
         print("-------------------------------------------------------------------------------")
         print("SDP var. size:       %i " % (n))
-        print("Constraints:         %i (%i|%i)" % (m,m-Ns,Ns))          
-        if CHORDAL: ChStr = "Chordal" 
+        print("Constraints:         %i (%i|%i)" % (m,m-Ns,Ns))
+        if CHORDAL: ChStr = "Chordal"
         else: ChStr = "Nonchordal"
         print("Aggregate sparsity:  %-14s NNZ(tril(V)) = %7i" % (ChStr,len(Va)))
         if not CHORDAL:
@@ -559,7 +559,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             if dcost is not None:
                 print("   Dual objective:                  % .8e" % (dcost))
         if gap is not None:
-            print("   Gap:                             % .8e" % (gap)) 
+            print("   Gap:                             % .8e" % (gap))
         if relgap is not None:
             print("   Relative gap:                    % .8e" % (relgap))
         if pres is not None:
@@ -656,7 +656,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             L = X.copy()
             completion(L)
         except:
-            raise ValueError("infeasible primal starting point") 
+            raise ValueError("infeasible primal starting point")
     else:
         X = None
     if dualstart is not None:
@@ -665,7 +665,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             S = cspmatrix(tril(perm(symmetrize(tril(dualstart['s'])),p)))
             resx = Aadj(-y) + C - S
             if sqrt(dot(resx,resx))/resx0 > 1e-8:
-                raise ValueError("infeasible dual starting point") 
+                raise ValueError("infeasible dual starting point")
         elif 'y' in dualstart and 's' not in dualstart:
             y = dualstart['y'][pm]
             S = Aadj(-y) + C
@@ -673,13 +673,13 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             L = S.copy()
             cholesky(L)
         except:
-            raise ValueError("infeasible dual starting point") 
+            raise ValueError("infeasible dual starting point")
     else:
         y = None; S = None
 
     if primalstart is None and dualstart is None:
         # heuristics for finding feasible starting point
-        
+
         # look for strictly feasible primal point
         Xt = cspmatrix(symb) + spmatrix(1.,list(range(n)),list(range(n)))
         Lt = Xt.copy()
@@ -727,7 +727,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                     print("Feasible primal solution found.")
                 except:
                     X = None
-                    
+
         # look for strictly feasible dual point
         nu,y = fI(C,matrix(0.0,(m,1)))
         S = Aadj(-y) + C
@@ -747,7 +747,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                 while True:
                     S = Aadj(-y)+C
                     try:
-                        Lt = S.copy() 
+                        Lt = S.copy()
                         cholesky(Lt)
                         break
                     except:
@@ -793,13 +793,13 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             dcost = blas.dot(b,y)
 
         # compute relgap
-        if pcost < 0.0 and pcost is not None:
+        if pcost is not None and pcost < 0.0:
             relgap = gap / -pcost
-        elif dcost > 0.0 and dcost is not None:
+        elif dcost is not None and dcost > 0.0:
             relgap = gap / dcost
-        else: 
+        else:
             relgap = None
-        
+
         ## Stopping criteria
         if iter == MAXITERS+1:
             # Max. number of iterations reached
@@ -841,7 +841,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                 break
             Y = L.copy()
             projected_inverse(Y)
-                
+
         f = kktsolver(L,Y)
         if f is None: break
 
@@ -897,7 +897,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                         gam = 1.0
 
                     stype = 'c'
-    
+
                 else:
                     # Lifting
                     if LIFTING:
@@ -931,12 +931,12 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                 del du
 
                 if ntdecr > DELTA:
-                    if ntdecr >= 1.0: 
+                    if ntdecr >= 1.0:
                         # centering step: backtracking line search
                         gam = 1.0
                         logdetL = sum(log(L.diag()))
-                        ddyb = - t*blas.dot(dy,b) 
-                        #val = ALPHA*ntdecr**2 - t*blas.dot(dy,b) 
+                        ddyb = - t*blas.dot(dy,b)
+                        #val = ALPHA*ntdecr**2 - t*blas.dot(dy,b)
                         while gam > MINSTEP:
                             yt = y + gam*dy
                             St = Aadj(-yt) + C
@@ -975,7 +975,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                     CENTER = False
 
         if not CENTER:
-            
+
             # Approximate tangent step (primal scaling):
             # [ -1/t Hphip(w)   A^T ][ dx  ] = [  s   ]
             # [   A             0   ][ dy  ] = [ b-Ax ]
@@ -984,7 +984,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             # [ -(1/t Hphid(w))^{-1}   A^T ][ dx  ] = [  s   ]
             # [        A               0   ][ dy  ] = [ b-Ax ]
             bx = S.copy()
-            by = b - Amap(X) 
+            by = b - Amap(X)
             dx,dy = f(bx, by)
             # iterative refinement
             for ii in range(REFINEMENT):
@@ -999,7 +999,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                 gam = linesearch_Omega(X,dx,S,ds,ETA)
                 # update X,y,S
                 X += gam*dx
-                y += gam*dy                
+                y += gam*dy
                 S = Aadj(-y) + C
                 pstep = gam; dstep = gam   # <-- for iter. info
 
@@ -1009,17 +1009,17 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                 if EQUALSTEPS:
                     pstep = min(pstep,dstep)
                     dstep = pstep
-                
+
                 Xt = X.copy() + pstep*dx
                 yt = y + dstep*dy
                 St = Aadj(-yt) + C
-                
+
                 if not PREDICTION:
                     # Update X,y,S
                     X = Xt
                     S = St
                     y = yt
-                    
+
                 else: # PREDICTION
 
                     # Compute predicted gap
@@ -1035,15 +1035,15 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
 
                     if DEBUG: print(" -- predicted gap: %.2e" %(gapt))
                     # update t
-                    t = n/gapt 
+                    t = n/gapt
 
                     if scaling == 'primal':
                         # step:
                         # [ -1/t Hphip(x)   A^T ][ dx  ] = [ s - (1/t)*shat ]
                         # [    A            0   ][ dy  ] = [ b-Ax           ]
                         bx = S.copy()-(1.0/t)*Shat
-                        by = b - Amap(X) 
-                    else: # scaling == 'dual' 
+                        by = b - Amap(X)
+                    else: # scaling == 'dual'
                         # step:
                         # [ -t Hphid(s)^{-1}   A^T ][ dx  ] = [ t*Hphid(s)^{-1}*x - s ]
                         # [    A               0   ][ dy  ] = [ b-Ax                  ]
@@ -1119,12 +1119,12 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                         y = yt
                         S = St
                     else:
-                        if ntdecr >= 1.0: 
+                        if ntdecr >= 1.0:
                         # centering step: backtracking line search
                             gam = 1.0
                             logdetL = sum(log(L.diag()))
-                            ddyb = - t*blas.dot(dy,b) 
-                            #val = ALPHA*ntdecr**2 - t*blas.dot(dy,b) 
+                            ddyb = - t*blas.dot(dy,b)
+                            #val = ALPHA*ntdecr**2 - t*blas.dot(dy,b)
                             while gam > MINSTEP:
                                 yt = y + gam*dy
                                 St = Aadj(-yt) + C
@@ -1168,13 +1168,13 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             gapt = dot(X,S)
             Ot = Omega(Lt,Lst,gapt)
             if DEBUG: print(" -- actual gap:    %.2e" %(gapt))
-    
+
             # update gap, t
             gap = min(n/t,gapt)  # Alternatively, set: gap = gapt [XXX]
             t = n/gap
-            
+
             stype = 'a'
-            
+
             # update residuals
             pres = blas.nrm2(Amap(X)-b)/resy0
 
@@ -1194,7 +1194,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
         if stype is 'c':
             if dcost is None:
                 print("%3i % .4e %-11s %.1e %.1e %7s %.1e %7s %4.2f" %\
-                    (iter, pcost, " ", ggap, pres, " ", ntdecr," ", gam))   
+                    (iter, pcost, " ", ggap, pres, " ", ntdecr," ", gam))
             elif pcost is None:
                 print("%3i %-11s % .4e %.1e %7s %.1e %.1e %13s %4.2f" %\
                     (iter, " ", dcost, ggap, " ", dres, ntdecr," ", gam))
@@ -1207,7 +1207,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
         elif stype is  'a':
             print("%3i % .4e % .4e %.1e %.1e %.1e %.1e %.1e %4.2f  %4.2f" %\
                 (iter, pcost, dcost, ggap, pres, dres, ntdecr,Ot, pstep, dstep))
-            
+
     ## END OF ITERATION LOOP
 
     # Get cputime and realtime
@@ -1225,7 +1225,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
         DIMACS_err[3] = 0.0
         DIMACS_err[4] = (pcost - dcost)/(1 + abs(pcost) + abs(dcost))
         DIMACS_err[5] = gap/(1 + abs(pcost) + abs(dcost))
-    else: 
+    else:
         DIMACS = False
         DIMACS_err = None
 
@@ -1242,7 +1242,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
     except:
         y = None
         S = None
-        
+
     if show_progress:
         print_exit_info()
 
@@ -1264,27 +1264,27 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
                   scaling='primal',kktsolver='chol',p=None):
     """
     Chordal SDP solver:
-    
+
     sol = chordalsolver_esd(A,b[,primalstart[,dualstart[,scaling[,kktsolver]]]])
 
     PURPOSE
     Solves a pair of primal and dual cone programs
-    
+
          minimize   c'*x        maximize   b'*y
          subject to A*x = b     subject to A'*y + s = c
                     x in C                 s in K.
 
-    Here C is the cone of symmetric matrices with sparsity 
-    pattern V that have a positive semidefinite completion, 
+    Here C is the cone of symmetric matrices with sparsity
+    pattern V that have a positive semidefinite completion,
     and K is the cone of positive semidefinite matrices with
     sparsity pattern V.
 
     ARGUMENTS
-    A         CVXOPT spmatrix with doubles 
+    A         CVXOPT spmatrix with doubles
     b         CVXOPT matrix with doubles
 
     RETURNS
-    sol       dictionary 
+    sol       dictionary
 
     """
 
@@ -1295,20 +1295,20 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
     from chompack import cspmatrix, symbolic, tril, perm, symmetrize,dot,peo,\
         hessian, completion, cholesky, projected_inverse, llt, trsm, maxcardsearch
     from smcp import __version, misc
-    
-    
+
+
     from sys import platform
     if platform.startswith('win'):
         from time import clock as time
         def cputime():
             return 0.0
     else:
-        from time import time 
+        from time import time
         from resource import getrusage, RUSAGE_SELF
         def cputime():
             return (getrusage(RUSAGE_SELF).ru_utime
                     +getrusage(RUSAGE_SELF).ru_stime)
-    
+
     BETA = 0.7
     EXPON = 3.0
     STEP = 0.99
@@ -1348,7 +1348,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             "options['abstol'] must be positive")
 
     FEASTOL = options['feastol']
-    if (type(FEASTOL) is not float and type(FEASTOL) is not int):    
+    if (type(FEASTOL) is not float and type(FEASTOL) is not int):
         raise TypeError("options['feastol'] must be a positive "\
             "scalar")
     elif FEASTOL <= 0.0:
@@ -1378,20 +1378,20 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         raise ValueError("options['refinement'] must be nonnegative ")
 
     TNZCOLS = options['tnzcols']
-    if type(TNZCOLS) is not float: 
+    if type(TNZCOLS) is not float:
         raise TypeError("tnzcols must be a float between 0.0 and 1.0")
-    elif TNZCOLS > 1 or TNZCOLS < 0: 
+    elif TNZCOLS > 1 or TNZCOLS < 0:
         raise ValueError("tnzcols must be between 0.0 and 1.0")
     else:
         TNZCOLS = int(n*TNZCOLS)
-        
+
     DIMACS = options['dimacs']
-    if type(DIMACS) is not bool: 
+    if type(DIMACS) is not bool:
         raise TypeError("dimacs must be a bool")
 
     if not (scaling=='primal' or scaling=='dual'):
         raise ValueError("scaling must be 'primal' or 'dual'")
-       
+
     def iperm(p):
         """
         Returns inverse permutation vector.
@@ -1409,12 +1409,12 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
     Ia, Ja = misc.ind2sub(n,LIa)
     Va = tril(spmatrix(0.,Ia,Ja,(n,n)))
     del Ia,Ja,LIa
-        
+
     if kktsolver=='chol':
         ### Find permutation
         Nz = misc.nzcolumns(A)
         pm,Ns = misc.matperm(Nz,TNZCOLS)
-        # Permute first part of pm (Decorate-Sort-Undecorate)        
+        # Permute first part of pm (Decorate-Sort-Undecorate)
         if (Ns < m):
             L = list(zip(A.CCS[0][pm[:m-Ns]+2] - A.CCS[0][pm[:m-Ns]+1],pm[:m-Ns]))
             L.sort(reverse=True)
@@ -1451,7 +1451,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         ip = matrix([j for _,j in fd])
         p = iperm(ip)
         Ve = tril(perm(symmetrize(Vp),ip))
-        lp = iperm([int(v) for v in Ve.V])        
+        lp = iperm([int(v) for v in Ve.V])
         CHORDAL = False
     else:
         pmcs = maxcardsearch(Va)
@@ -1466,7 +1466,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         Ve = symb.sparsity_pattern(reordered=False, symmetric=False)
         Ve.V = matrix([float(v) for v in range(len(Ve))])
         Vp = tril(perm(symmetrize(Ve),p))
-        lp = matrix([int(v) for v in Vp.V])        
+        lp = matrix([int(v) for v in Vp.V])
         symb = symbolic(Vp)
         ip = iperm(p)
 
@@ -1477,7 +1477,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
     # Extract Av and c
     # c = A[LI[lp],0] ## <-- unpacks A[:,0]
     c = A[:,0][LI[lp]] ## <-- does not unpack A[:,0]
-    # Av = A[LI[lp],pm+1] 
+    # Av = A[LI[lp],pm+1]
     if len(A) < 0.005*len(Va)*m or n > 15000: # do not unpack A
         Ve.V = matrix([float(v) for v in iperm(lp)])
         IJV = []; tmp = 0
@@ -1552,7 +1552,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         #
         #     minimize    ||X||_F
         #     subject to  <A_i,X> = b_i, for all i
-        #  
+        #
         #   by solving the system
         #
         #     [ 0   A ][ y ] = [ b ]
@@ -1589,8 +1589,8 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
                 except ArithmeticError:
                     X += u*Ic
                     u *= 2.
-        
-        if dualstart is None: 
+
+        if dualstart is None:
             y = Amap(C)
             cholmod.solve(F,y)
             # compute s
@@ -1630,9 +1630,9 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             llt(rbs)
             blas.scal(sigma/t,rbs.blkval)
             rbs -= S
-    
+
             rbk = -kappa + sigma/(t*tau)
-    
+
             if dz:
                 rby += b*dz[2] - Amap(dz[1])                 # uddate rby
                 rbx += Aadj(dz[0])+dz[3]-dz[2]*C             # update rbx
@@ -1642,7 +1642,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
                 #hessian(L,Y,[u],inv=True,adj=True)
                 #hessian(L,Y,[u],inv=True)
                 hessian(L,Y,[u],inv=True,adj=None)
-                rbs -= (1.0/t)*u 
+                rbs -= (1.0/t)*u
                 rbk -= dz[4] + 1./(t*tau**2)*dz[2]           # update rbk
 
             return (rby,rbx,rbt,rbs,rbk)
@@ -1650,18 +1650,18 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         def bres(sigma, dz=None):
 
             rby = (1-sigma)*ry
-    
+
             rbx = rx.copy()
             blas.scal(1-sigma,rbx.blkval)
-    
+
             rbt = (1-sigma)*rt
-    
+
             rbs = Y.copy()
             blas.scal(sigma/t,rbs.blkval)
             rbs -= X
-    
+
             rbk = -tau + sigma/(t*kappa)
-    
+
             if dz:
                 rby += b*dz[2] - Amap(dz[1])                 # uddate rby
                 rbx += -dz[2]*C+dz[3]+Aadj(dz[0])            # update rbx
@@ -1673,13 +1673,13 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
                 hessian(L,Y,[u],inv=False,adj=None)
                 rbs -= (1.0/t)*u
                 rbk -= dz[2] + 1./(t*kappa**2)*dz[4]         # update rbk
-                
+
             return (rby,rbx,rbt,rbs,rbk)
 
     if scaling=='primal':
         def tres(rbz):
             a = tau**2*t*(rbz[2] + rbz[4])
-            
+
             rtx = C.copy()
             blas.scal(a,rtx.blkval)
             rtx -= rbz[1]+rbz[3]
@@ -1719,14 +1719,14 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             r2 = Aadj(-dy) + dtau*C - dS - rbz[1]
             r2 = sqrt(dot(r2,r2))
             r3 = abs(blas.dot(b,dy) - dot(C,dX) - dkappa - rbz[2])
-            
+
             if scaling=='primal':
                 r4 = dX.copy()
                 #hessian(L,Y,[r4],adj=True,inv=True)
                 #hessian(L,Y,[r4],adj=False,inv=True)
                 hessian(L,Y,r4,inv=True,adj=None)
                 blas.scal(1.0/t,r4.blkval)
-                r4 += dS - rbz[3] 
+                r4 += dS - rbz[3]
                 r4 = sqrt(dot(r4,r4))
                 r5 = abs(dtau/(t*tau**2) + dkappa - rbz[4])
             else:
@@ -1738,11 +1738,11 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
                 r4 += dX-rbz[3]
                 r4 = sqrt(dot(r4,r4))
                 r5 = abs(dkappa/(t*kappa**2) + dtau - rbz[4])
-            print("\033[1;32m Newton:   % .2e % .2e % .2e % .2e % .2e \033[0m" 
+            print("\033[1;32m Newton:   % .2e % .2e % .2e % .2e % .2e \033[0m"
                   % (r1,r2,r3,r4,r5))
-          
+
     def kkt_qr(L,Y):
-	Ac_ = [Aj.copy() for Aj in Ac]
+        Ac_ = [Aj.copy() for Aj in Ac]
         hessian(L,Y,Ac_)
         for j in range(len(Ac_)):
             Aj = Ac_[j].spmatrix(reordered=False, symmetric=False)
@@ -1752,7 +1752,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
 
         # compute QR factorization of At
         try:
-            lapack.geqrf(At,tq)  
+            lapack.geqrf(At,tq)
         except ArithmeticError:
             print("\033[1;31m*** Factorization failed\033[0m")
             status = 'unknown'
@@ -1783,16 +1783,16 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
 
             r2 = +by
             lapack.trtrs(At[:m,:],r2,uplo='U',trans='T')
-            x[:m] += 0.5*kk*r2 
+            x[:m] += 0.5*kk*r2
             y = +x[:m]
             lapack.trtrs(At[:m,:],y,uplo='U')
 
             lapack.ormqr(At,tq,x)
-            Vp.V = x-r1 
+            Vp.V = x-r1
             misc.scal_diag(Vp,Id,sqrt(2.0))
-            x = cspmatrix(symb) + Vp               
+            x = cspmatrix(symb) + Vp
             hessian(L,Y,[x],adj=True)
-            blas.scal(1.0/kk,x.blkval)    
+            blas.scal(1.0/kk,x.blkval)
 
             if DEBUG:
                 r,rr = kkt_res(x,y,bx,by)
@@ -1832,7 +1832,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             print("\033[1;31m*** Factorization failed\033[0m")
             status = 'unknown'
             return None
-   
+
         if scaling=='primal':
             kk = 1.0/t
         else:
@@ -1863,7 +1863,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
                 r1 = sqrt(dot(r,r))/sqrt(dot(bx,bx))
                 r2 = blas.nrm2(rr)/blas.nrm2(by)
                 print("\033[1;33m KKTsolver: %.2e  %.2e \033[0m" % (r1,r2))
-            return x,y    
+            return x,y
         return solve_
 
     if kktsolver == 'chol':
@@ -1890,20 +1890,20 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         def newton(sigma):
             rbz = bres(sigma)
             rtx,rty = tres(rbz)
-            u1,u2 = f(rtx,rty)        
-    
+            u1,u2 = f(rtx,rty)
+
             gamma = (-blas.dot(b,u2)+dot(C,u1))/  \
                 (1.0/(t*tau**2) + blas.dot(b,v2) - dot(C,v1))
-            
+
             dy = u2 + gamma*v2
             dX = u1.copy()+gamma*v1
-    
+
             dkappa = - rbz[2]+blas.dot(b,dy) - dot(C,dX)
             if bmax > 1e-5:
                 dtau = (Amap(dX,ii) - rbz[0][ii])/b[ii] # OPTIMIZE!!
             else:
                 dtau = (rbz[4] - dkappa)*t*tau**2
-    
+
             #dS = Aadj(-dy)
             #axpy(C,dS,dtau)
             #axpy(rbz[1],dS,-1)
@@ -1913,18 +1913,18 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             #hessian(L,Y,[dS],inv=True)
             hessian(L,Y,dS,inv=True,adj=None)
             dS += rbz[3]
-    
+
             for i in range(REFINEMENT):
                 rbz = bres(sigma,dz=(dy,dX,dtau,dS,dkappa))
                 rtx,rty = tres(rbz)
-                u1,u2 = f(rtx,rty)        
-                
+                u1,u2 = f(rtx,rty)
+
                 gamma = (-blas.dot(b,u2) + dot(C,u1))/  \
                     (1.0/(t*tau**2) + blas.dot(b,v2) - dot(C,v1))
-                
+
                 ddy = u2 + gamma*v2
                 ddX = u1.copy() + gamma*v1
-    
+
                 ddkappa = - rbz[2] + blas.dot(b,ddy) - dot(C,ddX)
                 if bmax > 1e-5:
                     ddtau = (Amap(ddX,ii) - rbz[0][ii])/b[ii] # OPTIMIZE!!
@@ -1940,7 +1940,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
                 #hessian(L,Y,[ddS],inv=True)
                 hessian(L,Y,[ddS],inv=True,adj=None)
                 ddS += rbz[3]
-                
+
                 dy += ddy
                 dX += ddX
                 dtau += ddtau
@@ -1951,20 +1951,20 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         def newton(sigma):
             rbz = bres(sigma)
             rtx,rty = tres(rbz)
-            u1,u2 = f(rtx,rty)        
-    
+            u1,u2 = f(rtx,rty)
+
             gamma = (-blas.dot(b,u2) + dot(C,u1))/  \
                 (t*kappa**2 + blas.dot(b,v2) - dot(C,v1))
 
             dy = u2 + gamma*v2
             dX = u1.copy() + gamma*v1
-    
+
             dkappa = -rbz[2] + blas.dot(b,dy) - dot(C,dX)
             if bmax > 1e-5:
                 dtau = (Amap(dX,ii) - rbz[0][ii])/b[ii] # OPTIMIZE!!
             else:
                 dtau = rbz[4] - dkappa/(t*kappa**2)
-            
+
             #dS = Aadj(-dy)
             #axpy(C,dS,dtau)
             #axpy(rbz[1],dS,-1.0)
@@ -1973,24 +1973,24 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             #hessian(L,Y,[dS],inv=True,adj=True)
             #hessian(L,Y,[dS],inv=True)
             hessian(L,Y,[dS],inv=True,adj=None)
- 
+
             for i in range(REFINEMENT):
                 rbz = bres(sigma,dz=(dy,dX,dtau,dS,dkappa))
                 rtx,rty = tres(rbz)
-                u1,u2 = f(rtx,rty)        
-                
+                u1,u2 = f(rtx,rty)
+
                 gamma = (-blas.dot(b,u2) + dot(C,u1))/  \
                 (t*kappa**2 + blas.dot(b,v2) - dot(C,v1))
-                
+
                 ddy = u2 + gamma*v2
                 ddX = u1.copy() + gamma*v1
-    
+
                 ddkappa = - rbz[2] + blas.dot(b,ddy) - dot(C,ddX)
                 if bmax > 1e-5:
                     ddtau = (Amap(ddX,ii) - rbz[0][ii])/b[ii] # OPTIMIZE!!
                 else:
                     ddtau = rbz[4] - ddkappa/(t*kappa**2)
-                
+
                 #ddS = Aadj(-ddy)
                 #axpy(C,ddS,ddtau)
                 #axpy(rbz[1],ddS,-1.0)
@@ -1999,21 +1999,21 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
                 hessian(L,Y,[ddS],inv=True,adj=True)
                 hessian(L,Y,[ddS],inv=True)
                 hessian(L,Y,[ddS],inv=True,adj=None)
-                            
+
                 dy += ddy
                 dX += ddX
                 dtau += ddtau
                 dS += ddS
                 dkappa += ddkappa
-            return (dy,dX,dtau,dS,dkappa)            
+            return (dy,dX,dtau,dS,dkappa)
 
 
     def print_head():
         print("%-20s Extended self-dual embedding, %s scaling (%s)" % (__version,scaling,SolvStr))
         print("----------------------------------------------------------------------------")
         print("SDP var. size:       %i " % (n))
-        print("Constraints:         %i (%i|%i)" % (m,m-Ns,Ns))          
-        if CHORDAL: ChStr = "Chordal" 
+        print("Constraints:         %i (%i|%i)" % (m,m-Ns,Ns))
+        if CHORDAL: ChStr = "Chordal"
         else: ChStr = "Nonchordal"
         print("Aggregate sparsity:  %-14s NNZ(tril(V)) = %7i" % (ChStr,len(Va)))
         if not CHORDAL:
@@ -2028,7 +2028,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             if dcost is not None:
                 print("   Dual objective:                  % .8e" % (dcost))
         if gap is not None:
-            print("   Gap:                             % .8e" % (gap)) 
+            print("   Gap:                             % .8e" % (gap))
         if relgap is not None:
             print("   Relative gap:                    % .8e" % (relgap))
         if pres is not None:
@@ -2050,9 +2050,9 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         """
         Backtracking linesearch:
 
-        Computes step length t such that 
-        
-           kappa + t*dkappa > 0, tau + t*dtau > 0, 
+        Computes step length t such that
+
+           kappa + t*dkappa > 0, tau + t*dtau > 0,
            S + t*dS > 0, X + t*dX > 0
         """
         t = 1.
@@ -2067,9 +2067,9 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
                 completion(Lt)
                 break
             except ArithmeticError:
-                t *= BETA      
+                t *= BETA
                 if t < MINSTEP: return None
-        
+
         while True :
             St = S.copy() + t*dS
             try:
@@ -2079,9 +2079,9 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             except ArithmeticError:
                 t *= BETA
                 if t < MINSTEP: return None
-  
+
         return t
-        
+
     if show_progress:
         print_head()
 
@@ -2091,7 +2091,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         hry = Amap(X)
         # ry = b*tau - A*x
         ry = b*tau - hry
-        
+
         # hrx = A'*y + s
         hrx = Aadj(y) + S
         # rx = A'*y + s - tau*C
@@ -2108,7 +2108,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         cx = dot(C,X)
         pcost = cx/tau
         by = blas.dot(b,y) # TODO: handle sparse b
-        dcost = by/tau    
+        dcost = by/tau
 
         # compute gap
         gap = dot(X,S)/tau**2
@@ -2117,9 +2117,9 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             relgap = gap / -pcost
         elif dcost > 0.0:
             relgap = gap / dcost
-        else: 
+        else:
             relgap = None
-        
+
         # compute pinfres
         if -by < 0.0:
             hresx = sqrt(dot(hrx,hrx))
@@ -2133,7 +2133,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             dinfres = hresy/resy0/(-cx)
         else:
             dinfres = None
-        
+
         if show_progress:
             if not iter == 0:
                 print("%3d % .4e % .4e %.1e %.1e %.1e %.1e %.1e %7.1f" % \
@@ -2150,7 +2150,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
                 print("Optimal solution found.")
             status = 'optimal'
             break
-        elif pinfres is not None and pinfres <= FEASTOL: 
+        elif pinfres is not None and pinfres <= FEASTOL:
             # Primal infeasible
             if show_progress:
                 print("Certificate of primal infeasibility found.")
@@ -2182,7 +2182,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
 
         # compute new t
         t = (n+1)/(gap*tau**2 + kappa*tau)
-        
+
         if scaling=='primal':
             try:
                 L = X.copy()
@@ -2204,7 +2204,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
                 break
             Y = L.copy()
             projected_inverse(Y)
-                
+
         f = kktsolver(L,Y)
         if f is None: break
         v1,v2 = f(C,b)
@@ -2214,9 +2214,9 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         if DEBUG: newton_res(0.)
         # Compute step length
         step = linesearch(dX,dS,dtau,dkappa)
-        if not step:   
+        if not step:
             if show_progress: print("\033[1;31mTerminated "\
-                    "(small step size detected).\033[0m") 
+                    "(small step size detected).\033[0m")
             status = 'unknown'
             break
 
@@ -2226,15 +2226,15 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         taut = tau + step*dtau
         kappat = kappa+step*dkappa
         sigma = ((dot(Xt,St)+taut*kappat)/(gap*tau**2+kappa*tau))**EXPON
-        
+
         # compute newton direction
-        dy,dX,dtau,dS,dkappa = newton(sigma) 
+        dy,dX,dtau,dS,dkappa = newton(sigma)
         if DEBUG: newton_res(sigma)
         # Compute step length
         step = linesearch(dX,dS,dtau,dkappa)
-        if not step: 
+        if not step:
             if show_progress: print("\033[1;31mTerminated "\
-                    "(small step size detected).\033[0m") 
+                    "(small step size detected).\033[0m")
             break
 
         # Update (X,y,S)
@@ -2264,7 +2264,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         DIMACS_err[3] = 0.0
         DIMACS_err[4] = (pcost - dcost)/(1 + abs(pcost) + abs(dcost))
         DIMACS_err[5] = gap/(1 + abs(pcost) + abs(dcost))
-    else: 
+    else:
         DIMACS = False
         DIMACS_err = None
 
@@ -2348,7 +2348,7 @@ def conelp(c,G,h,dims=None,kktsolver='chol'):
             u1 = v[ptr+1:ptr+nq]
             tmp = spmatrix(u1.V,[nq-1 for j in range(len(u1))],u1.I,(nq,nq))
             if not u0 == 0.0:
-                tmp += spmatrix(u0,range(nq),range(nq),(nq,nq)) 
+                tmp += spmatrix(u0,range(nq),range(nq),(nq,nq))
             B.append(tmp)
             ptr += Nq[i]
 
@@ -2385,7 +2385,7 @@ def conelp(c,G,h,dims=None,kktsolver='chol'):
             N += i
     else:
         xq = matrix([])
- 
+
     xs = []
     if Ns:
         for i in Ns:
@@ -2426,7 +2426,7 @@ def conelp(c,G,h,dims=None,kktsolver='chol'):
 def lp(c,G,h,kktsolver='chol'):
     return conelp(c,G,h,dims={'l':G.size[0],'q':[],'s':[]},kktsolver=kktsolver)
 
-def socp(c,Gl=None,hl=None,Gq=None,hq=None,kktsolver='chol'): 
+def socp(c,Gl=None,hl=None,Gq=None,hq=None,kktsolver='chol'):
     from cvxopt import sparse
     dims = {'l':0,'q':[],'s':[]}
     G = []; h = []
@@ -2444,7 +2444,7 @@ def socp(c,Gl=None,hl=None,Gq=None,hq=None,kktsolver='chol'):
 
     sol = conelp(c,sparse(G),sparse(h),dims=dims,kktsolver=kktsolver)
 
-    Nl = dims['l'] 
+    Nl = dims['l']
     N = 0
     if Nl:
         sol['zl'] = sol['z'][N:Nl]
@@ -2484,10 +2484,10 @@ def sdp(c,Gl=None,hl=None,Gs=None,hs=None,kktsolver='chol'):
             h.append(hs[j][:])
     else:
         raise ValueError("'Gs' and 'hs' cannot be zero")
-  
+
     sol = conelp(c,sparse(G),sparse(h),dims=dims,kktsolver=kktsolver)
 
-    Nl = dims['l'] 
+    Nl = dims['l']
     N = 0
     if Nl:
         sol['zl'] = sol['z'][N:Nl]
@@ -2518,4 +2518,3 @@ def sdp(c,Gl=None,hl=None,Gs=None,hs=None,kktsolver='chol'):
 
 
 __all__ = ['chordalsolver_feas','chordalsolver_esd','lp','socp','sdp','conelp','options']
-

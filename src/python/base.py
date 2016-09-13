@@ -27,19 +27,19 @@ class SDP(object):
     """
     Creates SDP object from data file:
 
-    P = SDP(fname)    
+    P = SDP(fname)
 
     PURPOSE
-    Creates SDP object from problem data. Sparse SDPA data format (dat-s files) and 
+    Creates SDP object from problem data. Sparse SDPA data format (dat-s files) and
     Python 'pickled' data (pkl files) can be read and written.
 
     ARGUMENTS
     fname     String, path to data file
 
     RETURNS
-    P         SDP object 
+    P         SDP object
     """
-    _pname = None    # problem name  
+    _pname = None    # problem name
     _I = None        # Index list, aggregate sparsity pattern
     _ischordal = None
     _A = None; _b = None;
@@ -51,24 +51,24 @@ class SDP(object):
         Class SDP consructor.
 
         Example:
-         
+
            P = SDP('datafile.dat-s')
-       
+
         """
         if filename:
             fp,ext = os.path.splitext(filename)
             self._pname = fp.split('/')[-1]
             if ext == '.dat-s': self._read_sdpa(filename)
             elif ext == '.pkl': self._load(filename)
-            elif os.path.splitext(fp)[1] == '.dat-s': 
+            elif os.path.splitext(fp)[1] == '.dat-s':
                 self._pname = self._pname[:-6]
                 self._read_sdpa(filename)
             elif os.path.splitext(fp)[1] == '.pkl': self._load(filename)
             else: raise NameError('Unknown file extension')
             self._agg_sparsity()
-       
-    
-    def __str__(self): 
+
+
+    def __str__(self):
         """Returns SDP object info string"""
         buf = "<SDP: n=%i, m=%i, nnz=%i> %s" % (self.n,self.m,
                                                 self.nnz,self._pname)
@@ -76,7 +76,7 @@ class SDP(object):
 
     @property
     def n(self):
-        """Order of matrices""" 
+        """Order of matrices"""
         if self._A is not None: return int(sqrt(self._A.size[0]))
         else: raise AttributeError("SDP object has not been initialized")
 
@@ -86,7 +86,7 @@ class SDP(object):
         if self._A is not None :return self._A.size[1]-1
         else: raise AttributeError("SDP object has not been initialized")
 
-    @property 
+    @property
     def V(self):
         """Sparsity pattern (CVXOPT spmatrix)"""
         I,J = misc.ind2sub(self.n,self.I)
@@ -120,7 +120,7 @@ class SDP(object):
     @property
     def ischordal(self):
         """Is True if the sparsity pattern is chordal, False otherwise."""
-        if self._ischordal == None: 
+        if self._ischordal == None:
             V = +self.V
             p = chompack.maxcardsearch(V)
             if chompack.peo(V,p): self._ischordal = True
@@ -150,15 +150,15 @@ class SDP(object):
             fo.write(bz2.decompress(fc.read()))
             fc.close()
             fo.close()
-            f = open(fp)
-            self._A,self._b,self._blockstruct = misc.sdpa_read(f,neg=True)
-            f.close()
+            #f = open(fp)
+            self._A,self._b,self._blockstruct = misc.sdpa_read(fp,neg=True)
+            #f.close()
             os.remove(fp)
         else:
-            f = open(fname)
-            self._A,self._b,self._blockstruct = misc.sdpa_read(f,neg=True)
-            f.close()
- 
+            #f = open(fname)
+            self._A,self._b,self._blockstruct = misc.sdpa_read(fname,neg=True)
+            #f.close()
+
     def write_sdpa(self,fname=None,compress=False):
         """Writes problem data to sparse SDPA data file"""
         import bz2
@@ -166,31 +166,26 @@ class SDP(object):
 
         if fname is None:
             fname = self._pname
-        
+
         fname += ".dat-s"
-        if compress:
-            if not os.path.isfile(fname) and not os.path.isfile(fname+".bz2"):
-                f = open(fname,'w')
-            elif os.path.isfile(fname): raise IOError("file %s already exists" % (fname))
-            else: raise IOError("file %s already exists" % (fname+".bz2"))
-        elif not os.path.isfile(fname):
-            f = open(fname,'w')
-        else: raise IOError("file %s already exists" % (fname))
-        misc.sdpa_write(f,self._A,matrix(self._b),self._blockstruct,neg=True)
-        f.close()
+        if os.path.isfile(fname):
+            raise IOError("file %s already exists" % (fname))
+        if compress and os.path.isfile(fname+".bz2"):
+            raise IOError("file %s already exists" % (fname+".bz2"))
+        misc.sdpa_write(fname,self._A,matrix(self._b),self._blockstruct,neg=True)
         if compress:
             f = open(fname+".bz2", 'wb')
             f.write(bz2.compress(open(fname).read()))
             f.close()
             os.remove(fname)
-            
+
     def _load(self,fname):
         """Load SDP data from 'pickle' file"""
         import bz2, pickle
         fp,ext = os.path.splitext(fname)
-        if ext == '.bz2': 
+        if ext == '.bz2':
             D = pickle.loads(bz2.decompress(open(fname).read()))
-        elif ext == '.pkl': 
+        elif ext == '.pkl':
             f = open(fname,'r')
             D = pickle.load(f)
             f.close()
@@ -204,12 +199,12 @@ class SDP(object):
         import bz2, pickle
         if fname is None:
             fname = self._pname
-        
+
         if not compress:
             fname += ".pkl"
         else:
             fname += ".pkl.bz2"
-        
+
         if not os.path.isfile(fname):
             f = open(fname,'w')
         else: raise IOError("file %s already exists" % (fname))
@@ -239,7 +234,7 @@ class SDP(object):
         elif i>=0 and i<= self.m: return cptr[i+1]-cptr[i]
         else: raise ValueError("index out of range")
     nnzs = property(get_nnz,doc="Vector with number of nonzeros in lower triangle of A0,A1,...,Am")
-        
+
     def get_nzcols(self,i=None):
         """Returns (m+1)-by-1 vector with the number of nonzero columns in A1,...,Am"""
         if self._A: nzc = misc.nzcolumns(self._A)
@@ -255,7 +250,7 @@ class SDP(object):
 
         ARGUMENTS
         kktsolver String, 'chol' (default) or 'qr'
-        
+
         scaling   String, 'primal' (default) or 'dual'
 
         RETURNS
@@ -274,7 +269,7 @@ class SDP(object):
 
         ARGUMENTS
         kktsolver String, 'chol' (default) or 'qr'
-        
+
         scaling   String, 'primal' (default) or 'dual'
 
         RETURNS
@@ -288,7 +283,7 @@ class SDP(object):
 
     def solve_phase1(self,kktsolver='chol',MM = 1e5):
         """
-        Solves primal Phase I problem using the feasible 
+        Solves primal Phase I problem using the feasible
         start solver.
 
         Returns primal feasible X.
@@ -301,7 +296,7 @@ class SDP(object):
         Id = [i*(self.n+1) for i in range(self.n)]
         As = self._A[:,1:]
         As[Id,:] /= sqrt(2.0)
-        
+
         M = spmatrix([],[],[],(self.m,self.m))
         base.syrk(As,M,trans='T')
         u = +self.b
@@ -319,7 +314,7 @@ class SDP(object):
         #E = chompack.project(Xc,spmatrix(1.0,range(self.n),range(self.n)))
         symb = chompack.symbolic(self.V,p)
         Xc = chompack.cspmatrix(symb) + X0
-        
+
         try:
             # L = chompack.completion(Xc)
             L = Xc.copy()
@@ -348,7 +343,7 @@ class SDP(object):
             #Xt = chompack.copy(Xc)
             #chompack.axpy(E,Xt,t)
             Xt = Xc.copy() + spmatrix(t,list(range(self.n)),list(range(self.n)))
-            
+
             try:
                 # L = chompack.completion(Xt)
                 L = Xt.copy()
@@ -359,19 +354,19 @@ class SDP(object):
             except:
                 tMAX *= 2.0
                 tMIN = t
-                
+
         tt = t + 1.0
         U = X0 + spmatrix(tt,list(range(self.n,)),list(range(self.n)))
         trU = sum(U[:][Id])
-        
+
         Z0 = spdiag([U,spmatrix([tt+k,MM-trU],[0,1],[0,1],(2,2))])
         sol = P1.solve_feas(primalstart = {'x':Z0}, kktsolver = kktsolver)
 
-        s = sol['x'][-2,-2] - k        
+        s = sol['x'][-2,-2] - k
         if s > 0:
             return None,P1
         else:
-            
+
             sol.pop('y')
             sol.pop('s')
             X0 = sol.pop('x')[:self.n,:self.n]\
@@ -394,20 +389,20 @@ class SDP(object):
         if options:
             for key in list(options.keys()):
                 solvers.options[key] = options[key]
-                
-        if primalstart: 
+
+        if primalstart:
             y0,S0 = dualstart['y'],dualstart['s']
             PS = {'x':y0,'s':[matrix(S0[:])]}
         else:
             PS = None
 
-        if dualstart: 
+        if dualstart:
             X0 = primalstart['x']
             DS = {'y':None,'zl':[matrix(X0[:])]}
         else: DS = None
-        
+
         return solvers.conelp(c = -self._b,
-                              G = self._A[:,1:], 
+                              G = self._A[:,1:],
                               h = matrix(self.get_A(0)[:]),
                               dims = {'l':0,'q':[],'s':[self.n]},
                               primalstart = PS, dualstart = DS,
@@ -456,24 +451,24 @@ def mk_rand(V,cone='posdef',seed=0):
             U = +Ut
             break
         except:
-            Ut = U + spmatrix(t,range(n),range(n),(n,n))        
+            Ut = U + spmatrix(t,range(n),range(n),(n,n))
             t*=2.0
     return U
 
 class band_SDP(SDP):
-    """  
+    """
     Generates SDP problem data with band structure.
-    
+
     P = band_SDP(n,m,bw,seed=0)
-    
+
     PURPOSE
-    Generates random data for band SDP. 
-    
+    Generates random data for band SDP.
+
     ARGUMENTS
     n         integer, matrix order
-    
+
     m         integer, number of constraints
-    
+
     bw        integer, bandwidth
 
     seed      integer, seed for random number generator
@@ -521,7 +516,7 @@ class band_SDP(SDP):
         # compute b
         x = +X0.V
         x[Id] *= 0.5
-        self._b = matrix(0.,(m,1)) 
+        self._b = matrix(0.,(m,1))
         blas.gemv(A_[:,1:],x,self._b,trans='T',alpha=2.0)
         # form A
         self._A = spmatrix(A_[:],
@@ -532,16 +527,16 @@ class band_SDP(SDP):
 
 
 class mtxnorm_SDP(SDP):
-    """ 
+    """
     Generates SDP problem data for matrix norm minimization problem.
-    
+
     P = mtxnorm_SDP(p,q,r,density=1.0,seed=0)
-    
+
     PURPOSE
     Generates random data for matrix norm minimization problem:
-    
+
         minimize   || A1*y1 + A2*y2 + ... + Ar*yr + B ||
-  
+
     with pxq-matrices B, Ai, i = 1,...,r. This problem can be cast
     as an SDP
 
@@ -551,15 +546,15 @@ class mtxnorm_SDP(SDP):
 
     where A(y) = A1*y1 + ... + Ar*yr. The inequality constraint
     is with respect to the cone of positive semidefinite matrices
-    of order n = p + q. The parameter 'density' controls the 
+    of order n = p + q. The parameter 'density' controls the
     sparsity of A1,...,Ar, where density=1 corresponds to dense
-    matrices.         
-    
+    matrices.
+
     ARGUMENTS
     p         integer, rows in Ai
-    
+
     q         integer, cols in Ai
-    
+
     r         integer, number of data matrices
 
     density   float, between 0 and 1 (default is 1)
@@ -573,7 +568,7 @@ class mtxnorm_SDP(SDP):
 
     def __init__(self,p,q,r,density=1.,seed=0):
         SDP.__init__(self)
-        
+
         if type(density) is float:
             if density > 1 or density <= 0: raise ValueError("density must be between 0 and 1")
             if density == 1.0: self._pname = "mtxnorm_p%i_q%i_r%i" % (p,q,r)
@@ -586,7 +581,7 @@ class mtxnorm_SDP(SDP):
         self._p = p; self._q = q; self._density = density
         self._gen_mtxnormsdp(p,q,r,density,seed)
         self._agg_sparsity()
-        
+
     @property
     def n(self):
         return self._p+self._q
@@ -600,12 +595,12 @@ class mtxnorm_SDP(SDP):
 
         I = matrix([ i for j in range(q) for i in range(q,n)])
         J = matrix([ j for j in range(q) for i in range(q,n)])
-        Il = misc.sub2ind((n,n),I,J)
+        Il = list(misc.sub2ind((n,n),I,J))
 
         if type(d) is float:
             nz = min(max(1, int(round(d*p*q))), p*q)
             A = sparse([[spmatrix(normal(p*q,1),Il,[0 for i in range(p*q)],(n**2,1))],
-                        [spmatrix(normal(nz*r,1), 
+                        [spmatrix(normal(nz*r,1),
                                   [i for j in range(r) for i in random.sample(Il,nz)],
                                   [j for j in range(r) for i in range(nz)],(n**2,r))]])
         elif type(d) is list:
@@ -618,7 +613,7 @@ class mtxnorm_SDP(SDP):
                                       [j for j in range(r) for i in range(nz[j])],(n**2,r))]])
         else: raise TypeError
         self._A = sparse([[A],[spmatrix(-1.,list(range(0,n**2,n+1)),[0 for i in range(n)],(n**2,1))]])
-    
+
         self._b = matrix(0.,(r+1,1))
         self._b[-1] = -1.
 
@@ -641,31 +636,31 @@ class robustLS_SDP(SDP):
 def robustLS_toep(q,r,delta=None,seed=0):
     """
     Random data generator for matrix norm minimization SDP.
-    
+
     Al,b = robustLS_toep(q,r,delta=0.1,seed=0])
-    
+
     PURPOSE
     Generates random data for a robust least squares problem
     with Toeplitz structure:
-     
+
       minimize e_wc(x)^2
-    
+
     where
-    
+
       e_wc(x)=sup_{norm(u)<=1} norm((Ab+A1*u1+...+Ar*ur)*x - b),
-    
-      Ab,A1,...,Ar \in \reals^{p \times q}        
-    
+
+      Ab,A1,...,Ar \in \reals^{p \times q}
+
     The parameter r determines the number of nonzero diagonals
     in Ab (1 <= r <= p).
 
-    ARGUMENTS   
+    ARGUMENTS
     q         integer
-    
+
     r         integer
 
     delta     float
-    
+
     RETURNS
     Al        list of CVXOPT matrices, [Ab,A1,...,Ar]
 
@@ -673,19 +668,19 @@ def robustLS_toep(q,r,delta=None,seed=0):
 
     """
     setseed(seed)
-    
+
     p = q+r-1
     Alist = [sparse(misc.toeplitz(matrix([normal(r,1),matrix(0.,(p-r,1))],(p,1)),matrix(0.,(q,1))))]
     x = normal(q,1)
     b = normal(p,1,std=0.1)
     b += Alist[0]*x
-    
+
     if delta is None:
         delta = 1./r
 
     for i in range(r):
         Alist.append(spmatrix(delta,range(i,min(p,q+i)),range(min(q,p-i)),(p,q)))
-     
+
     return robustLS_SDP(Alist, b)
 
 
@@ -702,10 +697,10 @@ class rand_SDP(SDP):
         self._gen_randsdp(V,m,density,seed)
         self._pname = "rand_n%i_m%i" % (self._n,m)
         self._agg_sparsity()
-        
+
     def _gen_randsdp(self,V,m,d,seed):
         """
-        Random data generator 
+        Random data generator
         """
         setseed(seed)
         n = self._n
@@ -714,7 +709,7 @@ class rand_SDP(SDP):
         I = V.I; J = V.J
         Il = misc.sub2ind((n,n),I,J)
         Id = matrix([i for i in range(len(Il)) if I[i]==J[i]])
-                
+
         # generate random y with norm 1
         y0 = normal(m,1)
         y0 /= blas.nrm2(y0)
@@ -727,7 +722,7 @@ class rand_SDP(SDP):
         if type(d) is float:
             nz = min(max(1, int(round(d*N))), N)
             A = sparse([[spmatrix(normal(N,1),Il,[0 for i in range(N)],(n**2,1))],
-                        [spmatrix(normal(nz*m,1), 
+                        [spmatrix(normal(nz*m,1),
                                   [i for j in range(m) for i in random.sample(Il,nz)],
                                   [j for j in range(m) for i in range(nz)],(n**2,m))]])
         elif type(d) is list:
@@ -748,8 +743,8 @@ class rand_SDP(SDP):
         self._A = A
 
         # compute b
-        X0[Il[Id]] *= 0.5        
-        self._b = matrix(0.,(m,1)) 
+        X0[Il[Id]] *= 0.5
+        self._b = matrix(0.,(m,1))
         u = matrix(0.)
         for k in range(m):
             base.gemv(A[:,k+1][Il],X0.V,u,trans='T',alpha=2.0)
