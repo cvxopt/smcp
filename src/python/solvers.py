@@ -75,7 +75,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
     #    completion, cholesky, solve, partial_inv, logdet
     from chompack import cspmatrix, symbolic, tril, perm, symmetrize, dot, peo,\
         hessian, completion, cholesky, projected_inverse, llt, trsm, maxcardsearch, merge_size_fill
-    from smcp import __version, misc
+    from smcp import __version__, misc
 
     from sys import platform
     if platform.startswith('win'):
@@ -540,7 +540,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
         return factor(L,Y)
 
     def print_head():
-        print("%-20s Barrier method, %s scaling (%s)" % (__version,scaling,SolvStr))
+        print("%-20s Barrier method, %s scaling (%s)" % (__version__,scaling,SolvStr))
         print("-------------------------------------------------------------------------------")
         print("SDP var. size:       %i " % (n))
         print("Constraints:         %i (%i|%i)" % (m,m-Ns,Ns))
@@ -1294,7 +1294,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
     #    completion, cholesky, solve, partial_inv
     from chompack import cspmatrix, symbolic, tril, perm, symmetrize,dot,peo,\
         hessian, completion, cholesky, projected_inverse, llt, trsm, maxcardsearch
-    from smcp import __version, misc
+    from smcp import __version__, misc
 
 
     from sys import platform
@@ -2009,7 +2009,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
 
 
     def print_head():
-        print("%-20s Extended self-dual embedding, %s scaling (%s)" % (__version,scaling,SolvStr))
+        print("%-20s Extended self-dual embedding, %s scaling (%s)" % (__version__,scaling,SolvStr))
         print("----------------------------------------------------------------------------")
         print("SDP var. size:       %i " % (n))
         print("Constraints:         %i (%i|%i)" % (m,m-Ns,Ns))
