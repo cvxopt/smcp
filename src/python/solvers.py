@@ -373,7 +373,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
     resy0 = max(1,blas.nrm2(b))
     resx0 = max(1,sqrt(dot(C,C)))
 
-    def kkt_res(x,y,bx,by):
+    def kkt_res(L,Y,x,y,bx,by):
         r = x.copy()
         #hessian(L,Y,r,inv=True,adj=True)
         #hessian(L,Y,r,inv=True)
@@ -441,7 +441,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             blas.scal(1.0/kk,x.blkval)
 
             if DEBUG:
-                r,rr = kkt_res(x,y,bx,by)
+                r,rr = kkt_res(L,Y,x,y,bx,by)
                 r = sqrt(dot(r,r))/max(1,sqrt(dot(bx,bx)))
                 rr = blas.nrm2(rr)/max(1,blas.nrm2(by))
                 print("\033[1;33m KKTsolver: %.2e  %.2e \033[0m" % (r,rr))
@@ -455,7 +455,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             At = misc.Av_to_spmatrix(Av,Ip,Jp,j,n)
             U = cspmatrix(symb) + At
             #hessian(L,Y,[U]); hessian(L,Y,[U],adj=True)
-            hessian(L,Y,U,inv=True,adj=None)
+            hessian(L,Y,U,inv=False,adj=None)
             At = U.spmatrix(reordered=False, symmetric=False)
             misc.scal_diag(At,Id,0.5)
             base.gemv(Av[:,j:m],At.V,tmp,trans='T',alpha=2.0)
@@ -507,7 +507,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             blas.scal(1.0/kk,x.blkval)
 
             if DEBUG:
-                r,rr = kkt_res(x,y,bx,by)
+                r,rr = kkt_res(L,Y,x,y,bx,by)
                 r1 = sqrt(dot(r,r))/max(1,sqrt(dot(bx,bx)))
                 r2 = blas.nrm2(rr)/max(1,blas.nrm2(by))
                 print("\033[1;33m KKTsolver: %.2e  %.2e \033[0m" % (r1,r2))
@@ -858,7 +858,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                 dx,lam = f(bx,by)
                 # iterative refinement
                 for ii in range(REFINEMENT):
-                    r1,r2 = kkt_res(dx,lam,bx,by)
+                    r1,r2 = kkt_res(L,Y,dx,lam,bx,by)
                     ddx,dlam = f(r1,r2)
                     dx -= ddx
                     lam -= dlam
@@ -919,7 +919,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                 nu,dy = f(bx,by)
                 # iterative refinement
                 for ii in range(REFINEMENT):
-                    r1,r2 = kkt_res(nu,dy,bx,by)
+                    r1,r2 = kkt_res(L,Y,nu,dy,bx,by)
                     dnu,ddy = f(r1,r2)
                     nu -= dnu
                     dy -= ddy
@@ -988,7 +988,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
             dx,dy = f(bx, by)
             # iterative refinement
             for ii in range(REFINEMENT):
-                r1,r2 = kkt_res(dx,dy,bx,by)
+                r1,r2 = kkt_res(L,Y,dx,dy,bx,by)
                 ddx,ddy = f(r1,r2)
                 dx -= ddx
                 dy -= ddy
@@ -1058,7 +1058,7 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
                     dx,dy = f(bx, by, t)
                     # iterative refinement
                     for ii in range(REFINEMENT):
-                        r1,r2 = kkt_res(dx,dy,bx,by)
+                        r1,r2 = kkt_res(L,Y,dx,dy,bx,by)
                         ddx,ddy = f(r1,r2,t)
                         dx -= ddx
                         dy -= ddy
@@ -1701,7 +1701,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             return rtx,rty
 
     if DEBUG:
-        def kkt_res(x,y,bx,by):
+        def kkt_res(L,Y,x,y,bx,by):
             r = x.copy()
             #hessian(L,Y,[r],inv=True,adj=True)
             #hessian(L,Y,[r],inv=True)
@@ -1795,7 +1795,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             blas.scal(1.0/kk,x.blkval)
 
             if DEBUG:
-                r,rr = kkt_res(x,y,bx,by)
+                r,rr = kkt_res(L,Y,x,y,bx,by)
                 r = sqrt(dot(r,r))/sqrt(dot(bx,bx))
                 rr = blas.nrm2(rr)/blas.nrm2(by)
                 print("\033[1;33m KKTsolver: %.2e  %.2e \033[0m" % (r,rr))
@@ -1859,7 +1859,7 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             blas.scal(1.0/kk,x.blkval)
 
             if DEBUG:
-                r,rr = kkt_res(x,y,bx,by)
+                r,rr = kkt_res(L,Y,x,y,bx,by)
                 r1 = sqrt(dot(r,r))/sqrt(dot(bx,bx))
                 r2 = blas.nrm2(rr)/blas.nrm2(by)
                 print("\033[1;33m KKTsolver: %.2e  %.2e \033[0m" % (r1,r2))
@@ -1996,8 +1996,8 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
                 #axpy(rbz[1],ddS,-1.0)
                 ddS = rbz[3].copy()-ddX
                 blas.scal(t,ddS.blkval)
-                hessian(L,Y,[ddS],inv=True,adj=True)
-                hessian(L,Y,[ddS],inv=True)
+                #hessian(L,Y,[ddS],inv=True,adj=True)
+                #hessian(L,Y,[ddS],inv=True)
                 hessian(L,Y,[ddS],inv=True,adj=None)
 
                 dy += ddy
@@ -2174,6 +2174,8 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             break
         elif iter == MAXITERS:
             # Max. number of iterations reached
+            pcost = None
+            dcost = None
             if show_progress:
                 print("\033[1;31mTerminated " \
                     "(maximum number of iterations reached).\033[0m")

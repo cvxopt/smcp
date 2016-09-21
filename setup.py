@@ -17,6 +17,7 @@
 
 from distutils.core import setup, Extension
 import os, sys
+import versioneer
 
 if sys.version < '2.6':
     sys.exit('ERROR: Sorry, python 2.6 is required for this extension.')
@@ -35,7 +36,8 @@ misc = Extension('misc',
                  sources = ['src/C/misc.c'])
 
 setup(name="smcp",
-      version="0.4.1",
+      version=versioneer.get_version(),
+      cmdclass=versioneer.get_cmdclass(),
       description="Python extension for solving sparse matrix cone programs",
       author="Martin S. Andersen and Lieven Vandenberghe",
       author_email="martin.skovgaard.andersen@gmail.com, vandenbe@ee.ucla.edu",

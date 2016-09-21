@@ -320,7 +320,7 @@ class SDP(object):
             L = Xc.copy()
             chompack.completion(L)
             # least-norm solution is feasible
-            return X0
+            return X0,None
         except:
             pass
 
