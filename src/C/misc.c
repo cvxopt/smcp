@@ -74,7 +74,6 @@ static PyObject* sdpa_readhead
 #endif
       FILE *fp = fopen(fname,"r");
       if (!fp) {
-        Py_DECREF(f);
         return NULL;
       }
       /* Skip comments and read m */
@@ -101,7 +100,6 @@ static PyObject* sdpa_readhead
         n += (int_t) labs(MAT_BUFI(bstruct)[i]);
       }
       fclose(fp);
-      Py_DECREF(f);
   }
 
   return Py_BuildValue("iiN",n,m,bstruct);
@@ -166,7 +164,6 @@ static PyObject* sdpa_read
   #endif
   FILE *fp = fopen(fname,"r");
   if (!fp) {
-    Py_DECREF(f);
     return NULL;
   }
   /* Skip comments and read m */
@@ -248,7 +245,6 @@ static PyObject* sdpa_read
   while (m+1 > j)
     SP_COL(A)[++j] = i;
 
-  Py_DECREF(f);
   fclose(fp);
 
   // free temp. memory
