@@ -28,6 +28,7 @@
   
 
   
+        <link rel="search" title="Search" href="../search.html"/>
         <link rel="copyright" title="Copyright" href="../copyright.html"/>
     <link rel="top" title="SMCP" href="../index.html"/>
         <link rel="prev" title="Test problems" href="../testproblems/index.html"/> 
@@ -75,7 +76,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../testproblems/index.html">Test problems</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="">Benchmarks</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Benchmarks</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#sdp-solvers">SDP solvers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#error-measures">Error measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#experimental-setup">Experimental setup</a></li>
@@ -210,7 +211,7 @@ loadedobjects+=file+" " //Remember this object as being already added to page
 <h2>Error measures<a class="headerlink" href="#error-measures" title="Permalink to this headline">¶</a></h2>
 <p>We report DIMACS error measures when available. The six error measures are defined as:</p>
 <div class="math">
-<p><img src="../_images/math/b4f7fe2a9087b339565f4244b6a5263c0b4d2032.png" alt="\epsilon_1(X,y,S) &amp;= \frac{\|\mathcal{A}(X) - b\|_2}{1+\|b\|_\infty} \\
+<p><img src="../_images/math/40994b2d48ca834ddb751c954d66e9a62b71298d.png" alt="\epsilon_1(X,y,S) &amp;= \frac{\|\mathcal{A}(X) - b\|_2}{1+\|b\|_\infty} \\
 \epsilon_2(X,y,S) &amp;= \max\left\{0,\frac{-\lambda_{\min}(X)}{1+\|b\|_\infty } \right\} \\
 \epsilon_3(X,y,S) &amp;= \frac{\|\mathcal{A}^{\rm adj}(y)+S-C \|_F}{1+\|C\|_{\max}} \\
 \epsilon_4(X,y,S) &amp;= \max\left\{0, \frac{-\lambda_{\min}(S)}{1+\|C\|_{\max}} \right\} \\
@@ -227,13 +228,13 @@ since all iterates <img class="math" src="../_images/math/5b7f746cbfa429b567e135
 Intel Core 2 Quad Q6600 CPU (2.4 GHz), 4 GB of RAM, and running Ubuntu
 9.10 (64 bit).</p>
 <p>The problem instances used in the experiments are available for
-download <a class="reference internal" href="../testproblems/index.html"><em>here</em></a> and the SDPLIB problems are
+download <a class="reference internal" href="../testproblems/index.html"><span class="doc">here</span></a> and the SDPLIB problems are
 available <a class="reference external" href="http://www.nmt.edu/~borchers/sdplib">here</a>.</p>
 <p>We use the least-norm solution to the set of equations <img class="math" src="../_images/math/2b070f3115be6ad3d640160d818a425688594180.png" alt="A_i
 \bullet X, i=1,\ldots,m,"/> as starting point when it is strictly
 feasible, and otherwise we solve the phase I problem</p>
 <div class="math">
-<p><img src="../_images/math/b0138512f4798c1ee6ae96443a952663c2b87b6e.png" alt="\begin{array}{ll}
+<p><img src="../_images/math/782438896ee9b6d0142bd9d4d6661787d411b133.png" alt="\begin{array}{ll}
 \mbox{minimize}   &amp; s        \\
 \mbox{subject to} &amp; A_i \bullet X = b_i, \quad i=1,\ldots,m, \\
 &amp; \mathbf{tr}(X) \leq M  \\
@@ -320,12 +321,12 @@ common bandwidth <img class="math" src="../_images/math/7fe6069aa7e741b99f6b7fe9
 <h2>Matrix norm minimization<a class="headerlink" href="#matrix-norm-minimization" title="Permalink to this headline">¶</a></h2>
 <p>We consider the matrix norm minimization problem</p>
 <div class="math">
-<p><img src="../_images/math/686f33e0a49d1890582cc727ae2334d5435453fd.png" alt="\mbox{minimize} \ \| F(x) + G \|_2"/></p>
+<p><img src="../_images/math/87cb5c97fc6db938af9f5f8ff7e8c9d73199bd7d.png" alt="\mbox{minimize} \ \| F(x) + G \|_2"/></p>
 </div><p>where <img class="math" src="../_images/math/2e8d55760e8cdbcb49de2eb02c6b32ce41c8b9c0.png" alt="F(x) = x_1 F_1 + \cdots + x_r F_r"/> and <img class="math" src="../_images/math/6343a8b1544ccd0a7b4de9e5325b86526928daaf.png" alt="G,F_i \in
 \mathbf{R}^{p \times q}"/> are the problem data. The problem can be
 formulated as an SDP:</p>
 <div class="math">
-<p><img src="../_images/math/ff2ecd1e0de3bb1c2c2d7da7964c037314cf24c8.png" alt="\begin{array}{ll}
+<p><img src="../_images/math/adc972f2f288b209f87e4e4248a1803fb14b9382.png" alt="\begin{array}{ll}
    \mbox{minimize} &amp; t \\
    \mbox{subject to} &amp;
    \begin{bmatrix} t I &amp; F(x) +G \\
@@ -432,7 +433,7 @@ parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e
 <h2>Overlapping cliqes<a class="headerlink" href="#overlapping-cliqes" title="Permalink to this headline">¶</a></h2>
 <p>We consider a family of SDPs which have an aggregate sparsity patterns <img class="math" src="../_images/math/c99df7a209495334da442b1ec998abaabfa320d8.png" alt="V"/> with <img class="math" src="../_images/math/d99efde75c84ef402a92cd4497530d2366fb112f.png" alt="l"/> cliques of order <img class="math" src="../_images/math/75e27f04188974063be3230dca208cd495b77ce1.png" alt="N"/>. The cliques are given by</p>
 <div class="math">
-<p><img src="../_images/math/d46f367024050a11b2a468246799bf689c674e1d.png" alt="W_i = \{ (i-1)(N-u)+1,\ldots, (i-1)(N-u)+1+u \}, \quad i =1 ,\ldots, l"/></p>
+<p><img src="../_images/math/7f40131af00e20e0d8bd6a489645361dde20f5a7.png" alt="W_i = \{ (i-1)(N-u)+1,\ldots, (i-1)(N-u)+1+u \}, \quad i =1 ,\ldots, l"/></p>
 </div><p>where <img class="math" src="../_images/math/e5fc41b391867da81606413e3389c7efc73abaf0.png" alt="u"/> (<img class="math" src="../_images/math/c9f586e1b3189459a9d0c606b205298b82a64755.png" alt="0 \leq u \leq N-1"/>) is the overlap between neighboring cliques. The sparsity pattern is illustrated below:</p>
 <img alt="../_images/cliqueoverlap.png" class="align-center" src="../_images/cliqueoverlap.png" />
 <p>Note that <img class="math" src="../_images/math/608ff1cecc0399c33688fd14eb52fe97a45139a0.png" alt="u=0"/> corresponds to a block diagonal sparsity pattern and <img class="math" src="../_images/math/ec6743b73c0fa65fdb117156752153739e9bb56c.png" alt="u=N-1"/> corresponds to a band pattern.</p>
@@ -568,7 +569,7 @@ parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e
   <div role="contentinfo">
     <p>
         &copy; <a href="../copyright.html">Copyright</a> Martin S. Andersen and Lieven Vandenberghe.
-      Last updated on Jun 15, 2014.
+      Last updated on Dec 07, 2016.
     </p>
   </div>
 
@@ -588,7 +589,7 @@ parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'../',
-            VERSION:'0.3.1',
+            VERSION:'0.4.3',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
             HAS_SOURCE:  false
@@ -614,7 +615,7 @@ parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e
   </script>
   
     <div class="footer">
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.1.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
     </div>
 
 </body>

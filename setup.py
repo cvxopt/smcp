@@ -47,4 +47,4 @@ setup(name="smcp",
       package_dir = {'smcp':'src/python'},
       ext_package = "smcp",
       ext_modules = [misc],
-      requires = ["cvxopt (>=1.1.6)","chompack (>=2.1.1)"])
+      requires = ["cvxopt (>=1.1.9)","chompack (>=2.3.1)"])
