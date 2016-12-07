@@ -6,9 +6,10 @@ before_install:
 - sudo apt-get install python-dev
 - sudo apt-get install libblas-dev
 - sudo apt-get install liblapack-dev
-- sudo apt-get install libatlas-dev
-- pip install git+https://github.com/cvxopt/cvxopt@dev
-- pip install git+https://github.com/cvxopt/chompack@master
+- wget http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-4.5.3.tar.gz
+- tar -xf SuiteSparse-4.5.3.tar.gz
+- CVXOPT_SUITESPARSE_SRC_DIR=$(pwd)/SuiteSparse pip install cvxopt
+- pip install chompack 
 language: python
 python:
 - '2.7'
@@ -21,7 +22,8 @@ deploy:
   provider: pypi
   user: msa
   password:
-    secure: i09M0YIu6TxoxYdFQ/NbyTAtW5xb2itCo7kK8cZgCIg0nDbQBvFWYss67v4zfGLsi0yxL10osf48pAm9jQVU1MSGLdyBfoQ0F02WpptV+zDtLj7hgE3to5ksB5WQuqN7tXwctG2AQgxwQnm9i892U9Nb+KoCaP20MMviTqIBxkX3PJFHnwAWLX9JiGO87jFMSpTKtsekaBIm8fIujjY7Jelc+umOl7/v4XhWZWspvmuigpnq6ct6q2Llx1hQLNw1rfOE+cwgQg2n2W63Eih9aY2u/kiBxGmdRaDl9T0g8U7ftCv0Rum/CLjNhI/PCDdnNRhFyUTjZQm/8DKCrBOYmqAeTKqtQYEMXPSo1+N1dC/sd8YzVKfLzcrNSLPM90IbsK0W2LFo6gfawkdHV3Smoy/ub3mJC3ta6U/SwenVg9WxvtS48U4luKE/i/hydpkCHb/GAyEukEl5FivboBmpE8pFjGWozsyMPHso9rvdPg1GpDlGAz7U1B2zF6aCoqw9vl1t69WGV9X70d8PNrIhXHFriBPZtdV34OlO0L+zwE9d77j7DCjBerNky1DqRJZW+kqfPtFORpH3WiWowq/dIZzx8IEufzNioYDpLnQ+gMlh8VkMNNG5k4X2iTE+rOOpEVoHUXxtnIM0jee9Vra71n0E3Ktx4Ha68dppJO6KXxs=
+    secure: UIMsHEn6qF2az4Mcd5A3Elr3GkXWCEb3gEHQgTDnghZEA4JKGsOvuwuSFnRNKtAiFBwFTKjDrIHAwStRyf6y0Kdfi8j6Y4U9nt5UzqIXq0WHaiu4IfA3flxUSXhtzj8xmhAU/g2EwwR2DXpxou5x9RuwGJKkt/bOJ8MsbLjI+BQLFT9HJmHfRvgCoWEiHFoDl1I8aXXM+VgSXfyeMtZxh+hJ3WbT/W9unyWUSSZTBiupDDTnkFFmmAMWdAbOOdRoQVnY6Y/M9inaJexgbtranFlf0M1UnqjHySzNIeZADs5KjnOmhBuPOI+VrVRM7pyYWdR1+NMfzsPnpY75NP4E4pfSf2lkIsdk4QxgF6ITeabxQG2a1nOrbE+cYym3zczJ7TfpM45DPHZfPnXjwCWFCXZDYFRVgNT52HEp63IUDNQA+gSuhZFVqWdjZFloxrhA4Rh0r5HPY5hKY9QGDPyssX7TX0eNUSFxqFzlWHN79T6DHW115J/89hpLouTkfRxf+/lJq1gz1Xa8tLoQLdLyCBqefzqDHzBYb8QY8KMA+LylfVYu0s47BnJYbo2fugU7/cmUj8fMCd54JIaCLtvKCybur4oBesXhH6GiDYKWlrPJUnIeNYXtzODKo12Fjzs9iFQjeO64NGcreQ+wX37JDAnmixGW2lg/YUZVtrKAH7Y=
   on:
+    branch: master
     tags: true
     repo: cvxopt/smcp
