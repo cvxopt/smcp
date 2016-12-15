@@ -25,7 +25,7 @@ In its current form, SMCP is implemented in Python and C, and it relies on the P
 Current release
 --------------------
 
-Version 0.4 (June 16, 2014) includes:
+Version 0.4.3 (December 2016) includes:
 
 * Nonsymmetric feasible start interior-point methods (primal and dual scaling methods)
 * Two KKT system solvers: one solves the symmetric indefinite augmented system and the other solves the positive definite system of normal equations

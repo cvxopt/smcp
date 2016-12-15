@@ -9,7 +9,7 @@ before_install:
 - wget http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-4.5.3.tar.gz
 - tar -xf SuiteSparse-4.5.3.tar.gz
 - CVXOPT_SUITESPARSE_SRC_DIR=$(pwd)/SuiteSparse pip install cvxopt
-- pip install chompack 
+- pip install chompack
 language: python
 python:
 - '2.7'
@@ -22,8 +22,9 @@ deploy:
   provider: pypi
   user: msa
   password:
-    secure: UIMsHEn6qF2az4Mcd5A3Elr3GkXWCEb3gEHQgTDnghZEA4JKGsOvuwuSFnRNKtAiFBwFTKjDrIHAwStRyf6y0Kdfi8j6Y4U9nt5UzqIXq0WHaiu4IfA3flxUSXhtzj8xmhAU/g2EwwR2DXpxou5x9RuwGJKkt/bOJ8MsbLjI+BQLFT9HJmHfRvgCoWEiHFoDl1I8aXXM+VgSXfyeMtZxh+hJ3WbT/W9unyWUSSZTBiupDDTnkFFmmAMWdAbOOdRoQVnY6Y/M9inaJexgbtranFlf0M1UnqjHySzNIeZADs5KjnOmhBuPOI+VrVRM7pyYWdR1+NMfzsPnpY75NP4E4pfSf2lkIsdk4QxgF6ITeabxQG2a1nOrbE+cYym3zczJ7TfpM45DPHZfPnXjwCWFCXZDYFRVgNT52HEp63IUDNQA+gSuhZFVqWdjZFloxrhA4Rh0r5HPY5hKY9QGDPyssX7TX0eNUSFxqFzlWHN79T6DHW115J/89hpLouTkfRxf+/lJq1gz1Xa8tLoQLdLyCBqefzqDHzBYb8QY8KMA+LylfVYu0s47BnJYbo2fugU7/cmUj8fMCd54JIaCLtvKCybur4oBesXhH6GiDYKWlrPJUnIeNYXtzODKo12Fjzs9iFQjeO64NGcreQ+wX37JDAnmixGW2lg/YUZVtrKAH7Y=
+    secure: bV3oHy9EuAh/7wsEwdN/oZnTfuBJTRqYhdCgg4U+C15a6MQFK73HqyjsHgQTqibtAPRd5+BQqxDqpM2SNIU1fp6HTXavIcslfOWAfFsAVTTlc/p9UcD3Bnu3Ot6shPv6tlaoLJ1+Grigg6EtOTQnvsaDSW689wWTTyYdqWYPXoaWvJwpoTQN7wN+cHUXcOqmuRpELeCp8DsTNvtsek0iCbhgbJgMVtP1bkPEfZkaPSxec9wDukmzpdIXRHvMqJUl1x9Fb9mnkFN7PxfiFZrR5wZFSPX56WYkC079rDho165RTj9Ag9eg/4HHXCAHyv83NPer9+29sLt9L4NIlKg0iooJ0KjftLB5CzZkGctEzR7/A0BrUr5sMTux49AEUYtoU3N1zNZsQ9ooqheQ6dWNIf9HPrCaojUi9OD1l8xFEKtyqHF9Wl/ArIRiriJlIy091BYpAQIhlhQIEcwfXcqm6+Q3Se40beSZPsc0dACIYuyIVK6CQQZqfTIw5jABL2geU8kKvn8LixNVuxq/PmdxMQIjJCm8p8dEHeReDNIKaqpi+h4baMiTSdnHLyKZe3fMXGEJrDxHkZNAOrGQVpBsd0ypNkHnQph5UakwO5nwiAGUzf7H2qLrodunrcQemp9bnoTyp/zbicI+ycKFHAqujJBG+UYjgS0a4smCI6NP6m0=
   on:
     branch: master
     tags: true
+    distributions: sdist
     repo: cvxopt/smcp

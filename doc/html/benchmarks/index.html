@@ -211,16 +211,16 @@ loadedobjects+=file+" " //Remember this object as being already added to page
 <h2>Error measures<a class="headerlink" href="#error-measures" title="Permalink to this headline">¶</a></h2>
 <p>We report DIMACS error measures when available. The six error measures are defined as:</p>
 <div class="math">
-<p><img src="../_images/math/40994b2d48ca834ddb751c954d66e9a62b71298d.png" alt="\epsilon_1(X,y,S) &amp;= \frac{\|\mathcal{A}(X) - b\|_2}{1+\|b\|_\infty} \\
+\[\begin{split}\epsilon_1(X,y,S) &amp;= \frac{\|\mathcal{A}(X) - b\|_2}{1+\|b\|_\infty} \\
 \epsilon_2(X,y,S) &amp;= \max\left\{0,\frac{-\lambda_{\min}(X)}{1+\|b\|_\infty } \right\} \\
 \epsilon_3(X,y,S) &amp;= \frac{\|\mathcal{A}^{\rm adj}(y)+S-C \|_F}{1+\|C\|_{\max}} \\
 \epsilon_4(X,y,S) &amp;= \max\left\{0, \frac{-\lambda_{\min}(S)}{1+\|C\|_{\max}} \right\} \\
 \epsilon_5(X,y,S) &amp;= \frac{C \bullet X - b^Ty}{1+|C\bullet X|+|b^Ty|} \\
-\epsilon_6(X,y,S) &amp;= \frac{S\bullet X}{1+|C\bullet X|+|b^Ty|}"/></p>
-</div><p>Here <img class="math" src="../_images/math/6324b1b4bcf6ba04a4b0f7f7f469b1e55aa49c39.png" alt="\|C\|_{\max} = \max_{i,j} |C_{ij}|"/>, and <img class="math" src="../_images/math/036b689855ed227235257ca32c6b4ea1ea9162bd.png" alt="C\bullet X = \mathbf{tr}(C^TX)"/>.</p>
-<p>Note that <img class="math" src="../_images/math/f30175598ea0a11e999f9bff605f2532535cb0f1.png" alt="\epsilon_2(X,y,S)=0"/> and <img class="math" src="../_images/math/e04ed6b378a3e7620fea642b8c6fc41baa51971b.png" alt="\epsilon_4(X,y,S)=0"/>
-since all iterates <img class="math" src="../_images/math/5b7f746cbfa429b567e135f75155c9d34d13d497.png" alt="(X,y,S)"/> satisfy <img class="math" src="../_images/math/2de208254b1874b03b310a0d8157d88dbc79545b.png" alt="X \in
-\mathbf{S}_{V,c++}^n"/> and <img class="math" src="../_images/math/10aebc1e427ae0c5ff7a573f52cae7460ef5bfba.png" alt="S \in \mathbf{S}_{V,++}^n"/>.</p>
+\epsilon_6(X,y,S) &amp;= \frac{S\bullet X}{1+|C\bullet X|+|b^Ty|}\end{split}\]</div>
+<p>Here <span class="math">\(\|C\|_{\max} = \max_{i,j} |C_{ij}|\)</span>, and <span class="math">\(C\bullet X = \mathbf{tr}(C^TX)\)</span>.</p>
+<p>Note that <span class="math">\(\epsilon_2(X,y,S)=0\)</span> and <span class="math">\(\epsilon_4(X,y,S)=0\)</span>
+since all iterates <span class="math">\((X,y,S)\)</span> satisfy <span class="math">\(X \in
+\mathbf{S}_{V,c++}^n\)</span> and <span class="math">\(S \in \mathbf{S}_{V,++}^n\)</span>.</p>
 </div>
 <div class="section" id="experimental-setup">
 <h2>Experimental setup<a class="headerlink" href="#experimental-setup" title="Permalink to this headline">¶</a></h2>
@@ -230,27 +230,27 @@ Intel Core 2 Quad Q6600 CPU (2.4 GHz), 4 GB of RAM, and running Ubuntu
 <p>The problem instances used in the experiments are available for
 download <a class="reference internal" href="../testproblems/index.html"><span class="doc">here</span></a> and the SDPLIB problems are
 available <a class="reference external" href="http://www.nmt.edu/~borchers/sdplib">here</a>.</p>
-<p>We use the least-norm solution to the set of equations <img class="math" src="../_images/math/2b070f3115be6ad3d640160d818a425688594180.png" alt="A_i
-\bullet X, i=1,\ldots,m,"/> as starting point when it is strictly
+<p>We use the least-norm solution to the set of equations <span class="math">\(A_i
+\bullet X, i=1,\ldots,m,\)</span> as starting point when it is strictly
 feasible, and otherwise we solve the phase I problem</p>
 <div class="math">
-<p><img src="../_images/math/782438896ee9b6d0142bd9d4d6661787d411b133.png" alt="\begin{array}{ll}
+\[\begin{split}\begin{array}{ll}
 \mbox{minimize}   &amp; s        \\
 \mbox{subject to} &amp; A_i \bullet X = b_i, \quad i=1,\ldots,m, \\
 &amp; \mathbf{tr}(X) \leq M  \\
 &amp; X + (s-\epsilon) I \succeq_{\rm c} 0, s \geq 0.
-\end{array}"/></p>
-</div><p>Here <img class="math" src="../_images/math/19bc0073dde1bcd1a8e6a32b251e80cced668f04.png" alt="\epsilon"/> is a small constant, and the constraint
-<img class="math" src="../_images/math/ba4a8378dd3284663ebc6f20032457dab7238fb3.png" alt="\mathbf{tr}(X) \leq M"/> is added to bound the feasible set.</p>
+\end{array}\end{split}\]</div>
+<p>Here <span class="math">\(\epsilon\)</span> is a small constant, and the constraint
+<span class="math">\(\mathbf{tr}(X) \leq M\)</span> is added to bound the feasible set.</p>
 </div>
 <div class="section" id="sdps-with-band-structure">
 <h2>SDPs with band structure<a class="headerlink" href="#sdps-with-band-structure" title="Permalink to this headline">¶</a></h2>
 <p>We consider a family of SDP instances where the data matrices
-<img class="math" src="../_images/math/8a865f4e8dcd57fb6ada7380551829231f52cfd8.png" alt="C,A_1,\ldots,A_m"/> are of order <img class="math" src="../_images/math/413f8a8e40062a9090d9d50b88bc7b551b314c26.png" alt="n"/> and banded with a
-common bandwidth <img class="math" src="../_images/math/7fe6069aa7e741b99f6b7fe911ad086a274d3ec3.png" alt="2w+1"/>.</p>
+<span class="math">\(C,A_1,\ldots,A_m\)</span> are of order <span class="math">\(n\)</span> and banded with a
+common bandwidth <span class="math">\(2w+1\)</span>.</p>
 <div class="section" id="experiment-1">
 <h3>Experiment 1<a class="headerlink" href="#experiment-1" title="Permalink to this headline">¶</a></h3>
-<p><img class="math" src="../_images/math/87773b62a76517bd84e3e8db4ac122a2e8ac1721.png" alt="m=100"/> constraints, bandwidth <img class="math" src="../_images/math/37d6147c60f7096c0d6102f0b4d9f0b222015d18.png" alt="11"/> (<img class="math" src="../_images/math/bd5c8f6c32ceddd936c69991fd54cc4eb1a96946.png" alt="w=5"/>), and variable order <img class="math" src="../_images/math/413f8a8e40062a9090d9d50b88bc7b551b314c26.png" alt="n"/></p>
+<p><span class="math">\(m=100\)</span> constraints, bandwidth <span class="math">\(11\)</span> (<span class="math">\(w=5\)</span>), and variable order <span class="math">\(n\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -272,7 +272,7 @@ common bandwidth <img class="math" src="../_images/math/7fe6069aa7e741b99f6b7fe9
 </script></div>
 <div class="section" id="experiment-2">
 <h3>Experiment 2<a class="headerlink" href="#experiment-2" title="Permalink to this headline">¶</a></h3>
-<p>order <img class="math" src="../_images/math/6ca3cf957420b38233052d129c3cb37a337a8f03.png" alt="n = 500"/>, bandwidth <img class="math" src="../_images/math/1bf8f5b0beaf478c9994b0f613b68fc429625de4.png" alt="7"/> (<img class="math" src="../_images/math/53c59522c2bbbb97fda0b255ce324d7e49ca25ad.png" alt="w=3"/>), and variable number of constraints <img class="math" src="../_images/math/c4bb40dd65eae6c11b325989b14e0b8d35e4e3ef.png" alt="m"/></p>
+<p>order <span class="math">\(n = 500\)</span>, bandwidth <span class="math">\(7\)</span> (<span class="math">\(w=3\)</span>), and variable number of constraints <span class="math">\(m\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -295,7 +295,7 @@ common bandwidth <img class="math" src="../_images/math/7fe6069aa7e741b99f6b7fe9
 </div>
 <div class="section" id="experiment-3">
 <h3>Experiment 3<a class="headerlink" href="#experiment-3" title="Permalink to this headline">¶</a></h3>
-<p>order <img class="math" src="../_images/math/691c7f856f3cd4ed6bc1a607011db3d8fe40b76a.png" alt="n = 200"/>, <img class="math" src="../_images/math/87773b62a76517bd84e3e8db4ac122a2e8ac1721.png" alt="m=100"/> constraints, and variable bandwidth <img class="math" src="../_images/math/7fe6069aa7e741b99f6b7fe911ad086a274d3ec3.png" alt="2w+1"/></p>
+<p>order <span class="math">\(n = 200\)</span>, <span class="math">\(m=100\)</span> constraints, and variable bandwidth <span class="math">\(2w+1\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -321,28 +321,28 @@ common bandwidth <img class="math" src="../_images/math/7fe6069aa7e741b99f6b7fe9
 <h2>Matrix norm minimization<a class="headerlink" href="#matrix-norm-minimization" title="Permalink to this headline">¶</a></h2>
 <p>We consider the matrix norm minimization problem</p>
 <div class="math">
-<p><img src="../_images/math/87cb5c97fc6db938af9f5f8ff7e8c9d73199bd7d.png" alt="\mbox{minimize} \ \| F(x) + G \|_2"/></p>
-</div><p>where <img class="math" src="../_images/math/2e8d55760e8cdbcb49de2eb02c6b32ce41c8b9c0.png" alt="F(x) = x_1 F_1 + \cdots + x_r F_r"/> and <img class="math" src="../_images/math/6343a8b1544ccd0a7b4de9e5325b86526928daaf.png" alt="G,F_i \in
-\mathbf{R}^{p \times q}"/> are the problem data. The problem can be
+\[\mbox{minimize} \ \| F(x) + G \|_2\]</div>
+<p>where <span class="math">\(F(x) = x_1 F_1 + \cdots + x_r F_r\)</span> and <span class="math">\(G,F_i \in
+\mathbf{R}^{p \times q}\)</span> are the problem data. The problem can be
 formulated as an SDP:</p>
 <div class="math">
-<p><img src="../_images/math/adc972f2f288b209f87e4e4248a1803fb14b9382.png" alt="\begin{array}{ll}
+\[\begin{split}\begin{array}{ll}
    \mbox{minimize} &amp; t \\
    \mbox{subject to} &amp;
    \begin{bmatrix} t I &amp; F(x) +G \\
    (F(x)+G)^T &amp; tI
    \end{bmatrix} \succeq 0.
-\end{array}"/></p>
-</div><p>This SDP has dimensions <img class="math" src="../_images/math/e99e9e64fe4ab2546f6dea730c6732556f4250a8.png" alt="m=r+1"/> and <img class="math" src="../_images/math/5fd341436fa8caf9132e52c2809de3b45b5b2b69.png" alt="n = p + q"/>.  We
-generate <img class="math" src="../_images/math/b92c09a649305a0aef3239729d93cdf941e0e5cf.png" alt="G"/> as a dense <img class="math" src="../_images/math/45df5cd8f9c2725710d983d29abd7424e3a1ced3.png" alt="p\times q"/> matrix, and the
-matrices <img class="math" src="../_images/math/d07b4c16d04b6739df29c10f32dfc4b946061922.png" alt="F_i"/> are generated such that the number of nonzero
-entries in each matrix is given by <img class="math" src="../_images/math/84903966f493f2ae1158c95d9b3c0429f5cb3b21.png" alt="\max (1,dpq)"/> where the
-parameter <img class="math" src="../_images/math/63c895e6ed137e52a997795bfa5173593f9fbca4.png" alt="d \in [0,1]"/> determines sparsity. The locations of
-nonzero entries in <img class="math" src="../_images/math/d07b4c16d04b6739df29c10f32dfc4b946061922.png" alt="F_i"/> are random. Thus, the problem family is
-parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e9ddac46fc44ea781c122bfa9f3.png" alt="(p,q,r,d)"/>.</p>
+\end{array}\end{split}\]</div>
+<p>This SDP has dimensions <span class="math">\(m=r+1\)</span> and <span class="math">\(n = p + q\)</span>.  We
+generate <span class="math">\(G\)</span> as a dense <span class="math">\(p\times q\)</span> matrix, and the
+matrices <span class="math">\(F_i\)</span> are generated such that the number of nonzero
+entries in each matrix is given by <span class="math">\(\max (1,dpq)\)</span> where the
+parameter <span class="math">\(d \in [0,1]\)</span> determines sparsity. The locations of
+nonzero entries in <span class="math">\(F_i\)</span> are random. Thus, the problem family is
+parameterized by the tuple <span class="math">\((p,q,r,d)\)</span>.</p>
 <div class="section" id="experiment-4">
 <h3>Experiment 4<a class="headerlink" href="#experiment-4" title="Permalink to this headline">¶</a></h3>
-<p>variable number of rows <img class="math" src="../_images/math/3eca8557203e86160952e1c0f735f7417f3285b1.png" alt="p"/>, <img class="math" src="../_images/math/0a6c1f9ae7bb2ec5c0baf6e182d44c923a5e84ff.png" alt="q=10"/> columns, <img class="math" src="../_images/math/9b126dae94455cfb66c9bc8a3a2d7b487824a72b.png" alt="r=100"/> variables, and density <img class="math" src="../_images/math/c0c4677937214de046e792bf58aff56583ba536f.png" alt="d=1"/></p>
+<p>variable number of rows <span class="math">\(p\)</span>, <span class="math">\(q=10\)</span> columns, <span class="math">\(r=100\)</span> variables, and density <span class="math">\(d=1\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -364,7 +364,7 @@ parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e
 </script></div>
 <div class="section" id="experiment-5">
 <h3>Experiment 5<a class="headerlink" href="#experiment-5" title="Permalink to this headline">¶</a></h3>
-<p><img class="math" src="../_images/math/8e612c87dd3685b9f00730d761f8fc41a99c609f.png" alt="p=400"/> rows, <img class="math" src="../_images/math/0a6c1f9ae7bb2ec5c0baf6e182d44c923a5e84ff.png" alt="q=10"/> columns, <img class="math" src="../_images/math/2e24d42cd40a597d436eb201e19157538ae03d57.png" alt="r=200"/> variables, and variable density</p>
+<p><span class="math">\(p=400\)</span> rows, <span class="math">\(q=10\)</span> columns, <span class="math">\(r=200\)</span> variables, and variable density</p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -386,7 +386,7 @@ parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e
 </script></div>
 <div class="section" id="experiment-6">
 <h3>Experiment 6:<a class="headerlink" href="#experiment-6" title="Permalink to this headline">¶</a></h3>
-<p><img class="math" src="../_images/math/8e612c87dd3685b9f00730d761f8fc41a99c609f.png" alt="p=400"/> rows, <img class="math" src="../_images/math/0a6c1f9ae7bb2ec5c0baf6e182d44c923a5e84ff.png" alt="q=10"/> columns, variable number of variables <img class="math" src="../_images/math/2ede365ad144ab396916ec60458da03860803078.png" alt="r"/>, and density <img class="math" src="../_images/math/c0c4677937214de046e792bf58aff56583ba536f.png" alt="d=1"/></p>
+<p><span class="math">\(p=400\)</span> rows, <span class="math">\(q=10\)</span> columns, variable number of variables <span class="math">\(r\)</span>, and density <span class="math">\(d=1\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -408,7 +408,7 @@ parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e
 </script></div>
 <div class="section" id="experiment-7">
 <h3>Experiment 7:<a class="headerlink" href="#experiment-7" title="Permalink to this headline">¶</a></h3>
-<p><img class="math" src="../_images/math/359b50abb42fb20da7098a9b0418a23d3b453cc3.png" alt="p + q=1000"/>, <img class="math" src="../_images/math/b379f11972594f3a23d0bd31f8bca8b26d33fec6.png" alt="r=10"/> variables, and density <img class="math" src="../_images/math/d07229dd2f213aa8472c46bfff475469b6d40291.png" alt="d = 1"/></p>
+<p><span class="math">\(p + q=1000\)</span>, <span class="math">\(r=10\)</span> variables, and density <span class="math">\(d = 1\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -431,15 +431,15 @@ parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e
 </div>
 <div class="section" id="overlapping-cliqes">
 <h2>Overlapping cliqes<a class="headerlink" href="#overlapping-cliqes" title="Permalink to this headline">¶</a></h2>
-<p>We consider a family of SDPs which have an aggregate sparsity patterns <img class="math" src="../_images/math/c99df7a209495334da442b1ec998abaabfa320d8.png" alt="V"/> with <img class="math" src="../_images/math/d99efde75c84ef402a92cd4497530d2366fb112f.png" alt="l"/> cliques of order <img class="math" src="../_images/math/75e27f04188974063be3230dca208cd495b77ce1.png" alt="N"/>. The cliques are given by</p>
+<p>We consider a family of SDPs which have an aggregate sparsity patterns <span class="math">\(V\)</span> with <span class="math">\(l\)</span> cliques of order <span class="math">\(N\)</span>. The cliques are given by</p>
 <div class="math">
-<p><img src="../_images/math/7f40131af00e20e0d8bd6a489645361dde20f5a7.png" alt="W_i = \{ (i-1)(N-u)+1,\ldots, (i-1)(N-u)+1+u \}, \quad i =1 ,\ldots, l"/></p>
-</div><p>where <img class="math" src="../_images/math/e5fc41b391867da81606413e3389c7efc73abaf0.png" alt="u"/> (<img class="math" src="../_images/math/c9f586e1b3189459a9d0c606b205298b82a64755.png" alt="0 \leq u \leq N-1"/>) is the overlap between neighboring cliques. The sparsity pattern is illustrated below:</p>
+\[W_i = \{ (i-1)(N-u)+1,\ldots, (i-1)(N-u)+1+u \}, \quad i =1 ,\ldots, l\]</div>
+<p>where <span class="math">\(u\)</span> (<span class="math">\(0 \leq u \leq N-1\)</span>) is the overlap between neighboring cliques. The sparsity pattern is illustrated below:</p>
 <img alt="../_images/cliqueoverlap.png" class="align-center" src="../_images/cliqueoverlap.png" />
-<p>Note that <img class="math" src="../_images/math/608ff1cecc0399c33688fd14eb52fe97a45139a0.png" alt="u=0"/> corresponds to a block diagonal sparsity pattern and <img class="math" src="../_images/math/ec6743b73c0fa65fdb117156752153739e9bb56c.png" alt="u=N-1"/> corresponds to a band pattern.</p>
+<p>Note that <span class="math">\(u=0\)</span> corresponds to a block diagonal sparsity pattern and <span class="math">\(u=N-1\)</span> corresponds to a band pattern.</p>
 <div class="section" id="experiment-8">
 <h3>Experiment 8<a class="headerlink" href="#experiment-8" title="Permalink to this headline">¶</a></h3>
-<p><img class="math" src="../_images/math/519d81c3938357e1245409fd881c6bd874f7e4f4.png" alt="m = 100"/> constraints, clique size <img class="math" src="../_images/math/7fc523a302aa6e999035be23223185c06525a456.png" alt="N=16"/>, and variable overlap <img class="math" src="../_images/math/e5fc41b391867da81606413e3389c7efc73abaf0.png" alt="u"/></p>
+<p><span class="math">\(m = 100\)</span> constraints, clique size <span class="math">\(N=16\)</span>, and variable overlap <span class="math">\(u\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -465,7 +465,7 @@ parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e
 <p>The following experiment is based on problem instances from <span class="raw-html"><a href="http://www.nmt.edu/~sdplib/">SDPLIB</a></span>.</p>
 <div class="section" id="experiment-9">
 <h3>Experiment 9<a class="headerlink" href="#experiment-9" title="Permalink to this headline">¶</a></h3>
-<p>SDPLIB problems with <img class="math" src="../_images/math/a141163ec8dcd3eadfb5318b1e197e1d76e3416c.png" alt="n \geq 500"/></p>
+<p>SDPLIB problems with <span class="math">\(n \geq 500\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -489,7 +489,7 @@ parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e
 </div>
 <div class="section" id="nonchordal-sparsity-patterns">
 <h2>Nonchordal sparsity patterns<a class="headerlink" href="#nonchordal-sparsity-patterns" title="Permalink to this headline">¶</a></h2>
-<p>The following problems are based on sparsity patterns from the <a class="reference external" href="http://www.cise.ufl.edu/research/sparse/matrices">University of Florida Sparse Matrix Collection</a> (UFSMC). We use as problem identifier the name <cite>rsX</cite> where <cite>X</cite> is the ID number of a sparsity pattern from UFSMC. Each problem instance has <img class="math" src="../_images/math/c4bb40dd65eae6c11b325989b14e0b8d35e4e3ef.png" alt="m"/> constraints and the number of nonzeros in the lower triangle of <img class="math" src="../_images/math/121e299726ed162074fcd7fe348b154ad4be1073.png" alt="A_i"/> is <img class="math" src="../_images/math/9dd1b3c70063cc1d107791e1af7e19a70a4fe210.png" alt="\max\{1,\mathrm{round}(0.005 |V|)\}"/> where <img class="math" src="../_images/math/81de438050c542efad1976c42389c728ff03f8f6.png" alt="|V|"/> is the number of nonzeros in the lower triangle of the aggregate sparsity pattern <img class="math" src="../_images/math/c99df7a209495334da442b1ec998abaabfa320d8.png" alt="V"/>, and <img class="math" src="../_images/math/2bcc65482aa8e15cd4c9e9f2542451fb4e971a91.png" alt="C"/> has <img class="math" src="../_images/math/81de438050c542efad1976c42389c728ff03f8f6.png" alt="|V|"/> nonzeros.</p>
+<p>The following problems are based on sparsity patterns from the <a class="reference external" href="http://www.cise.ufl.edu/research/sparse/matrices">University of Florida Sparse Matrix Collection</a> (UFSMC). We use as problem identifier the name <cite>rsX</cite> where <cite>X</cite> is the ID number of a sparsity pattern from UFSMC. Each problem instance has <span class="math">\(m\)</span> constraints and the number of nonzeros in the lower triangle of <span class="math">\(A_i\)</span> is <span class="math">\(\max\{1,\mathrm{round}(0.005 |V|)\}\)</span> where <span class="math">\(|V|\)</span> is the number of nonzeros in the lower triangle of the aggregate sparsity pattern <span class="math">\(V\)</span>, and <span class="math">\(C\)</span> has <span class="math">\(|V|\)</span> nonzeros.</p>
 <div class="section" id="experiment-10">
 <h3>Experiment 10<a class="headerlink" href="#experiment-10" title="Permalink to this headline">¶</a></h3>
 <h4> Results </h4>
@@ -569,7 +569,7 @@ parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e
   <div role="contentinfo">
     <p>
         &copy; <a href="../copyright.html">Copyright</a> Martin S. Andersen and Lieven Vandenberghe.
-      Last updated on Dec 07, 2016.
+      Last updated on Dec 15, 2016.
     </p>
   </div>
 
@@ -598,6 +598,7 @@ parameterized by the tuple <img class="math" src="../_images/math/eae80a9cf9ad8e
       <script type="text/javascript" src="../_static/jquery.js"></script>
       <script type="text/javascript" src="../_static/underscore.js"></script>
       <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   
 

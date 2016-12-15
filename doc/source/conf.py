@@ -55,7 +55,7 @@ for mod_name in MOCK_MODULES:
 
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.pngmath']
+extensions = ['sphinx.ext.mathjax']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -130,10 +130,6 @@ on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 if not on_rtd: # only import and set the theme if we're building docs locally
     html_theme = "sphinx_rtd_theme"
     html_theme_path = ["_themes", ]
-else:
-    # use MathJax on RTD 
-    extensions.remove('sphinx.ext.pngmath')
-    extensions.append('sphinx.ext.mathjax')
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
