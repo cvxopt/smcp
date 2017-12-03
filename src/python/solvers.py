@@ -1,4 +1,4 @@
-# Copyright 2010-2014 M. S. Andersen & L. Vandenberghe
+# Copyright 2010-2017 M. S. Andersen & L. Vandenberghe
 #
 # This file is part of SMCP.
 #
@@ -21,7 +21,7 @@ options = {'debug'        :  False,
            'abstol'       :   1e-6,
            'reltol'       :   1e-6,
            'feastol'      :   1e-8,
-           'refinement'   :      1,
+           'refinement'   :      2,
            'cholmod'      :  False,
            'order'        :  'AMD',
            'tnzcols'      :    0.1,
@@ -2330,9 +2330,9 @@ def conelp(c,G,h,dims=None,kktsolver='chol'):
 
     for k in range(P._m+1):
         if not k==0:
-            v = G[:,k-1].spmatrix(reordered=False, symmetric=False)
+            v = sparse(G[:,k-1])
         else:
-            v = h.spmatrix(reordered=False, symmetric=False)
+            v = sparse(h)
         B = []
 
         ptr = 0
