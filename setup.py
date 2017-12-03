@@ -1,4 +1,4 @@
-# Copyright 2010-2014 M. S. Andersen & L. Vandenberghe
+# Copyright 2010-2017 M. S. Andersen & L. Vandenberghe
 #
 # This file is part of SMCP.
 #
@@ -24,7 +24,7 @@ if sys.version < '2.6':
 
 LIBRARIES = ['gomp']
 EXTRA_COMPILE_ARGS = ['-fopenmp']
-# Compile without OpenMP under Mac OS 
+# Compile without OpenMP under Mac OS
 if sys.platform.startswith('darwin'):
     LIBRARIES.remove('gomp')
     EXTRA_COMPILE_ARGS.remove('-fopenmp')
@@ -32,7 +32,7 @@ if sys.platform.startswith('darwin'):
 misc = Extension('misc',
 #                 include_dirs = [ CVXOPT_SRC ],
                  libraries = LIBRARIES,
-                 extra_compile_args = EXTRA_COMPILE_ARGS,                    
+                 extra_compile_args = EXTRA_COMPILE_ARGS,
                  sources = ['src/C/misc.c'])
 
 setup(name="smcp",
@@ -47,4 +47,4 @@ setup(name="smcp",
       package_dir = {'smcp':'src/python'},
       ext_package = "smcp",
       ext_modules = [misc],
-      requires = ["cvxopt (>=1.1.9)","chompack (>=2.3.1)"])
+      requires = ["cvxopt (>=1.1.9)","chompack (>=2.3.2)"])

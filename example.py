@@ -1,4 +1,4 @@
-# Copyright 2010-2014 M. S. Andersen & L. Vandenberghe
+# Copyright 2010-2017 M. S. Andersen & L. Vandenberghe
 #
 # This file is part of SMCP.
 #
@@ -23,10 +23,10 @@ P = smcp.mtxnorm_SDP(p,q,m)
 
 #
 try:
-    # try feasible solver 
+    # try feasible solver
     sol = P.solve_feas(kktsolver='qr',scaling='primal')
 except:
-    # solve phase 1 problem to find feasible starting point 
+    # solve phase 1 problem to find feasible starting point
     X0,p1sol = P.solve_phase1(kktsolver='qr')
-    # try feasible solver with feasible starting point 
+    # try feasible solver with feasible starting point
     sol = P.solve_feas(kktsolver='qr',primalstart={'x':X0})

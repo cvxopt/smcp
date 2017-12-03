@@ -6,14 +6,14 @@ before_install:
 - sudo apt-get install python-dev
 - sudo apt-get install libblas-dev
 - sudo apt-get install liblapack-dev
-- wget http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-4.5.3.tar.gz
-- tar -xf SuiteSparse-4.5.3.tar.gz
+- wget http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-4.5.4.tar.gz
+- tar -xf SuiteSparse-4.5.4.tar.gz
 - CVXOPT_SUITESPARSE_SRC_DIR=$(pwd)/SuiteSparse pip install cvxopt
 - pip install chompack
 language: python
 python:
 - '2.7'
-- '3.5'
+- '3.6'
 install:
 - python setup.py -q install
 script:
