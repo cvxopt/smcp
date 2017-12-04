@@ -2174,8 +2174,6 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
             break
         elif iter == MAXITERS:
             # Max. number of iterations reached
-            pcost = None
-            dcost = None
             if show_progress:
                 print("\033[1;31mTerminated " \
                     "(maximum number of iterations reached).\033[0m")
