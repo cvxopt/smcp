@@ -1,4 +1,4 @@
-# Copyright 2010-2017 M. S. Andersen & L. Vandenberghe
+# Copyright 2010-2018 M. S. Andersen & L. Vandenberghe
 #
 # This file is part of SMCP.
 #
@@ -15,19 +15,21 @@
 # You should have received a copy of the GNU General Public License
 # along with SMCP.  If not, see <http://www.gnu.org/licenses/>.
 
-from distutils.core import setup, Extension
+try:
+    from setuptools import setup, Extension
+except ImportError:
+    from distutils.core import setup, Extension
 import os, sys
 import versioneer
 
-if sys.version < '2.6':
-    sys.exit('ERROR: Sorry, python 2.6 is required for this extension.')
+if sys.version < '2.7':
+    sys.exit('ERROR: Sorry, python 2.7 is required for this extension.')
 
-LIBRARIES = ['gomp']
-EXTRA_COMPILE_ARGS = ['-fopenmp']
-# Compile without OpenMP under Mac OS
-if sys.platform.startswith('darwin'):
-    LIBRARIES.remove('gomp')
-    EXTRA_COMPILE_ARGS.remove('-fopenmp')
+LIBRARIES = os.environ.get("SMCP_LIBRARIES",[])
+if type(LIBRARIES) is str: LIBRARIES = LIBRARIES.strip().split(';')
+
+EXTRA_COMPILE_ARGS = os.environ.get("SMCP_EXTRA_COMPILE_ARGS",[])
+if type(EXTRA_COMPILE_ARGS) is str: EXTRA_COMPILE_ARGS = EXTRA_COMPILE_ARGS.strip().split(';')
 
 misc = Extension('misc',
 #                 include_dirs = [ CVXOPT_SRC ],

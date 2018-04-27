@@ -1,4 +1,4 @@
-include INSTALL LICENSE README.md example.py
+include LICENSE README.md example.py
 recursive-include src/C *
 include versioneer.py
 include src/python/_version.py
