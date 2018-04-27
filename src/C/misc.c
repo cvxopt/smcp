@@ -1,4 +1,4 @@
-// Copyright 2010-2017 M. S. Andersen & L. Vandenberghe
+// Copyright 2010-2018 M. S. Andersen & L. Vandenberghe
 //
 // This file is part of SMCP.
 //

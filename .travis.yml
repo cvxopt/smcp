@@ -1,30 +1,40 @@
 notifications:
   email: false
-os:
-- linux
+
+env:
+  global:
+    - TEST_DEPENDS="chompack"
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+      language: python
+      python: '2.7'
+    - os: linux
+      dist: trusty
+      sudo: required
+      language: python
+      python: '3.6'
+    - os: osx
+      language: python
+      env: PYVERSION=2.7
+      language: generic
+    - os: osx
+      language: python
+      env: PYVERSION=3.6
+      language: generic
+
 before_install:
-- sudo apt-get install python-dev
-- sudo apt-get install libblas-dev
-- sudo apt-get install liblapack-dev
-- wget http://faculty.cse.tamu.edu/davis/SuiteSparse/SuiteSparse-4.5.4.tar.gz
-- tar -xf SuiteSparse-4.5.4.tar.gz
-- CVXOPT_SUITESPARSE_SRC_DIR=$(pwd)/SuiteSparse pip install cvxopt
-- pip install chompack
-language: python
-python:
-- '2.7'
-- '3.6'
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install python-dev; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew cask uninstall oclint; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;bash miniconda.sh -b -p $HOME/miniconda; export PATH="$HOME/miniconda/bin:$PATH" ;  fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then conda create -y -n myenv python=$PYVERSION && source $HOME/miniconda/bin/activate myenv; fi
+
 install:
-- python setup.py -q install
+  - python setup.py -q install
+
 script:
-- python example.py
-deploy:
-  provider: pypi
-  user: msa
-  password:
-    secure: bV3oHy9EuAh/7wsEwdN/oZnTfuBJTRqYhdCgg4U+C15a6MQFK73HqyjsHgQTqibtAPRd5+BQqxDqpM2SNIU1fp6HTXavIcslfOWAfFsAVTTlc/p9UcD3Bnu3Ot6shPv6tlaoLJ1+Grigg6EtOTQnvsaDSW689wWTTyYdqWYPXoaWvJwpoTQN7wN+cHUXcOqmuRpELeCp8DsTNvtsek0iCbhgbJgMVtP1bkPEfZkaPSxec9wDukmzpdIXRHvMqJUl1x9Fb9mnkFN7PxfiFZrR5wZFSPX56WYkC079rDho165RTj9Ag9eg/4HHXCAHyv83NPer9+29sLt9L4NIlKg0iooJ0KjftLB5CzZkGctEzR7/A0BrUr5sMTux49AEUYtoU3N1zNZsQ9ooqheQ6dWNIf9HPrCaojUi9OD1l8xFEKtyqHF9Wl/ArIRiriJlIy091BYpAQIhlhQIEcwfXcqm6+Q3Se40beSZPsc0dACIYuyIVK6CQQZqfTIw5jABL2geU8kKvn8LixNVuxq/PmdxMQIjJCm8p8dEHeReDNIKaqpi+h4baMiTSdnHLyKZe3fMXGEJrDxHkZNAOrGQVpBsd0ypNkHnQph5UakwO5nwiAGUzf7H2qLrodunrcQemp9bnoTyp/zbicI+ycKFHAqujJBG+UYjgS0a4smCI6NP6m0=
-  on:
-    branch: master
-    tags: true
-    distributions: sdist
-    repo: cvxopt/smcp
+  - pip install $TEST_DEPENDS
+  - python example.py
