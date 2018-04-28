@@ -15,10 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with SMCP.  If not, see <http://www.gnu.org/licenses/>.
 
-try:
-    from setuptools import setup, Extension
-except ImportError:
-    from distutils.core import setup, Extension
+from setuptools import setup, Extension
 import os, sys
 import versioneer
 
@@ -49,4 +46,4 @@ setup(name="smcp",
       package_dir = {'smcp':'src/python'},
       ext_package = "smcp",
       ext_modules = [misc],
-      requires = ["cvxopt (>=1.1.9)","chompack (>=2.3.2)"])
+      install_requires = ["cvxopt (>=1.1.9)","chompack (>=2.3.2)"])
