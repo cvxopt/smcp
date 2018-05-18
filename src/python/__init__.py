@@ -18,11 +18,12 @@
 Python extension for chordal matrix cone programs.
 """
 
-from . import solvers
-from .base import SDP, mtxnorm_SDP, band_SDP, completion
+from smcp.base import SDP, mtxnorm_SDP, band_SDP, completion
 from cvxopt import matrix, spmatrix, sparse
+import smcp.analysis
+import smcp.solvers
 
-__all__ = ['solvers','SDP','mtxnorm_SDP','band_SDP','completion',\
+__all__ = ['solvers','analysis','SDP','mtxnorm_SDP','band_SDP','completion',\
                'matrix','spmatrix','sparse']
 
 from ._version import get_versions

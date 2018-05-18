@@ -51,23 +51,23 @@ def embed_SDP(P,order="AMD",cholmod=False):
     Pe._agg_sparsity()
     Pe._pname = P._pname + "_embed"
     Pe._ischordal = True; Pe._blockstruct = P._blockstruct
-    return Pe      
+    return Pe
 
-try: 
-    import pylab
-    _PYLAB = True
+try:
+    import matplotlib.pyplot as plt
+    _mpl = True
 except:
-    _PYLAB = False
+    _mpl = False
 
-if _PYLAB:
+if _mpl:
     def spy(P,i=None,file=None,scale=None):
-        """Generates sparsity plot using Pylab"""
+        """Generates sparsity plot using matplotlib"""
         if type(P) is spmatrix:
             V = chompack.symmetrize(chompack.tril(P))
             n = V.size[0]
         else:
             if not P._A: raise AttributeError("SDP data missing")
-            n = +P.n; 
+            n = +P.n;
             if i == None: V = chompack.symmetrize(P.V)
             elif i>=0 and i<=P.m and P._A:
                 r = P._A.CCS[1][P._A.CCS[0][i]:P._A.CCS[0][i+1]]
@@ -79,53 +79,53 @@ if _PYLAB:
         from math import floor
         msize = max(1,int(floor(100./n)))
 
-        if file==None: pylab.ion()
-        else: pylab.ioff()
-        f = pylab.figure(figsize=(6,6)); f.clf()
-        if scale is None: scale = 1.0 
+        if file==None: plt.ion()
+        else: plt.ioff()
+        f = plt.figure(figsize=(6,6)); f.clf()
+        if scale is None: scale = 1.0
         I = V.I*scale+1; J = (n-V.J)*scale
-        p = pylab.plot(I,J, 's', linewidth = 1, hold = 'False')
-        pylab.setp(p, markersize = msize, markerfacecolor = 'k')
-        g = pylab.gca()
-        pylab.axis([0.5,n*scale+0.5,0.5,n*scale+0.5])
+        p = plt.plot(I,J, 's', linewidth = 1)
+        plt.setp(p, markersize = msize, markerfacecolor = 'k')
+        g = plt.gca()
+        plt.axis([0.5,n*scale+0.5,0.5,n*scale+0.5])
         g.set_aspect('equal')
-        locs,labels = pylab.yticks()
+        locs,labels = plt.yticks()
         locs = locs[locs<=n*scale]; locs = locs[locs>=1]
-        pylab.yticks(locs[::-1]-(locs[-1]-n*scale-1)-locs[0],
+        plt.yticks(locs[::-1]-(locs[-1]-n*scale-1)-locs[0],
                      [str(int(loc)) for loc in locs])
-        if file: pylab.savefig(file)
+        if file: plt.savefig(file)
 
     def nzcols_hist(P,file=None):
-        if file==None: pylab.ion()
-        else: pylab.ioff()
+        if file==None: plt.ion()
+        else: plt.ioff()
         nzcols = +P.nzcols
         Nmax = max(nzcols)
         y = matrix(0,(Nmax,1))
         for n in nzcols:
             y[n-1] += 1
         y = sparse(y)
-        f = pylab.figure(); f.clf()
-        pylab.stem(y.I+1,y.V)#; pylab.xlim(-1,Nmax+2)
-        if file: pylab.savefig(P._pname + "_nzcols_hist.png")
+        f = plt.figure(); f.clf()
+        plt.stem(y.I+1,y.V)#; plt.xlim(-1,Nmax+2)
+        if file: plt.savefig(P._pname + "_nzcols_hist.png")
 
     def nnz_hist(P,file=None):
-        if file==None: pylab.ion()
-        else: pylab.ioff()
+        if file==None: plt.ion()
+        else: plt.ioff()
         nnz = +P.nnzs
         Nmax = max(nnz)
         y = matrix(0,(Nmax,1))
         for n in nnz:
             y[n-1] += 1
         y = sparse(y)
-        f = pylab.figure(); f.clf()
-        pylab.stem(y.I+1,y.V)#; pylab.xlim(-1,Nmax+2)
-        if file: pylab.savefig(P._pname + "_nnz_hist.png")
+        f = plt.figure(); f.clf()
+        plt.stem(y.I+1,y.V)#; plt.xlim(-1,Nmax+2)
+        if file: plt.savefig(P._pname + "_nnz_hist.png")
 
     def clique_hist(P,file=None):
         if not P.ischordal: raise TypeError("Nonchordal")
-        if file==None: pylab.ion()
-        else: pylab.ioff()
-        V = +P.V 
+        if file==None: plt.ion()
+        else: plt.ioff()
+        V = +P.V
         p = chompack.maxcardsearch(V)
         #Vc,n = chompack.embed(V,p)
         symb = chompack.symbolic(V,p)
@@ -136,43 +136,41 @@ if _PYLAB:
         Ns = [len(v) for v in symb.supernodes()]
         Nu = [len(v) for v in symb.separators()]
         Nw = [len(v) for v in symb.cliques()]
-        
-        f = pylab.figure(); f.clf()
+
+        f = plt.figure(); f.clf()
         f.text(0.58,0.40,"Number of cliques: %i" % (len(Nw)))
         f.text(0.61,0.40-1*0.07,"$\sum | W_i | = %i$" % (sum(Nw)))
         f.text(0.61,0.40-2*0.07,"$\sum | V_i | = %i$" % (sum(Ns)))
         f.text(0.61,0.40-3*0.07,"$\sum | U_i | = %i$" % (sum(Nu)))
         f.text(0.61,0.40-4*0.07,"$\max_i\,| W_i | = %i$" % (max(Nw)))
 
-        pylab.subplot(221)
+        plt.subplot(221)
         Nmax = max(Nw)
         y = matrix(0,(Nmax,1))
         for n in Nw :
             y[n-1] += 1
         y = sparse(y)
-        pylab.stem(y.I+1,y.V,'k'); pylab.xlim(0, Nmax+1)
-        pylab.title("Cliques")
-        
-        
+        plt.stem(y.I+1,y.V,'k'); plt.xlim(0, Nmax+1)
+        plt.title("Cliques")
+
+
         Nmax = max(Nu)
         y = matrix(0,(Nmax,1))
-        if Nmax > 0: 
-            pylab.subplot(222)
+        if Nmax > 0:
+            plt.subplot(222)
             for n in Nu :
                 y[n-1] += 1
             y = sparse(y)
-            pylab.stem(y.I+1,y.V,'k'); pylab.xlim(0, Nmax+1)
-            pylab.title("Separators")
+            plt.stem(y.I+1,y.V,'k'); plt.xlim(0, Nmax+1)
+            plt.title("Separators")
 
-        pylab.subplot(223)
+        plt.subplot(223)
         Nmax = max(Ns)
         y = matrix(0,(Nmax,1))
         for n in Ns :
             y[n-1] += 1
         y = sparse(y)
-        pylab.stem(y.I+1,y.V,'k'); pylab.xlim(0, Nmax+1)
-        pylab.title("Residuals")
+        plt.stem(y.I+1,y.V,'k'); plt.xlim(0, Nmax+1)
+        plt.title("Residuals")
 
-        if file: pylab.savefig(file)
-
-
+        if file: plt.savefig(file)
