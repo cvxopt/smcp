@@ -530,6 +530,8 @@ def chordalsolver_feas(A,b,primalstart=None,dualstart=None,
         At = matrix(0.,(len(Vp),m))
         # Allocate storage for tq
         tq = matrix(0.,(m,1))
+    else:
+        raise ValueError("Unknown 'kktsolver'.")
 
     if LIFTING:
         SolvStr += ",lifting"
@@ -1882,7 +1884,9 @@ def chordalsolver_esd(A,b,primalstart=None,dualstart=None,
         At = matrix(0.,(len(Vp),m))
         # Allocate storage for tq
         tq = matrix(0.,(m,1))
-
+    else:
+        raise ValueError("Unknown 'kktsolver'.")
+    
     def kktsolver(L,Y):
         return factor(L,Y)
 
