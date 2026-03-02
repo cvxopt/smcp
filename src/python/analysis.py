@@ -1,4 +1,4 @@
-# Copyright 2010-2018 M. S. Andersen & L. Vandenberghe
+# Copyright 2010-2026 M. S. Andersen & L. Vandenberghe
 #
 # This file is part of SMCP.
 #
@@ -19,158 +19,199 @@ from smcp import SDP, misc
 import chompack
 from cvxopt import matrix, spmatrix, sparse
 
-def embed_SDP(P,order="AMD",cholmod=False):
-    if not isinstance(P,SDP): raise ValueError("not an SDP object")
-    if order=='AMD':
+
+def embed_SDP(P, order="AMD", cholmod=False):
+    if not isinstance(P, SDP):
+        raise ValueError("not an SDP object")
+    if order == "AMD":
         from cvxopt.amd import order
-    elif order=='METIS':
+    elif order == "METIS":
         from cvxopt.metis import order
-    else: raise ValueError("unknown ordering: %s " %(order))
+    else:
+        raise ValueError("unknown ordering: %s " % (order))
     p = order(P.V)
 
     if cholmod:
         from cvxopt import cholmod
-        V = +P.V + spmatrix([float(i+1) for i in range(P.n)],range(P.n),range(P.n))
-        F = cholmod.symbolic(V,p=p)
-        cholmod.numeric(V,F)
+
+        V = +P.V + spmatrix([float(i + 1) for i in range(P.n)],
+                            range(P.n), range(P.n))
+        F = cholmod.symbolic(V, p=p)
+        cholmod.numeric(V, F)
         f = cholmod.getfactor(F)
-        fd = [(j,i) for i,j in enumerate(f[:P.n**2:P.n+1])]
+        fd = [(j, i) for i, j in enumerate(f[:P.n**2:P.n+1])]
         fd.sort()
-        ip = matrix([j for _,j in fd])
-        Ve = chompack.tril(chompack.perm(chompack.symmetrize(f),ip))
-        Ie = misc.sub2ind((P.n,P.n),Ve.I,Ve.J)
+        ip = matrix([j for _, j in fd])
+        Ve = chompack.tril(chompack.perm(chompack.symmetrize(f), ip))
+        Ie = misc.sub2ind((P.n, P.n), Ve.I, Ve.J)
     else:
-        #Vc,n = chompack.embed(P.V,p)
-        symb = chompack.symbolic(P.V,p)
-        #Ve = chompack.sparse(Vc)
+        # Vc,n = chompack.embed(P.V,p)
+        symb = chompack.symbolic(P.V, p)
+        # Ve = chompack.sparse(Vc)
         Ve = symb.sparsity_pattern(reordered=False)
-        Ie = misc.sub2ind((P.n,P.n),Ve.I,Ve.J)
+        Ie = misc.sub2ind((P.n, P.n), Ve.I, Ve.J)
     Pe = SDP()
-    Pe._A = +P.A; Pe._b = +P.b
-    Pe._A[:,0] += spmatrix(0.0,Ie,[0 for i in range(len(Ie))],(Pe._A.size[0],1))
+    Pe._A = +P.A
+    Pe._b = +P.b
+    Pe._A[:, 0] += spmatrix(0.0, Ie, [0 for i in range(len(Ie))],
+                            (Pe._A.size[0], 1))
     Pe._agg_sparsity()
     Pe._pname = P._pname + "_embed"
-    Pe._ischordal = True; Pe._blockstruct = P._blockstruct
+    Pe._ischordal = True
+    Pe._blockstruct = P._blockstruct
     return Pe
+
 
 try:
     import matplotlib.pyplot as plt
     _mpl = True
-except:
+except ImportError:
     _mpl = False
 
 if _mpl:
-    def spy(P,i=None,file=None,scale=None):
+
+    def spy(P, i=None, file=None, scale=None):
         """Generates sparsity plot using matplotlib"""
         if type(P) is spmatrix:
             V = chompack.symmetrize(chompack.tril(P))
             n = V.size[0]
         else:
-            if not P._A: raise AttributeError("SDP data missing")
-            n = +P.n;
-            if i == None: V = chompack.symmetrize(P.V)
-            elif i>=0 and i<=P.m and P._A:
-                r = P._A.CCS[1][P._A.CCS[0][i]:P._A.CCS[0][i+1]]
-                if type(r) is int: I = [r%n]; J = [r/n]
-                else: I,J = misc.ind2sub(n,r)
-                V = chompack.symmetrize(spmatrix(0.,I,J,(n,n)))
-            else: raise ValueError("index out of range")
+            if not P._A:
+                raise AttributeError("SDP data missing")
+            n = +P.n
+            if i is None:
+                V = chompack.symmetrize(P.V)
+            elif i >= 0 and i <= P.m and P._A:
+                r = P._A.CCS[1][P._A.CCS[0][i]:P._A.CCS[0][i + 1]]
+                if type(r) is int:
+                    Il = [r % n]
+                    Jl = [r / n]
+                else:
+                    Il, Jl = misc.ind2sub(n, r)
+                V = chompack.symmetrize(spmatrix(0.0, Il, Jl, (n, n)))
+            else:
+                raise ValueError("index out of range")
 
         from math import floor
-        msize = max(1,int(floor(100./n)))
 
-        if file==None: plt.ion()
-        else: plt.ioff()
-        f = plt.figure(figsize=(6,6)); f.clf()
-        if scale is None: scale = 1.0
-        I = V.I*scale+1; J = (n-V.J)*scale
-        p = plt.plot(I,J, 's', linewidth = 1)
-        plt.setp(p, markersize = msize, markerfacecolor = 'k')
+        msize = max(1, int(floor(100.0 / n)))
+
+        if file is None:
+            plt.ion()
+        else:
+            plt.ioff()
+        f = plt.figure(figsize=(6, 6))
+        f.clf()
+        if scale is None:
+            scale = 1.0
+        Il = V.I * scale + 1
+        Jl = (n - V.J) * scale
+        p = plt.plot(Il, Jl, "s", linewidth=1)
+        plt.setp(p, markersize=msize, markerfacecolor="k")
         g = plt.gca()
-        plt.axis([0.5,n*scale+0.5,0.5,n*scale+0.5])
-        g.set_aspect('equal')
-        locs,labels = plt.yticks()
-        locs = locs[locs<=n*scale]; locs = locs[locs>=1]
-        plt.yticks(locs[::-1]-(locs[-1]-n*scale-1)-locs[0],
-                     [str(int(loc)) for loc in locs])
-        if file: plt.savefig(file)
+        plt.axis([0.5, n * scale + 0.5, 0.5, n * scale + 0.5])
+        g.set_aspect("equal")
+        locs, labels = plt.yticks()
+        locs = locs[locs <= n * scale]
+        locs = locs[locs >= 1]
+        plt.yticks(
+            locs[::-1] - (locs[-1] - n * scale - 1) - locs[0],
+            [str(int(loc)) for loc in locs],
+        )
+        if file:
+            plt.savefig(file)
 
-    def nzcols_hist(P,file=None):
-        if file==None: plt.ion()
-        else: plt.ioff()
+    def nzcols_hist(P, file=None):
+        if file is None:
+            plt.ion()
+        else:
+            plt.ioff()
         nzcols = +P.nzcols
         Nmax = max(nzcols)
-        y = matrix(0,(Nmax,1))
+        y = matrix(0, (Nmax, 1))
         for n in nzcols:
-            y[n-1] += 1
+            y[n - 1] += 1
         y = sparse(y)
-        f = plt.figure(); f.clf()
-        plt.stem(y.I+1,y.V)#; plt.xlim(-1,Nmax+2)
-        if file: plt.savefig(P._pname + "_nzcols_hist.png")
+        f = plt.figure()
+        f.clf()
+        plt.stem(y.I + 1, y.V)  # ; plt.xlim(-1,Nmax+2)
+        if file:
+            plt.savefig(P._pname + "_nzcols_hist.png")
 
-    def nnz_hist(P,file=None):
-        if file==None: plt.ion()
-        else: plt.ioff()
+    def nnz_hist(P, file=None):
+        if file is None:
+            plt.ion()
+        else:
+            plt.ioff()
         nnz = +P.nnzs
         Nmax = max(nnz)
-        y = matrix(0,(Nmax,1))
+        y = matrix(0, (Nmax, 1))
         for n in nnz:
-            y[n-1] += 1
+            y[n - 1] += 1
         y = sparse(y)
-        f = plt.figure(); f.clf()
-        plt.stem(y.I+1,y.V)#; plt.xlim(-1,Nmax+2)
-        if file: plt.savefig(P._pname + "_nnz_hist.png")
+        f = plt.figure()
+        f.clf()
+        plt.stem(y.I + 1, y.V)  # ; plt.xlim(-1,Nmax+2)
+        if file:
+            plt.savefig(P._pname + "_nnz_hist.png")
 
-    def clique_hist(P,file=None):
-        if not P.ischordal: raise TypeError("Nonchordal")
-        if file==None: plt.ion()
-        else: plt.ioff()
+    def clique_hist(P, file=None):
+        if not P.ischordal:
+            raise TypeError("Nonchordal")
+        if file is None:
+            plt.ion()
+        else:
+            plt.ioff()
         V = +P.V
         p = chompack.maxcardsearch(V)
-        #Vc,n = chompack.embed(V,p)
-        symb = chompack.symbolic(V,p)
-        #D = chompack.info(Vc); N = len(D)
-        N = symb.Nsn
-        #Ns = [len(v['S']) for v in D]; Nu = [len(v['U']) for v in D]
-        #Nw = [len(v['U']) + len(v['S']) for v in D]
+        # Vc,n = chompack.embed(V,p)
+        symb = chompack.symbolic(V, p)
+        # D = chompack.info(Vc); N = len(D)
+
+        # Ns = [len(v['S']) for v in D]; Nu = [len(v['U']) for v in D]
+        # Nw = [len(v['U']) + len(v['S']) for v in D]
         Ns = [len(v) for v in symb.supernodes()]
         Nu = [len(v) for v in symb.separators()]
         Nw = [len(v) for v in symb.cliques()]
 
-        f = plt.figure(); f.clf()
-        f.text(0.58,0.40,"Number of cliques: %i" % (len(Nw)))
-        f.text(0.61,0.40-1*0.07,"$\sum | W_i | = %i$" % (sum(Nw)))
-        f.text(0.61,0.40-2*0.07,"$\sum | V_i | = %i$" % (sum(Ns)))
-        f.text(0.61,0.40-3*0.07,"$\sum | U_i | = %i$" % (sum(Nu)))
-        f.text(0.61,0.40-4*0.07,"$\max_i\,| W_i | = %i$" % (max(Nw)))
+        f = plt.figure()
+        f.clf()
+        f.text(0.58, 0.40, "Number of cliques: %i" % (len(Nw)))
+        f.text(0.61, 0.40 - 1 * 0.07, r"$\sum | W_i | = %i$" % (sum(Nw)))
+        f.text(0.61, 0.40 - 2 * 0.07, r"$\sum | V_i | = %i$" % (sum(Ns)))
+        f.text(0.61, 0.40 - 3 * 0.07, r"$\sum | U_i | = %i$" % (sum(Nu)))
+        f.text(0.61, 0.40 - 4 * 0.07, r"$\max_i\,| W_i | = %i$" % (max(Nw)))
 
         plt.subplot(221)
         Nmax = max(Nw)
-        y = matrix(0,(Nmax,1))
-        for n in Nw :
-            y[n-1] += 1
+        y = matrix(0, (Nmax, 1))
+        for n in Nw:
+            y[n - 1] += 1
         y = sparse(y)
-        plt.stem(y.I+1,y.V,'k'); plt.xlim(0, Nmax+1)
+        plt.stem(y.I + 1, y.V, "k")
+        plt.xlim(0, Nmax + 1)
         plt.title("Cliques")
 
-
         Nmax = max(Nu)
-        y = matrix(0,(Nmax,1))
+        y = matrix(0, (Nmax, 1))
         if Nmax > 0:
             plt.subplot(222)
-            for n in Nu :
-                y[n-1] += 1
+            for n in Nu:
+                y[n - 1] += 1
             y = sparse(y)
-            plt.stem(y.I+1,y.V,'k'); plt.xlim(0, Nmax+1)
+            plt.stem(y.I + 1, y.V, "k")
+            plt.xlim(0, Nmax + 1)
             plt.title("Separators")
 
         plt.subplot(223)
         Nmax = max(Ns)
-        y = matrix(0,(Nmax,1))
-        for n in Ns :
-            y[n-1] += 1
+        y = matrix(0, (Nmax, 1))
+        for n in Ns:
+            y[n - 1] += 1
         y = sparse(y)
-        plt.stem(y.I+1,y.V,'k'); plt.xlim(0, Nmax+1)
+        plt.stem(y.I + 1, y.V, "k")
+        plt.xlim(0, Nmax + 1)
         plt.title("Residuals")
 
-        if file: plt.savefig(file)
+        if file:
+            plt.savefig(file)
