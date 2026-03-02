@@ -1,525 +1,534 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Documentation &mdash; SMCP</title>
-  
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
-  
-
-  
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
-
-  
-  
-    
-
-  
-
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-        <link rel="search" title="Search" href="../search.html"/>
-        <link rel="copyright" title="Copyright" href="../copyright.html"/>
-    <link rel="top" title="SMCP" href="../index.html"/>
-        <link rel="next" title="Test problems" href="../testproblems/index.html"/>
-        <link rel="prev" title="Download and installation" href="../download/index.html"/> 
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=16c547dc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="next" title="Test problems" href="../testproblems/index.html" />
+    <link rel="prev" title="Download and installation" href="../download/index.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
-
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="../index.html" class="fa fa-home"> SMCP</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            SMCP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul class="current">
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright and license</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download and installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../download/index.html#installation-from-source">Installation from source</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../download/index.html#installation-with-pip">Installation with pip</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download and installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Documentation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#the-chordal-sdp-solvers">The chordal SDP solvers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#solver-interfaces">Solver interfaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#the-sdp-object">The SDP object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#auxiliary-routines">Auxiliary routines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#analysis-routines">Analysis routines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#random-problem-generators">Random problem generators</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-chordal-sdp-solvers">The chordal SDP solvers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.solvers.chordalsolver_feas"><code class="docutils literal notranslate"><span class="pre">smcp.solvers.chordalsolver_feas()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.solvers.chordalsolver_esd"><code class="docutils literal notranslate"><span class="pre">smcp.solvers.chordalsolver_esd()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#solver-interfaces">Solver interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.solvers.conelp"><code class="docutils literal notranslate"><span class="pre">smcp.solvers.conelp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.solvers.lp"><code class="docutils literal notranslate"><span class="pre">smcp.solvers.lp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.solvers.socp"><code class="docutils literal notranslate"><span class="pre">smcp.solvers.socp()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.solvers.sdp"><code class="docutils literal notranslate"><span class="pre">smcp.solvers.sdp()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#the-sdp-object">The SDP object</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#SDP"><code class="docutils literal notranslate"><span class="pre">SDP</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.m"><code class="docutils literal notranslate"><span class="pre">SDP.m</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.n"><code class="docutils literal notranslate"><span class="pre">SDP.n</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.A"><code class="docutils literal notranslate"><span class="pre">SDP.A</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.b"><code class="docutils literal notranslate"><span class="pre">SDP.b</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.V"><code class="docutils literal notranslate"><span class="pre">SDP.V</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.nnz"><code class="docutils literal notranslate"><span class="pre">SDP.nnz</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.nnzs"><code class="docutils literal notranslate"><span class="pre">SDP.nnzs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.nzcols"><code class="docutils literal notranslate"><span class="pre">SDP.nzcols</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.issparse"><code class="docutils literal notranslate"><span class="pre">SDP.issparse</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.ischordal"><code class="docutils literal notranslate"><span class="pre">SDP.ischordal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.get_A"><code class="docutils literal notranslate"><span class="pre">SDP.get_A()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.write_sdpa"><code class="docutils literal notranslate"><span class="pre">SDP.write_sdpa()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.save"><code class="docutils literal notranslate"><span class="pre">SDP.save()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.solve_feas"><code class="docutils literal notranslate"><span class="pre">SDP.solve_feas()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.solve_phase1"><code class="docutils literal notranslate"><span class="pre">SDP.solve_phase1()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.solve_esd"><code class="docutils literal notranslate"><span class="pre">SDP.solve_esd()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#SDP.solve_cvxopt"><code class="docutils literal notranslate"><span class="pre">SDP.solve_cvxopt()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#auxiliary-routines">Auxiliary routines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.completion"><code class="docutils literal notranslate"><span class="pre">smcp.completion()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.misc.ind2sub"><code class="docutils literal notranslate"><span class="pre">smcp.misc.ind2sub()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.misc.sub2ind"><code class="docutils literal notranslate"><span class="pre">smcp.misc.sub2ind()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.misc.sdpa_read"><code class="docutils literal notranslate"><span class="pre">smcp.misc.sdpa_read()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.misc.sdpa_readhead"><code class="docutils literal notranslate"><span class="pre">smcp.misc.sdpa_readhead()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.misc.sdpa_write"><code class="docutils literal notranslate"><span class="pre">smcp.misc.sdpa_write()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis-routines">Analysis routines</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.analysis.embed_SDP"><code class="docutils literal notranslate"><span class="pre">smcp.analysis.embed_SDP()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.analysis.spy"><code class="docutils literal notranslate"><span class="pre">smcp.analysis.spy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.analysis.clique_hist"><code class="docutils literal notranslate"><span class="pre">smcp.analysis.clique_hist()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#smcp.analysis.nnz_hist"><code class="docutils literal notranslate"><span class="pre">smcp.analysis.nnz_hist()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#random-problem-generators">Random problem generators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mtxnorm_SDP"><code class="docutils literal notranslate"><span class="pre">mtxnorm_SDP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#base.band_SDP"><code class="docutils literal notranslate"><span class="pre">base.band_SDP</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#base.rand_SDP"><code class="docutils literal notranslate"><span class="pre">base.rand_SDP</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../testproblems/index.html">Test problems</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../benchmarks/index.html">Benchmarks</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#sdp-solvers">SDP solvers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#error-measures">Error measures</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#experimental-setup">Experimental setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#sdps-with-band-structure">SDPs with band structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#matrix-norm-minimization">Matrix norm minimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#overlapping-cliqes">Overlapping cliqes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#sdplib-problems">SDPLIB problems</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../benchmarks/index.html#nonchordal-sparsity-patterns">Nonchordal sparsity patterns</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../benchmarks/index.html">Benchmarks</a></li>
 </ul>
 
-        
+        </div>
       </div>
-      &nbsp;
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">SMCP</a>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SMCP</a>
       </nav>
 
-
-      
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
-    <li>Documentation</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Documentation</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
-            
-  <div class="section" id="documentation">
-<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>Let <span class="math">\(\mathbf{S}^n\)</span> denote the set of symmetric matrices of order <span class="math">\(n\)</span>, and let
-and let <span class="math">\(C \bullet X\)</span> denote the standard inner product on <span class="math">\(\mathbf{S}^n\)</span>.</p>
-<p><span class="math">\(\mathbf{S}_V^n\)</span> is the set of symmetric matrices of order <span class="math">\(n\)</span> and with sparsity pattern <span class="math">\(V\)</span>, <em>i.e.</em>, <span class="math">\(X \in \mathbf{S}_V^n\)</span> if and only if <span class="math">\(X_{ij} = 0\)</span> for all <span class="math">\((i,j) \neq V\)</span>. We will assume that all diagonal elements are included in <span class="math">\(V\)</span>. The projection <span class="math">\(Y\)</span> of <span class="math">\(X\)</span> on the subspace <span class="math">\(\mathbf{S}_V^n\)</span> is denoted <span class="math">\(Y=P_V(X)\)</span>, <em>i.e.</em>, <span class="math">\(Y_{ij} = X_{ij}\)</span> if <span class="math">\((i,j) \in V\)</span> and <span class="math">\(Y_{ij} = 0\)</span> otherwise. The inequality signs <span class="math">\(\succeq\)</span> and <span class="math">\(\succ\)</span> denote matrix inequality. We define <span class="math">\(|V|\)</span> as the number of nonzeros in the lower triangular part of <span class="math">\(V\)</span>, and <span class="math">\(\mathrm{nnz}(A_i)\)</span> denotes the number of nonzeros in the matrix A_i.</p>
-<p><span class="math">\(\mathbf{S}_{V,+}^n\)</span> and <span class="math">\(\mathbf{S}_{V,++}^n\)</span> are the sets of positive semidefinite and positive definite matrices in <span class="math">\(\mathbf{S}_V^n\)</span>, and similarly, <span class="math">\(\mathbf{S}_{V,c+}^n = \{ P_V(X)\ |\ X \succeq 0 \}\)</span> and <span class="math">\(\mathbf{S}_{V,c++}^n = \{ P_V(X)\ |\ X \succ 0 \}\)</span> are the sets of matrices in <span class="math">\(\mathbf{S}_V^n\)</span> that have a positive semidefinite completion and a positive definite completion, respectively. We denote with <span class="math">\(\succeq_{\rm c}\)</span> and <span class="math">\(\succ_{\rm c}\)</span> matrix inequality with respect to the cone <span class="math">\(\mathbf{S}_{V,c+}^n\)</span>.</p>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{S}^n\)</span> denote the set of symmetric matrices of order <span class="math notranslate nohighlight">\(n\)</span>, and let
+and let <span class="math notranslate nohighlight">\(C \bullet X\)</span> denote the standard inner product on <span class="math notranslate nohighlight">\(\mathbf{S}^n\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{S}_V^n\)</span> is the set of symmetric matrices of order <span class="math notranslate nohighlight">\(n\)</span> and with sparsity pattern <span class="math notranslate nohighlight">\(V\)</span>, <em>i.e.</em>, <span class="math notranslate nohighlight">\(X \in \mathbf{S}_V^n\)</span> if and only if <span class="math notranslate nohighlight">\(X_{ij} = 0\)</span> for all <span class="math notranslate nohighlight">\((i,j) \neq V\)</span>. We will assume that all diagonal elements are included in <span class="math notranslate nohighlight">\(V\)</span>. The projection <span class="math notranslate nohighlight">\(Y\)</span> of <span class="math notranslate nohighlight">\(X\)</span> on the subspace <span class="math notranslate nohighlight">\(\mathbf{S}_V^n\)</span> is denoted <span class="math notranslate nohighlight">\(Y=P_V(X)\)</span>, <em>i.e.</em>, <span class="math notranslate nohighlight">\(Y_{ij} = X_{ij}\)</span> if <span class="math notranslate nohighlight">\((i,j) \in V\)</span> and <span class="math notranslate nohighlight">\(Y_{ij} = 0\)</span> otherwise. The inequality signs <span class="math notranslate nohighlight">\(\succeq\)</span> and <span class="math notranslate nohighlight">\(\succ\)</span> denote matrix inequality. We define <span class="math notranslate nohighlight">\(|V|\)</span> as the number of nonzeros in the lower triangular part of <span class="math notranslate nohighlight">\(V\)</span>, and <span class="math notranslate nohighlight">\(\mathrm{nnz}(A_i)\)</span> denotes the number of nonzeros in the matrix A_i.</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{S}_{V,+}^n\)</span> and <span class="math notranslate nohighlight">\(\mathbf{S}_{V,++}^n\)</span> are the sets of positive semidefinite and positive definite matrices in <span class="math notranslate nohighlight">\(\mathbf{S}_V^n\)</span>, and similarly, <span class="math notranslate nohighlight">\(\mathbf{S}_{V,c+}^n = \{ P_V(X)\ |\ X \succeq 0 \}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{S}_{V,c++}^n = \{ P_V(X)\ |\ X \succ 0 \}\)</span> are the sets of matrices in <span class="math notranslate nohighlight">\(\mathbf{S}_V^n\)</span> that have a positive semidefinite completion and a positive definite completion, respectively. We denote with <span class="math notranslate nohighlight">\(\succeq_{\rm c}\)</span> and <span class="math notranslate nohighlight">\(\succ_{\rm c}\)</span> matrix inequality with respect to the cone <span class="math notranslate nohighlight">\(\mathbf{S}_{V,c+}^n\)</span>.</p>
 <p>SMCP solves a pair of primal and dual linear cone programs:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{llllll}
  (P)  &amp; \mbox{minimize}   &amp; C \bullet X        &amp; \qquad (D) &amp; \mbox{maximize}   &amp; b^Ty  \\
       &amp; \mbox{subject to} &amp; A_i \bullet X = b_i, i=1,\ldots,m &amp;            &amp; \mbox{subject to} &amp; \sum_{i=1}^m y_iA_i + S = C \\
       &amp;                   &amp; X \succeq_{\rm c} 0  &amp;            &amp;             &amp; S \succeq 0.
 \end{array}\end{split}\]</div>
-<p>The variables are <span class="math">\(X \in \mathbf{S}_V^n\)</span>, <span class="math">\(S \in \mathbf{S}_V^n\)</span>, and <span class="math">\(y \in \mathbf{R}^m\)</span>, and the problem data are the matrix <span class="math">\(C \in \mathbf{S}_V^n\)</span>, the vector <span class="math">\(b \in \mathbf{R}^m\)</span>, and <span class="math">\(A_i \in \mathbf{S}_V^n, i=1,\ldots,m\)</span>.</p>
-<p>Compositions of cones are handled implicitly by defining a block diagonal sparsity pattern <span class="math">\(V\)</span>.
-Dense blocks and general sparse blocks correspond to standard positive semidefinite matrix constraints, diagonal blocks corresponds to linear inequality constraints, and second-order cone constraints can be embedded in an LMI with an &#8220;arrow pattern&#8221;, <em>i.e</em>,</p>
-<div class="math">
+<p>The variables are <span class="math notranslate nohighlight">\(X \in \mathbf{S}_V^n\)</span>, <span class="math notranslate nohighlight">\(S \in \mathbf{S}_V^n\)</span>, and <span class="math notranslate nohighlight">\(y \in \mathbf{R}^m\)</span>, and the problem data are the matrix <span class="math notranslate nohighlight">\(C \in \mathbf{S}_V^n\)</span>, the vector <span class="math notranslate nohighlight">\(b \in \mathbf{R}^m\)</span>, and <span class="math notranslate nohighlight">\(A_i \in \mathbf{S}_V^n, i=1,\ldots,m\)</span>.</p>
+<p>Compositions of cones are handled implicitly by defining a block diagonal sparsity pattern <span class="math notranslate nohighlight">\(V\)</span>.
+Dense blocks and general sparse blocks correspond to standard positive semidefinite matrix constraints, diagonal blocks corresponds to linear inequality constraints, and second-order cone constraints can be embedded in an LMI with an “arrow pattern”, <em>i.e</em>,</p>
+<div class="math notranslate nohighlight">
 \[\begin{split}\lVert x \rVert_2 \leq t \quad \Leftrightarrow \quad
 \begin{bmatrix}
      t  &amp; x^T \\
      x  &amp; t I
 \end{bmatrix} \succeq 0.\end{split}\]</div>
-</div>
-<div class="section" id="the-chordal-sdp-solvers">
-<h2>The chordal SDP solvers<a class="headerlink" href="#the-chordal-sdp-solvers" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="smcp.solvers.chordalsolver_feas">
-<code class="descclassname">smcp.solvers.</code><code class="descname">chordalsolver_feas</code><span class="sig-paren">(</span><em>A</em>, <em>b</em><span class="optional">[</span>, <em>primalstart</em><span class="optional">[</span>, <em>dualstart</em><span class="optional">[</span>, <em>scaling='primal'</em><span class="optional">[</span>, <em>kktsolver='chol'</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.solvers.chordalsolver_feas" title="Permalink to this definition">¶</a></dt>
+</section>
+<section id="the-chordal-sdp-solvers">
+<h2>The chordal SDP solvers<a class="headerlink" href="#the-chordal-sdp-solvers" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.solvers.chordalsolver_feas">
+<span class="sig-prename descclassname"><span class="pre">smcp.solvers.</span></span><span class="sig-name descname"><span class="pre">chordalsolver_feas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">primalstart</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">dualstart</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">scaling='primal'</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">kktsolver='chol'</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.solvers.chordalsolver_feas" title="Link to this definition"></a></dt>
 <dd><p>Solves the pair of cone programs (P) and (D) using a feasible start
 interior-point method. If no primal and/or dual feasible starting
 point is specified, the algorithm tries to find a feasible starting
 point based on some simple heuristics. An exception is raised if no
 starting point can be found. In this case a Phase I problem must be
 solved, or the (experimental) infeasible start interior-point
-method <a class="reference internal" href="#smcp.solvers.chordalsolver_esd" title="smcp.solvers.chordalsolver_esd"><code class="xref py py-func docutils literal"><span class="pre">chordalsolver_esd</span></code></a> can be
+method <a class="reference internal" href="#smcp.solvers.chordalsolver_esd" title="smcp.solvers.chordalsolver_esd"><code class="xref py py-func docutils literal notranslate"><span class="pre">chordalsolver_esd</span></code></a> can be
 used.</p>
-<p>The columns of the sparse matrix <code class="docutils literal"><span class="pre">A</span></code> are vectors of length
-<span class="math">\(n^2\)</span> and the <span class="math">\(m+1\)</span> columns of <code class="docutils literal"><span class="pre">A</span></code> are:</p>
-<div class="math">
+<p>The columns of the sparse matrix <code class="docutils literal notranslate"><span class="pre">A</span></code> are vectors of length
+<span class="math notranslate nohighlight">\(n^2\)</span> and the <span class="math notranslate nohighlight">\(m+1\)</span> columns of <code class="docutils literal notranslate"><span class="pre">A</span></code> are:</p>
+<div class="math notranslate nohighlight">
 \[\left[ \mathbf{vec}(C) \ \mathbf{vec}(A_1) \ \cdots \ \mathbf{vec}(A_m) \right].\]</div>
-<p>Only the rows of <code class="docutils literal"><span class="pre">A</span></code> corresponding to the lower triangular
-elements of the aggregate sparsity pattern <span class="math">\(V\)</span> are accessed.</p>
+<p>Only the rows of <code class="docutils literal notranslate"><span class="pre">A</span></code> corresponding to the lower triangular
+elements of the aggregate sparsity pattern <span class="math notranslate nohighlight">\(V\)</span> are accessed.</p>
 <p>The optional argument <cite>primalstart</cite> is a dictionary with the key
 <cite>x</cite> which can be used to specify an initial value for the primal
-variable <span class="math">\(X\)</span>.  Similarly, the optional argument <cite>dualstart</cite>
+variable <span class="math notranslate nohighlight">\(X\)</span>.  Similarly, the optional argument <cite>dualstart</cite>
 must be a dictionary with keys <cite>s</cite> and <cite>y</cite>.</p>
 <p>The optional argument <cite>scaling</cite> takes one of the values
-<code class="xref py py-const docutils literal"><span class="pre">'primal'</span></code> (default) or <code class="xref py py-const docutils literal"><span class="pre">'dual'</span></code>.</p>
+<code class="xref py py-const docutils literal notranslate"><span class="pre">'primal'</span></code> (default) or <code class="xref py py-const docutils literal notranslate"><span class="pre">'dual'</span></code>.</p>
 <p>The optional argument <cite>kktsolver</cite> is used to specify the KKT
 solver. Possible values include:</p>
-<dl class="docutils">
-<dt><code class="xref py py-const docutils literal"><span class="pre">'chol'</span></code> (default)</dt>
-<dd>solves the KKT system via a Cholesky factorization of the Schur complement</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'qr'</span></code></dt>
-<dd>solves the KKT system via a QR factorization</dd>
+<dl class="simple">
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'chol'</span></code> (default)</dt><dd><p>solves the KKT system via a Cholesky factorization of the Schur complement</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'qr'</span></code></dt><dd><p>solves the KKT system via a QR factorization</p>
+</dd>
 </dl>
 <p>The solver returns a dictionary with the following keys:</p>
-<dl class="docutils">
-<dt><code class="xref py py-const docutils literal"><span class="pre">'primal</span> <span class="pre">objective'</span></code>, <code class="xref py py-const docutils literal"><span class="pre">'dual</span> <span class="pre">objective'</span></code></dt>
-<dd>primal objective value and dual objective value.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'primal</span> <span class="pre">infeasibility'</span></code>, <code class="xref py py-const docutils literal"><span class="pre">'dual</span> <span class="pre">infeasibility'</span></code></dt>
-<dd>residual norms of primal and dual infeasibility.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'x'</span></code>, <code class="xref py py-const docutils literal"><span class="pre">'s'</span></code>, and <code class="xref py py-const docutils literal"><span class="pre">'y'</span></code></dt>
-<dd>primal and dual variables.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'iterations'</span></code></dt>
-<dd>number of iterations.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'cputime'</span></code>, <code class="xref py py-const docutils literal"><span class="pre">'time'</span></code></dt>
-<dd>total cputime and real time.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'gap'</span></code></dt>
-<dd>duality gap.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'relative</span> <span class="pre">gap'</span></code></dt>
-<dd>relative duality gap.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'status'</span></code></dt>
-<dd><ul class="first last">
-<li><p class="first">has the value <code class="xref py py-const docutils literal"><span class="pre">'optimal'</span></code> if</p>
-<div class="math">
+<dl>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'primal</span> <span class="pre">objective'</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">'dual</span> <span class="pre">objective'</span></code></dt><dd><p>primal objective value and dual objective value.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'primal</span> <span class="pre">infeasibility'</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">'dual</span> <span class="pre">infeasibility'</span></code></dt><dd><p>residual norms of primal and dual infeasibility.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'x'</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">'s'</span></code>, and <code class="xref py py-const docutils literal notranslate"><span class="pre">'y'</span></code></dt><dd><p>primal and dual variables.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'iterations'</span></code></dt><dd><p>number of iterations.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'cputime'</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">'time'</span></code></dt><dd><p>total cputime and real time.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'gap'</span></code></dt><dd><p>duality gap.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'relative</span> <span class="pre">gap'</span></code></dt><dd><p>relative duality gap.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'status'</span></code></dt><dd><ul>
+<li><p>has the value <code class="xref py py-const docutils literal notranslate"><span class="pre">'optimal'</span></code> if</p>
+<div class="math notranslate nohighlight">
 \[\frac{\| b-\mathcal{A}(X) \|_2}{\max\{1,\|b\|_2 \}} \leq \epsilon_{\rm feas}, \qquad
 \frac{\|\mathcal{A}^{\rm adj}(y) + S -  C\|_F}{\max\{1,\|C\|_F \}} \leq \epsilon_{\rm feas}, \qquad
 X \succ_{\rm c} 0,\qquad
 S \succ 0,\]</div>
 <p>and</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[X\bullet S \leq \epsilon_{\rm abs} \quad \text{or} \quad \left( \min\{C\bullet X, -b^Ty\} \leq 0 ,
 \frac{X\bullet S}{-\min\{C\bullet X,-b^Ty \}} \leq \epsilon_{\rm rel} \right).\]</div>
 </li>
-<li><p class="first">has the value <code class="xref py py-const docutils literal"><span class="pre">'unknown'</span></code> otherwise.</p>
-</li>
+<li><p>has the value <code class="xref py py-const docutils literal notranslate"><span class="pre">'unknown'</span></code> otherwise.</p></li>
 </ul>
 </dd>
 </dl>
 <p>The following options can be set using the dictionary
-<code class="xref py py-const docutils literal"><span class="pre">smcp.solvers.options</span></code>:</p>
-<dl class="docutils">
-<dt><code class="xref py py-const docutils literal"><span class="pre">'delta'</span></code> (default: 0.9)</dt>
-<dd>a positive constant between 0 and
+<code class="xref py py-const docutils literal notranslate"><span class="pre">smcp.solvers.options</span></code>:</p>
+<dl>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'delta'</span></code> (default: 0.9)</dt><dd><p>a positive constant between 0 and
 1; an approximate tangent direction is computed when the
-Newton decrement is less than <code class="xref py py-const docutils literal"><span class="pre">delta</span></code>.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'eta'</span></code> (default: <code class="xref py py-const docutils literal"><span class="pre">None</span></code>)</dt>
-<dd><p class="first"><code class="xref py py-const docutils literal"><span class="pre">None</span></code> or a positive float. If <code class="xref py py-const docutils literal"><span class="pre">'eta'</span></code> is a
+Newton decrement is less than <code class="xref py py-const docutils literal notranslate"><span class="pre">delta</span></code>.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'eta'</span></code> (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code>)</dt><dd><p><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code> or a positive float. If <code class="xref py py-const docutils literal notranslate"><span class="pre">'eta'</span></code> is a
 positive number, a step in the approximate tangent
 direction is taken such that</p>
 <blockquote>
-<div><div class="math">
+<div><div class="math notranslate nohighlight">
 \[\Omega(X+\alpha \Delta X, S + \alpha \Delta S) \approx \eta\]</div>
 </div></blockquote>
-<p>where <span class="math">\(\Omega(X,S)\)</span> is the proximity function</p>
+<p>where <span class="math notranslate nohighlight">\(\Omega(X,S)\)</span> is the proximity function</p>
 <blockquote>
-<div><div class="math">
+<div><div class="math notranslate nohighlight">
 \[\Omega(X,S) = \phi_{\rm c}(X) + \phi(S) + n\cdot \log\frac{X\bullet S}{n} + n.\]</div>
 </div></blockquote>
-<p>If <code class="xref py py-const docutils literal"><span class="pre">'eta'</span></code> is <code class="xref py py-const docutils literal"><span class="pre">None</span></code>, the step length
-<span class="math">\(\alpha\)</span> in the approximate tangent direction is
+<p>If <code class="xref py py-const docutils literal notranslate"><span class="pre">'eta'</span></code> is <code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code>, the step length
+<span class="math notranslate nohighlight">\(\alpha\)</span> in the approximate tangent direction is
 computed as</p>
 <blockquote>
-<div><div class="math">
+<div><div class="math notranslate nohighlight">
 \[\begin{split}\alpha_p &amp;= \arg \max \{ \alpha \in (0,1] \,|\, X + \alpha \Delta X \succeq_{\rm c} 0 \} \\
 \alpha_d &amp;= \arg \max \{ \alpha \in (0,1] \,|\, S + \alpha \Delta S \succeq 0 \}  \\
 \alpha &amp;= \texttt{step}\cdot\min(\alpha_p,\alpha_d)\end{split}\]</div>
 </div></blockquote>
-<p class="last">where <span class="math">\(\texttt{step}\)</span> is the value of the option <code class="xref py py-const docutils literal"><span class="pre">'step'</span></code> (default: 0.98).</p>
+<p>where <span class="math notranslate nohighlight">\(\texttt{step}\)</span> is the value of the option <code class="xref py py-const docutils literal notranslate"><span class="pre">'step'</span></code> (default: 0.98).</p>
 </dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'prediction'</span></code> (default: <code class="xref py py-const docutils literal"><span class="pre">True</span></code>)</dt>
-<dd><code class="xref py py-const docutils literal"><span class="pre">True</span></code> or <code class="xref py py-const docutils literal"><span class="pre">False</span></code>. This option is effective only
-when <code class="xref py py-const docutils literal"><span class="pre">'eta'</span></code> is <code class="xref py py-const docutils literal"><span class="pre">None</span></code>. If
-<code class="xref py py-const docutils literal"><span class="pre">'prediction'</span></code> is <code class="xref py py-const docutils literal"><span class="pre">True</span></code>, a step in the
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'prediction'</span></code> (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code>)</dt><dd><p><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code> or <code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code>. This option is effective only
+when <code class="xref py py-const docutils literal notranslate"><span class="pre">'eta'</span></code> is <code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code>. If
+<code class="xref py py-const docutils literal notranslate"><span class="pre">'prediction'</span></code> is <code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code>, a step in the
 approximate tangent direction is never taken but only used to
-predict the duality gap.  If <code class="xref py py-const docutils literal"><span class="pre">'prediction'</span></code> is <code class="xref py py-const docutils literal"><span class="pre">False</span></code>,
-a step in the approximate tangent direction is taken.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'step'</span></code> (default: 0.98)</dt>
-<dd>positive float between 0 and 1.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'lifting'</span></code> (default: <code class="xref py py-const docutils literal"><span class="pre">True</span></code>)</dt>
-<dd><code class="xref py py-const docutils literal"><span class="pre">True</span></code> or <code class="xref py py-const docutils literal"><span class="pre">False</span></code>; determines whether or not to
-apply lifting before taking a step in the approximate tangent direction.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'show_progress'</span></code></dt>
-<dd><code class="xref py py-const docutils literal"><span class="pre">True</span></code> or <code class="xref py py-const docutils literal"><span class="pre">False</span></code>; turns the
-output to the screen on or off (default: <code class="xref py py-const docutils literal"><span class="pre">True</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'maxiters'</span></code></dt>
-<dd>maximum number of iterations (default: <code class="xref py py-const docutils literal"><span class="pre">100</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'abstol'</span></code></dt>
-<dd>absolute accuracy (default: <code class="xref py py-const docutils literal"><span class="pre">1e-6</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'reltol'</span></code></dt>
-<dd>relative accuracy (default: <code class="xref py py-const docutils literal"><span class="pre">1e-6</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'feastol'</span></code></dt>
-<dd>tolerance for feasibility conditions (default: <code class="xref py py-const docutils literal"><span class="pre">1e-8</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'refinement'</span></code></dt>
-<dd>number of iterative refinement steps when solving KKT equations
-(default: <code class="xref py py-const docutils literal"><span class="pre">1</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'cholmod'</span></code></dt>
-<dd>use Cholmod&#8217;s AMD embedding (defaults: <code class="xref py py-const docutils literal"><span class="pre">False</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'dimacs'</span></code></dt>
-<dd>report DIMACS error measures (default: <code class="xref py py-const docutils literal"><span class="pre">True</span></code>).</dd>
+predict the duality gap.  If <code class="xref py py-const docutils literal notranslate"><span class="pre">'prediction'</span></code> is <code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code>,
+a step in the approximate tangent direction is taken.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'step'</span></code> (default: 0.98)</dt><dd><p>positive float between 0 and 1.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'lifting'</span></code> (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code>)</dt><dd><p><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code> or <code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code>; determines whether or not to
+apply lifting before taking a step in the approximate tangent direction.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'show_progress'</span></code></dt><dd><p><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code> or <code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code>; turns the
+output to the screen on or off (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'maxiters'</span></code></dt><dd><p>maximum number of iterations (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">100</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'abstol'</span></code></dt><dd><p>absolute accuracy (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">1e-6</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'reltol'</span></code></dt><dd><p>relative accuracy (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">1e-6</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'feastol'</span></code></dt><dd><p>tolerance for feasibility conditions (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">1e-8</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'refinement'</span></code></dt><dd><p>number of iterative refinement steps when solving KKT equations
+(default: <code class="xref py py-const docutils literal notranslate"><span class="pre">1</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'cholmod'</span></code></dt><dd><p>use Cholmod’s AMD embedding (defaults: <code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'dimacs'</span></code></dt><dd><p>report DIMACS error measures (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code>).</p>
+</dd>
 </dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="smcp.solvers.chordalsolver_esd">
-<code class="descclassname">smcp.solvers.</code><code class="descname">chordalsolver_esd</code><span class="sig-paren">(</span><em>A</em>, <em>b</em><span class="optional">[</span>, <em>primalstart</em><span class="optional">[</span>, <em>dualstart</em><span class="optional">[</span>, <em>scaling='primal'</em><span class="optional">[</span>, <em>kktsolver='chol'</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.solvers.chordalsolver_esd" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.solvers.chordalsolver_esd">
+<span class="sig-prename descclassname"><span class="pre">smcp.solvers.</span></span><span class="sig-name descname"><span class="pre">chordalsolver_esd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">primalstart</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">dualstart</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">scaling='primal'</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">kktsolver='chol'</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.solvers.chordalsolver_esd" title="Link to this definition"></a></dt>
 <dd><p>Solves the pair of cone programs (P) and (D) using an extended self-dual embedding. This solver is currently experimental.</p>
-<p>The columns of the sparse matrix <code class="docutils literal"><span class="pre">A</span></code> are vectors of length
-<span class="math">\(n^2\)</span> and the <span class="math">\(m+1\)</span> columns of <code class="docutils literal"><span class="pre">A</span></code> are:</p>
-<div class="math">
+<p>The columns of the sparse matrix <code class="docutils literal notranslate"><span class="pre">A</span></code> are vectors of length
+<span class="math notranslate nohighlight">\(n^2\)</span> and the <span class="math notranslate nohighlight">\(m+1\)</span> columns of <code class="docutils literal notranslate"><span class="pre">A</span></code> are:</p>
+<div class="math notranslate nohighlight">
 \[\left[ \mathbf{vec}(C) \ \mathbf{vec}(A_1) \ \cdots \ \mathbf{vec}(A_m) \right].\]</div>
-<p>Only the rows of <code class="docutils literal"><span class="pre">A</span></code> corresponding to the lower triangular
-elements of the aggregate sparsity pattern <span class="math">\(V\)</span> are accessed.</p>
+<p>Only the rows of <code class="docutils literal notranslate"><span class="pre">A</span></code> corresponding to the lower triangular
+elements of the aggregate sparsity pattern <span class="math notranslate nohighlight">\(V\)</span> are accessed.</p>
 <p>The optional argument <cite>primalstart</cite> is a dictionary with the key
 <cite>x</cite> which can be used to specify an initial value for the primal
-variable <span class="math">\(X\)</span>.  Similarly, the optional argument <cite>dualstart</cite>
+variable <span class="math notranslate nohighlight">\(X\)</span>.  Similarly, the optional argument <cite>dualstart</cite>
 must be a dictionary with keys <cite>s</cite> and <cite>y</cite>.</p>
 <p>The optional argument <cite>scaling</cite> takes one of the values
-<code class="xref py py-const docutils literal"><span class="pre">'primal'</span></code> (default) or <code class="xref py py-const docutils literal"><span class="pre">'dual'</span></code>.</p>
+<code class="xref py py-const docutils literal notranslate"><span class="pre">'primal'</span></code> (default) or <code class="xref py py-const docutils literal notranslate"><span class="pre">'dual'</span></code>.</p>
 <p>The optional argument <cite>kktsolver</cite> is used to specify the KKT
 solver. Possible values include:</p>
-<dl class="docutils">
-<dt><code class="xref py py-const docutils literal"><span class="pre">'chol'</span></code> (default)</dt>
-<dd>solves the KKT system via a Cholesky factorization of the Schur complement</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'qr'</span></code></dt>
-<dd>solves the KKT system via a QR factorization</dd>
+<dl class="simple">
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'chol'</span></code> (default)</dt><dd><p>solves the KKT system via a Cholesky factorization of the Schur complement</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'qr'</span></code></dt><dd><p>solves the KKT system via a QR factorization</p>
+</dd>
 </dl>
 <p>The solver returns a dictionary with the following keys:</p>
-<dl class="docutils">
-<dt><code class="xref py py-const docutils literal"><span class="pre">'primal</span> <span class="pre">objective'</span></code>, <code class="xref py py-const docutils literal"><span class="pre">'dual</span> <span class="pre">objective'</span></code></dt>
-<dd>primal objective value and dual objective value.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'primal</span> <span class="pre">infeasibility'</span></code>, <code class="xref py py-const docutils literal"><span class="pre">'dual</span> <span class="pre">infeasibility'</span></code></dt>
-<dd>residual norms of primal and dual infeasibility.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'x'</span></code>, <code class="xref py py-const docutils literal"><span class="pre">'s'</span></code>, and <code class="xref py py-const docutils literal"><span class="pre">'y'</span></code></dt>
-<dd>primal and dual variables.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'iterations'</span></code></dt>
-<dd>number of iterations.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'cputime'</span></code>, <code class="xref py py-const docutils literal"><span class="pre">'time'</span></code></dt>
-<dd>total cputime and real time.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'gap'</span></code></dt>
-<dd>duality gap.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'relative</span> <span class="pre">gap'</span></code></dt>
-<dd>relative duality gap.</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'status'</span></code></dt>
-<dd><ul class="first last">
-<li><p class="first">has the value <code class="xref py py-const docutils literal"><span class="pre">'optimal'</span></code> if</p>
-<div class="math">
+<dl>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'primal</span> <span class="pre">objective'</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">'dual</span> <span class="pre">objective'</span></code></dt><dd><p>primal objective value and dual objective value.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'primal</span> <span class="pre">infeasibility'</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">'dual</span> <span class="pre">infeasibility'</span></code></dt><dd><p>residual norms of primal and dual infeasibility.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'x'</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">'s'</span></code>, and <code class="xref py py-const docutils literal notranslate"><span class="pre">'y'</span></code></dt><dd><p>primal and dual variables.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'iterations'</span></code></dt><dd><p>number of iterations.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'cputime'</span></code>, <code class="xref py py-const docutils literal notranslate"><span class="pre">'time'</span></code></dt><dd><p>total cputime and real time.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'gap'</span></code></dt><dd><p>duality gap.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'relative</span> <span class="pre">gap'</span></code></dt><dd><p>relative duality gap.</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'status'</span></code></dt><dd><ul>
+<li><p>has the value <code class="xref py py-const docutils literal notranslate"><span class="pre">'optimal'</span></code> if</p>
+<div class="math notranslate nohighlight">
 \[\frac{(1/\tau) \| \tau b-\mathcal{A}(X) \|_2}{\max\{1,\|b\|_2 \}} \leq \epsilon_{\rm feas}, \qquad
 \frac{(1/\tau) \|\mathcal{A}^{\rm adj}(y) + S - \tau C\|_F}{\max\{1,\|C\|_F \}} \leq \epsilon_{\rm feas}, \qquad
 X \succ_{\rm c} 0,\qquad
 S \succ 0,\]</div>
 <p>and</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\frac{X\bullet S}{\tau^2} \leq \epsilon_{\rm abs} \quad \text{or} \quad \left( \min\{C\bullet X, -b^Ty\} \leq 0 , \frac{(1/\tau) X\bullet S}{-\min\{C\bullet X,-b^Ty \}} \leq \epsilon_{\rm rel} \right).\]</div>
 </li>
-<li><p class="first">has the value <code class="xref py py-const docutils literal"><span class="pre">'primal</span> <span class="pre">infeasible'</span></code> if</p>
-<div class="math">
+<li><p>has the value <code class="xref py py-const docutils literal notranslate"><span class="pre">'primal</span> <span class="pre">infeasible'</span></code> if</p>
+<div class="math notranslate nohighlight">
 \[b^Ty = 1, \qquad
 \frac{\| \mathcal{A}^{\rm adj}(y) + S \|_F}{\max\{1,\|C\|_F\}} \leq \epsilon_{\rm feas}, \qquad
 S \succ 0.\]</div>
 </li>
-<li><p class="first">has the value <code class="xref py py-const docutils literal"><span class="pre">'dual</span> <span class="pre">infeasible'</span></code> if</p>
-<div class="math">
+<li><p>has the value <code class="xref py py-const docutils literal notranslate"><span class="pre">'dual</span> <span class="pre">infeasible'</span></code> if</p>
+<div class="math notranslate nohighlight">
 \[C\bullet X = -1, \qquad
 \frac{\| \mathcal{A}(X) \|_2}{\max\{1,\|b\|_2\}} \leq \epsilon_{\rm feas}, \qquad
 X \succ_{\rm c} 0.\]</div>
 </li>
-<li><p class="first">has the value <code class="xref py py-const docutils literal"><span class="pre">'unknown'</span></code> if maximum number iterations is reached or if a numerical error is encountered.</p>
-</li>
+<li><p>has the value <code class="xref py py-const docutils literal notranslate"><span class="pre">'unknown'</span></code> if maximum number iterations is reached or if a numerical error is encountered.</p></li>
 </ul>
 </dd>
 </dl>
-<p>The following options can be set using the dictionary <code class="xref py py-const docutils literal"><span class="pre">smcp.solvers.options</span></code>:</p>
-<dl class="docutils">
-<dt><code class="xref py py-const docutils literal"><span class="pre">'show_progress'</span></code></dt>
-<dd><code class="xref py py-const docutils literal"><span class="pre">True</span></code> or <code class="xref py py-const docutils literal"><span class="pre">False</span></code>; turns the output to the screen on or
-off (default: <code class="xref py py-const docutils literal"><span class="pre">True</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'maxiters'</span></code></dt>
-<dd>maximum number of iterations (default: <code class="xref py py-const docutils literal"><span class="pre">100</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'abstol'</span></code></dt>
-<dd>absolute accuracy (default: <code class="xref py py-const docutils literal"><span class="pre">1e-6</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'reltol'</span></code></dt>
-<dd>relative accuracy (default: <code class="xref py py-const docutils literal"><span class="pre">1e-6</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'feastol'</span></code></dt>
-<dd>tolerance for feasibility conditions (default: <code class="xref py py-const docutils literal"><span class="pre">1e-8</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'refinement'</span></code></dt>
-<dd>number of iterative refinement steps when solving KKT equations
-(default: <code class="xref py py-const docutils literal"><span class="pre">1</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'cholmod'</span></code></dt>
-<dd>use Cholmod&#8217;s AMD embedding (defaults: <code class="xref py py-const docutils literal"><span class="pre">False</span></code>).</dd>
-<dt><code class="xref py py-const docutils literal"><span class="pre">'dimacs'</span></code></dt>
-<dd>report DIMACS error measures (default: <code class="xref py py-const docutils literal"><span class="pre">True</span></code>).</dd>
+<p>The following options can be set using the dictionary <code class="xref py py-const docutils literal notranslate"><span class="pre">smcp.solvers.options</span></code>:</p>
+<dl class="simple">
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'show_progress'</span></code></dt><dd><p><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code> or <code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code>; turns the output to the screen on or
+off (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'maxiters'</span></code></dt><dd><p>maximum number of iterations (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">100</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'abstol'</span></code></dt><dd><p>absolute accuracy (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">1e-6</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'reltol'</span></code></dt><dd><p>relative accuracy (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">1e-6</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'feastol'</span></code></dt><dd><p>tolerance for feasibility conditions (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">1e-8</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'refinement'</span></code></dt><dd><p>number of iterative refinement steps when solving KKT equations
+(default: <code class="xref py py-const docutils literal notranslate"><span class="pre">1</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'cholmod'</span></code></dt><dd><p>use Cholmod’s AMD embedding (defaults: <code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code>).</p>
+</dd>
+<dt><code class="xref py py-const docutils literal notranslate"><span class="pre">'dimacs'</span></code></dt><dd><p>report DIMACS error measures (default: <code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code>).</p>
+</dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="solver-interfaces">
-<h2>Solver interfaces<a class="headerlink" href="#solver-interfaces" title="Permalink to this headline">¶</a></h2>
-<p>The following functions implement CVXOPT-like interfaces to the experimental solver <a class="reference internal" href="#smcp.solvers.chordalsolver_esd" title="smcp.solvers.chordalsolver_esd"><code class="xref py py-func docutils literal"><span class="pre">chordalsolver_esd</span></code></a>.</p>
-<dl class="function">
-<dt id="smcp.solvers.conelp">
-<code class="descclassname">smcp.solvers.</code><code class="descname">conelp</code><span class="sig-paren">(</span><em>c</em>, <em>G</em>, <em>h</em><span class="optional">[</span>, <em>dims</em><span class="optional">[</span>, <em>kktsolver='chol'</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.solvers.conelp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface to <a class="reference internal" href="#smcp.solvers.chordalsolver_esd" title="smcp.solvers.chordalsolver_esd"><code class="xref py py-func docutils literal"><span class="pre">chordalsolver_esd</span></code></a>.</p>
+</section>
+<section id="solver-interfaces">
+<h2>Solver interfaces<a class="headerlink" href="#solver-interfaces" title="Link to this heading"></a></h2>
+<p>The following functions implement CVXOPT-like interfaces to the experimental solver <a class="reference internal" href="#smcp.solvers.chordalsolver_esd" title="smcp.solvers.chordalsolver_esd"><code class="xref py py-func docutils literal notranslate"><span class="pre">chordalsolver_esd</span></code></a>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.solvers.conelp">
+<span class="sig-prename descclassname"><span class="pre">smcp.solvers.</span></span><span class="sig-name descname"><span class="pre">conelp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">dims</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">kktsolver='chol'</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.solvers.conelp" title="Link to this definition"></a></dt>
+<dd><p>Interface to <a class="reference internal" href="#smcp.solvers.chordalsolver_esd" title="smcp.solvers.chordalsolver_esd"><code class="xref py py-func docutils literal notranslate"><span class="pre">chordalsolver_esd</span></code></a>.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="smcp.solvers.lp">
-<code class="descclassname">smcp.solvers.</code><code class="descname">lp</code><span class="sig-paren">(</span><em>c</em>, <em>G</em>, <em>h</em><span class="optional">[</span>, <em>kktsolver='chol'</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.solvers.lp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface to <a class="reference internal" href="#smcp.solvers.conelp" title="smcp.solvers.conelp"><code class="xref py py-func docutils literal"><span class="pre">conelp</span></code></a>; see <a class="reference external" href="http://abel.ee.ucla.edu/cvxopt/documentation/">CVXOPT documentation</a> for more information.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.solvers.lp">
+<span class="sig-prename descclassname"><span class="pre">smcp.solvers.</span></span><span class="sig-name descname"><span class="pre">lp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">G</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">kktsolver='chol'</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.solvers.lp" title="Link to this definition"></a></dt>
+<dd><p>Interface to <a class="reference internal" href="#smcp.solvers.conelp" title="smcp.solvers.conelp"><code class="xref py py-func docutils literal notranslate"><span class="pre">conelp</span></code></a>; see <a class="reference external" href="http://abel.ee.ucla.edu/cvxopt/documentation/">CVXOPT documentation</a> for more information.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="smcp.solvers.socp">
-<code class="descclassname">smcp.solvers.</code><code class="descname">socp</code><span class="sig-paren">(</span><em>c</em><span class="optional">[</span>, <em>Gl</em>, <em>hl</em><span class="optional">[</span>, <em>Gq</em>, <em>hq</em><span class="optional">[</span>, <em>kktsolver='chol'</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.solvers.socp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface to <a class="reference internal" href="#smcp.solvers.conelp" title="smcp.solvers.conelp"><code class="xref py py-func docutils literal"><span class="pre">conelp</span></code></a>; see <a class="reference external" href="http://abel.ee.ucla.edu/cvxopt/documentation/">CVXOPT documentation</a> for more information.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.solvers.socp">
+<span class="sig-prename descclassname"><span class="pre">smcp.solvers.</span></span><span class="sig-name descname"><span class="pre">socp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">Gl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hl</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">Gq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hq</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">kktsolver='chol'</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.solvers.socp" title="Link to this definition"></a></dt>
+<dd><p>Interface to <a class="reference internal" href="#smcp.solvers.conelp" title="smcp.solvers.conelp"><code class="xref py py-func docutils literal notranslate"><span class="pre">conelp</span></code></a>; see <a class="reference external" href="http://abel.ee.ucla.edu/cvxopt/documentation/">CVXOPT documentation</a> for more information.</p>
 </dd></dl>
 
-<dl class="function">
-<dt id="smcp.solvers.sdp">
-<code class="descclassname">smcp.solvers.</code><code class="descname">sdp</code><span class="sig-paren">(</span><em>c</em><span class="optional">[</span>, <em>Gl</em>, <em>hl</em><span class="optional">[</span>, <em>Gs</em>, <em>hs</em><span class="optional">[</span>, <em>kktsolver='chol'</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.solvers.sdp" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface to <a class="reference internal" href="#smcp.solvers.conelp" title="smcp.solvers.conelp"><code class="xref py py-func docutils literal"><span class="pre">conelp</span></code></a>; see <a class="reference external" href="http://abel.ee.ucla.edu/cvxopt/documentation/">CVXOPT documentation</a> for more information.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.solvers.sdp">
+<span class="sig-prename descclassname"><span class="pre">smcp.solvers.</span></span><span class="sig-name descname"><span class="pre">sdp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">Gl</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hl</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">Gs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hs</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">kktsolver='chol'</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.solvers.sdp" title="Link to this definition"></a></dt>
+<dd><p>Interface to <a class="reference internal" href="#smcp.solvers.conelp" title="smcp.solvers.conelp"><code class="xref py py-func docutils literal notranslate"><span class="pre">conelp</span></code></a>; see <a class="reference external" href="http://abel.ee.ucla.edu/cvxopt/documentation/">CVXOPT documentation</a> for more information.</p>
 </dd></dl>
 
-</div>
-<div class="section" id="the-sdp-object">
-<h2>The SDP object<a class="headerlink" href="#the-sdp-object" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="SDP">
-<em class="property">class </em><code class="descname">SDP</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#SDP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Class for SDP problems. Simplifies reading and writing SDP data files and includes a wrapper for <a class="reference internal" href="#smcp.solvers.chordalsolver_esd" title="smcp.solvers.chordalsolver_esd"><code class="xref py py-func docutils literal"><span class="pre">chordalsolver_esd</span></code></a>.</p>
-<p>The constructor accepts sparse SDPA data files (extension &#8216;dat-s&#8217;) and data files created with the <a class="reference internal" href="#SDP.save" title="SDP.save"><code class="xref py py-meth docutils literal"><span class="pre">save</span></code></a> method (extension &#8216;pkl&#8217;). Data files compressed with Bzip2 can also be read (extensions &#8216;dat-s.bz2&#8217; and &#8216;pkl.bz2&#8217;).</p>
-<dl class="attribute">
-<dt id="SDP.m">
-<code class="descname">m</code><a class="headerlink" href="#SDP.m" title="Permalink to this definition">¶</a></dt>
+</section>
+<section id="the-sdp-object">
+<h2>The SDP object<a class="headerlink" href="#the-sdp-object" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="SDP">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">SDP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SDP" title="Link to this definition"></a></dt>
+<dd><p>Class for SDP problems. Simplifies reading and writing SDP data files and includes a wrapper for <a class="reference internal" href="#smcp.solvers.chordalsolver_esd" title="smcp.solvers.chordalsolver_esd"><code class="xref py py-func docutils literal notranslate"><span class="pre">chordalsolver_esd</span></code></a>.</p>
+<p>The constructor accepts sparse SDPA data files (extension ‘dat-s’) and data files created with the <a class="reference internal" href="#SDP.save" title="SDP.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save</span></code></a> method (extension ‘pkl’). Data files compressed with Bzip2 can also be read (extensions ‘dat-s.bz2’ and ‘pkl.bz2’).</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SDP.m">
+<span class="sig-name descname"><span class="pre">m</span></span><a class="headerlink" href="#SDP.m" title="Link to this definition"></a></dt>
 <dd><p>Number of constraints.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="SDP.n">
-<code class="descname">n</code><a class="headerlink" href="#SDP.n" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SDP.n">
+<span class="sig-name descname"><span class="pre">n</span></span><a class="headerlink" href="#SDP.n" title="Link to this definition"></a></dt>
 <dd><p>Order of semidefinite variable.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="SDP.A">
-<code class="descname">A</code><a class="headerlink" href="#SDP.A" title="Permalink to this definition">¶</a></dt>
-<dd><p>Problem data: sparse matrix of size <span class="math">\(n^2 \times (m+1)\)</span> with columns <span class="math">\(\mathbf{vec}(C),\mathbf{vec}(A_1),\ldots,\mathbf{vec}(A_m)\)</span>. Only the lower triangular elements of <span class="math">\(C,A_1,\ldots,A_m\)</span> are stored.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SDP.A">
+<span class="sig-name descname"><span class="pre">A</span></span><a class="headerlink" href="#SDP.A" title="Link to this definition"></a></dt>
+<dd><p>Problem data: sparse matrix of size <span class="math notranslate nohighlight">\(n^2 \times (m+1)\)</span> with columns <span class="math notranslate nohighlight">\(\mathbf{vec}(C),\mathbf{vec}(A_1),\ldots,\mathbf{vec}(A_m)\)</span>. Only the lower triangular elements of <span class="math notranslate nohighlight">\(C,A_1,\ldots,A_m\)</span> are stored.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="SDP.b">
-<code class="descname">b</code><a class="headerlink" href="#SDP.b" title="Permalink to this definition">¶</a></dt>
-<dd><p>Problems data: vector of length <span class="math">\(m\)</span>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SDP.b">
+<span class="sig-name descname"><span class="pre">b</span></span><a class="headerlink" href="#SDP.b" title="Link to this definition"></a></dt>
+<dd><p>Problems data: vector of length <span class="math notranslate nohighlight">\(m\)</span>.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="SDP.V">
-<code class="descname">V</code><a class="headerlink" href="#SDP.V" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SDP.V">
+<span class="sig-name descname"><span class="pre">V</span></span><a class="headerlink" href="#SDP.V" title="Link to this definition"></a></dt>
 <dd><p>Sparse matrix with aggregate sparsity pattern (lower triangle).</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="SDP.nnz">
-<code class="descname">nnz</code><a class="headerlink" href="#SDP.nnz" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SDP.nnz">
+<span class="sig-name descname"><span class="pre">nnz</span></span><a class="headerlink" href="#SDP.nnz" title="Link to this definition"></a></dt>
 <dd><p>Number of nonzero elements in lower triangle of aggregate sparsity pattern.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="SDP.nnzs">
-<code class="descname">nnzs</code><a class="headerlink" href="#SDP.nnzs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Vector with number of nonzero elements in lower triangle of <span class="math">\(A_0,\ldots,A_m\)</span>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SDP.nnzs">
+<span class="sig-name descname"><span class="pre">nnzs</span></span><a class="headerlink" href="#SDP.nnzs" title="Link to this definition"></a></dt>
+<dd><p>Vector with number of nonzero elements in lower triangle of <span class="math notranslate nohighlight">\(A_0,\ldots,A_m\)</span>.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="SDP.nzcols">
-<code class="descname">nzcols</code><a class="headerlink" href="#SDP.nzcols" title="Permalink to this definition">¶</a></dt>
-<dd><p>Vector with number of nonzero columns in <span class="math">\(A_1,\ldots,A_m\)</span>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SDP.nzcols">
+<span class="sig-name descname"><span class="pre">nzcols</span></span><a class="headerlink" href="#SDP.nzcols" title="Link to this definition"></a></dt>
+<dd><p>Vector with number of nonzero columns in <span class="math notranslate nohighlight">\(A_1,\ldots,A_m\)</span>.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="SDP.issparse">
-<code class="descname">issparse</code><a class="headerlink" href="#SDP.issparse" title="Permalink to this definition">¶</a></dt>
-<dd><p>True if the number of nonzeros is less than <span class="math">\(0.5 \cdot n(n+1)/2\)</span>, otherwise false.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SDP.issparse">
+<span class="sig-name descname"><span class="pre">issparse</span></span><a class="headerlink" href="#SDP.issparse" title="Link to this definition"></a></dt>
+<dd><p>True if the number of nonzeros is less than <span class="math notranslate nohighlight">\(0.5 \cdot n(n+1)/2\)</span>, otherwise false.</p>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="SDP.ischordal">
-<code class="descname">ischordal</code><a class="headerlink" href="#SDP.ischordal" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="SDP.ischordal">
+<span class="sig-name descname"><span class="pre">ischordal</span></span><a class="headerlink" href="#SDP.ischordal" title="Link to this definition"></a></dt>
 <dd><p>True if aggregate sparsity pattern is chordal, otherwise false.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="SDP.get_A">
-<code class="descname">get_A</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="headerlink" href="#SDP.get_A" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns the <span class="math">\(i\)</span>&#8216;th coeffiecient matrix <span class="math">\(A_i\)</span> (<span class="math">\(0\leq i \leq m\)</span>) as a sparse matrix. Only lower triangular elements are stored.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="SDP.get_A">
+<span class="sig-name descname"><span class="pre">get_A</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#SDP.get_A" title="Link to this definition"></a></dt>
+<dd><p>Returns the <span class="math notranslate nohighlight">\(i\)</span>’th coeffiecient matrix <span class="math notranslate nohighlight">\(A_i\)</span> (<span class="math notranslate nohighlight">\(0\leq i \leq m\)</span>) as a sparse matrix. Only lower triangular elements are stored.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="SDP.write_sdpa">
-<code class="descname">write_sdpa</code><span class="sig-paren">(</span><span class="optional">[</span><em>fname</em><span class="optional">[</span>, <em>compress=False</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#SDP.write_sdpa" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes SDP data to SDPA sparse data file. The extension &#8216;dat-s&#8217; is automatically added to the filename. The method is an interface to <a class="reference internal" href="#smcp.misc.sdpa_write" title="smcp.misc.sdpa_write"><code class="xref py py-func docutils literal"><span class="pre">sdpa_write</span></code></a>.</p>
-<p>If <code class="docutils literal"><span class="pre">compress</span></code> is true, the data file is compressed with Bzip2 and &#8216;bz2&#8217; is appended to the filename.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="SDP.write_sdpa">
+<span class="sig-name descname"><span class="pre">write_sdpa</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">compress=False</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#SDP.write_sdpa" title="Link to this definition"></a></dt>
+<dd><p>Writes SDP data to SDPA sparse data file. The extension ‘dat-s’ is automatically added to the filename. The method is an interface to <a class="reference internal" href="#smcp.misc.sdpa_write" title="smcp.misc.sdpa_write"><code class="xref py py-func docutils literal notranslate"><span class="pre">sdpa_write</span></code></a>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">compress</span></code> is true, the data file is compressed with Bzip2 and ‘bz2’ is appended to the filename.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="SDP.save">
-<code class="descname">save</code><span class="sig-paren">(</span><span class="optional">[</span><em>fname</em><span class="optional">[</span>, <em>compress=False</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#SDP.save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Writes SDP data to file using cPickle. The extension &#8216;pkl&#8217; is automatically added to the filename.</p>
-<p>If <code class="docutils literal"><span class="pre">compress</span></code> is true, the data file is compressed with Bzip2 and &#8216;bz2&#8217; is appended to the filename.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="SDP.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">fname</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">compress=False</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#SDP.save" title="Link to this definition"></a></dt>
+<dd><p>Writes SDP data to file using cPickle. The extension ‘pkl’ is automatically added to the filename.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">compress</span></code> is true, the data file is compressed with Bzip2 and ‘bz2’ is appended to the filename.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="SDP.solve_feas">
-<code class="descname">solve_feas</code><span class="sig-paren">(</span><span class="optional">[</span><em>scaling='primal'</em><span class="optional">[</span>, <em>kktsolver='chol'</em><span class="optional">[</span>, <em>primalstart</em><span class="optional">[</span>, <em>dualstart</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#SDP.solve_feas" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface to the feasible start solver <a class="reference internal" href="#smcp.solvers.chordalsolver_feas" title="smcp.solvers.chordalsolver_feas"><code class="xref py py-func docutils literal"><span class="pre">chordalsolver_feas</span></code></a>. Returns dictionary with solution.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="SDP.solve_feas">
+<span class="sig-name descname"><span class="pre">solve_feas</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">scaling='primal'</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">kktsolver='chol'</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">primalstart</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">dualstart</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#SDP.solve_feas" title="Link to this definition"></a></dt>
+<dd><p>Interface to the feasible start solver <a class="reference internal" href="#smcp.solvers.chordalsolver_feas" title="smcp.solvers.chordalsolver_feas"><code class="xref py py-func docutils literal notranslate"><span class="pre">chordalsolver_feas</span></code></a>. Returns dictionary with solution.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="SDP.solve_phase1">
-<code class="descname">solve_phase1</code><span class="sig-paren">(</span><span class="optional">[</span><em>kktsolver='chol'</em><span class="optional">[</span>, <em>M=1e5</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#SDP.solve_phase1" title="Permalink to this definition">¶</a></dt>
+<dl class="py method">
+<dt class="sig sig-object py" id="SDP.solve_phase1">
+<span class="sig-name descname"><span class="pre">solve_phase1</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">kktsolver='chol'</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">M=1e5</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#SDP.solve_phase1" title="Link to this definition"></a></dt>
 <dd><p>Solves a Phase I problem to find a feasible (primal) starting point:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{ll}
   \mbox{minimize} &amp; s \\
   \mbox{subject to} &amp; A_i \bullet X = b_i, \quad i=i,\ldots,m \\
                     &amp; \mathbf{tr}(X) \leq M \\
                     &amp; X + (s-\epsilon)I \succeq_{\rm c} 0,\, s \geq 0
 \end{array}\end{split}\]</div>
-<p>The variables are <span class="math">\(X \in \mathbf{S}_V^n\)</span> and <span class="math">\(s \in \mathbf{R}\)</span>, and <span class="math">\(\epsilon \in \mathbf{R}_{++}\)</span> is a small constant. If <span class="math">\(s^\star &lt; \epsilon\)</span>, the method returns <span class="math">\(X^\star\)</span> (which is a strictly feasible starting point in the original problem) and a dictionary (with information about the Phase I problem). If <span class="math">\(s &gt;= \epsilon\)</span> the method returns (<cite>None</cite>, <cite>None</cite>).</p>
+<p>The variables are <span class="math notranslate nohighlight">\(X \in \mathbf{S}_V^n\)</span> and <span class="math notranslate nohighlight">\(s \in \mathbf{R}\)</span>, and <span class="math notranslate nohighlight">\(\epsilon \in \mathbf{R}_{++}\)</span> is a small constant. If <span class="math notranslate nohighlight">\(s^\star &lt; \epsilon\)</span>, the method returns <span class="math notranslate nohighlight">\(X^\star\)</span> (which is a strictly feasible starting point in the original problem) and a dictionary (with information about the Phase I problem). If <span class="math notranslate nohighlight">\(s &gt;= \epsilon\)</span> the method returns (<cite>None</cite>, <cite>None</cite>).</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="SDP.solve_esd">
-<code class="descname">solve_esd</code><span class="sig-paren">(</span><span class="optional">[</span><em>scaling='primal'</em><span class="optional">[</span>, <em>kktsolver='chol'</em><span class="optional">[</span>, <em>primalstart</em><span class="optional">[</span>, <em>dualstart</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#SDP.solve_esd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface to <a class="reference internal" href="#smcp.solvers.chordalsolver_esd" title="smcp.solvers.chordalsolver_esd"><code class="xref py py-func docutils literal"><span class="pre">chordalsolver_esd</span></code></a>. Returns dictionary with solution.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="SDP.solve_esd">
+<span class="sig-name descname"><span class="pre">solve_esd</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">scaling='primal'</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">kktsolver='chol'</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">primalstart</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">dualstart</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#SDP.solve_esd" title="Link to this definition"></a></dt>
+<dd><p>Interface to <a class="reference internal" href="#smcp.solvers.chordalsolver_esd" title="smcp.solvers.chordalsolver_esd"><code class="xref py py-func docutils literal notranslate"><span class="pre">chordalsolver_esd</span></code></a>. Returns dictionary with solution.</p>
 </dd></dl>
 
-<dl class="method">
-<dt id="SDP.solve_cvxopt">
-<code class="descname">solve_cvxopt</code><span class="sig-paren">(</span><span class="optional">[</span><em>primalstart</em><span class="optional">[</span>, <em>dualstart</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#SDP.solve_cvxopt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Interface to <code class="xref py py-func docutils literal"><span class="pre">cvxopt.solvers.sdp()</span></code>. Returns dictionary with solution. (Note that this simple interface does not yet specify block structure properly.)</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="SDP.solve_cvxopt">
+<span class="sig-name descname"><span class="pre">solve_cvxopt</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">primalstart</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">dualstart</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#SDP.solve_cvxopt" title="Link to this definition"></a></dt>
+<dd><p>Interface to <code class="xref py py-func docutils literal notranslate"><span class="pre">cvxopt.solvers.sdp()</span></code>. Returns dictionary with solution. (Note that this simple interface does not yet specify block structure properly.)</p>
 </dd></dl>
 
 </dd></dl>
 
 <p>The following example demostrates how to load and solve a problem from an SDPA sparse data file:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">smcp</span> <span class="k">import</span> <span class="n">SDP</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">smcp</span><span class="w"> </span><span class="kn">import</span> <span class="n">SDP</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">P</span> <span class="o">=</span> <span class="n">SDP</span><span class="p">(</span><span class="s1">&#39;qpG11.dat-s&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">P</span>
 <span class="go">&lt;SDP: n=1600, m=800, nnz=3200&gt; qpG11</span>
@@ -534,15 +543,15 @@ off (default: <code class="xref py py-const docutils literal"><span class="pre">
 <span class="go">9.71747121876e-08</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="auxiliary-routines">
-<h2>Auxiliary routines<a class="headerlink" href="#auxiliary-routines" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="smcp.completion">
-<code class="descclassname">smcp.</code><code class="descname">completion</code><span class="sig-paren">(</span><em>X</em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.completion" title="Permalink to this definition">¶</a></dt>
+</section>
+<section id="auxiliary-routines">
+<h2>Auxiliary routines<a class="headerlink" href="#auxiliary-routines" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.completion">
+<span class="sig-prename descclassname"><span class="pre">smcp.</span></span><span class="sig-name descname"><span class="pre">completion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.completion" title="Link to this definition"></a></dt>
 <dd><p>Computes the maximum determinant positive definite completion of a sparse matrix X.</p>
 <p>Example:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">smcp</span> <span class="k">import</span> <span class="n">mtxnorm_SDP</span><span class="p">,</span> <span class="n">completion</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">smcp</span><span class="w"> </span><span class="kn">import</span> <span class="n">mtxnorm_SDP</span><span class="p">,</span> <span class="n">completion</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">P</span> <span class="o">=</span> <span class="n">mtxnorm_SDP</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">q</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">r</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">sol</span> <span class="o">=</span> <span class="n">P</span><span class="o">.</span><span class="n">solve_feas</span><span class="p">(</span><span class="n">kktsolver</span><span class="o">=</span><span class="s1">&#39;chol&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">X</span> <span class="o">=</span> <span class="n">completion</span><span class="p">(</span><span class="n">sol</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">])</span>
@@ -550,175 +559,153 @@ off (default: <code class="xref py py-const docutils literal"><span class="pre">
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="smcp.misc.ind2sub">
-<code class="descclassname">smcp.misc.</code><code class="descname">ind2sub</code><span class="sig-paren">(</span><em>siz</em>, <em>ind</em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.misc.ind2sub" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.misc.ind2sub">
+<span class="sig-prename descclassname"><span class="pre">smcp.misc.</span></span><span class="sig-name descname"><span class="pre">ind2sub</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">siz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ind</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.misc.ind2sub" title="Link to this definition"></a></dt>
 <dd><p>Converts indices to subscripts.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>siz</strong> (<em>integer</em>) &#8211; matrix order</li>
-<li><strong>ind</strong> (<em>matrix</em>) &#8211; vector with indices</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>siz</strong> (<em>integer</em>) – matrix order</p></li>
+<li><p><strong>ind</strong> (<em>matrix</em>) – vector with indices</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">matrix <code class="docutils literal"><span class="pre">I</span></code> with row subscripts and matrix <code class="docutils literal"><span class="pre">J</span></code> with column subscripts</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>matrix <code class="docutils literal notranslate"><span class="pre">I</span></code> with row subscripts and matrix <code class="docutils literal notranslate"><span class="pre">J</span></code> with column subscripts</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="smcp.misc.sub2ind">
-<code class="descclassname">smcp.misc.</code><code class="descname">sub2ind</code><span class="sig-paren">(</span><em>siz</em>, <em>I</em>, <em>J</em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.misc.sub2ind" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.misc.sub2ind">
+<span class="sig-prename descclassname"><span class="pre">smcp.misc.</span></span><span class="sig-name descname"><span class="pre">sub2ind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">siz</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">I</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">J</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.misc.sub2ind" title="Link to this definition"></a></dt>
 <dd><p>Converts subscripts to indices.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>siz</strong> (<em>integer tuple</em>) &#8211; matrix size</li>
-<li><strong>I</strong> (<em>matrix</em>) &#8211; row subscripts</li>
-<li><strong>J</strong> (<em>matrix</em>) &#8211; column subscripts</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>siz</strong> (<em>integer tuple</em>) – matrix size</p></li>
+<li><p><strong>I</strong> (<em>matrix</em>) – row subscripts</p></li>
+<li><p><strong>J</strong> (<em>matrix</em>) – column subscripts</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">matrix with indices</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>matrix with indices</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="smcp.misc.sdpa_read">
-<code class="descclassname">smcp.misc.</code><code class="descname">sdpa_read</code><span class="sig-paren">(</span><em>file_obj</em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.misc.sdpa_read" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reads data from sparse SDPA data file (file extension: &#8216;dat-s&#8217;).
-A description of the sparse SDPA file format can be found in the document <a class="reference external" href="http://infohost.nmt.edu/~sdplib/FORMAT">SDPLIB/FORMAT</a> and in the <a class="reference external" href="http://sdpa.indsys.chuo-u.ac.jp/sdpa/download.html">SDPA User&#8217;s Manual</a>.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.misc.sdpa_read">
+<span class="sig-prename descclassname"><span class="pre">smcp.misc.</span></span><span class="sig-name descname"><span class="pre">sdpa_read</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.misc.sdpa_read" title="Link to this definition"></a></dt>
+<dd><p>Reads data from sparse SDPA data file (file extension: ‘dat-s’).
+A description of the sparse SDPA file format can be found in the document <a class="reference external" href="http://infohost.nmt.edu/~sdplib/FORMAT">SDPLIB/FORMAT</a> and in the <a class="reference external" href="http://sdpa.indsys.chuo-u.ac.jp/sdpa/download.html">SDPA User’s Manual</a>.</p>
 <p>Example:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;qpG11.dat-s&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;qpG11.dat-s&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">blockstruct</span> <span class="o">=</span> <span class="n">smcp</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">sdpa_read</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="smcp.misc.sdpa_readhead">
-<code class="descclassname">smcp.misc.</code><code class="descname">sdpa_readhead</code><span class="sig-paren">(</span><em>file_obj</em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.misc.sdpa_readhead" title="Permalink to this definition">¶</a></dt>
-<dd><p>Reads header from sparse SDPA data file and returns the order <span class="math">\(n\)</span>, the number of constraints <span class="math">\(m\)</span>, and a vector with block sizes.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.misc.sdpa_readhead">
+<span class="sig-prename descclassname"><span class="pre">smcp.misc.</span></span><span class="sig-name descname"><span class="pre">sdpa_readhead</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.misc.sdpa_readhead" title="Link to this definition"></a></dt>
+<dd><p>Reads header from sparse SDPA data file and returns the order <span class="math notranslate nohighlight">\(n\)</span>, the number of constraints <span class="math notranslate nohighlight">\(m\)</span>, and a vector with block sizes.</p>
 <p>Example:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;qpG11.dat-s&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;qpG11.dat-s&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">blockstruct</span> <span class="o">=</span> <span class="n">smcp</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">sdpa_readhead</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="smcp.misc.sdpa_write">
-<code class="descclassname">smcp.misc.</code><code class="descname">sdpa_write</code><span class="sig-paren">(</span><em>file_obj</em>, <em>A</em>, <em>b</em>, <em>blockstruct</em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.misc.sdpa_write" title="Permalink to this definition">¶</a></dt>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.misc.sdpa_write">
+<span class="sig-prename descclassname"><span class="pre">smcp.misc.</span></span><span class="sig-name descname"><span class="pre">sdpa_write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blockstruct</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.misc.sdpa_write" title="Link to this definition"></a></dt>
 <dd><p>Writes SDP data to sparse SDPA file.</p>
 <p>Example:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;my_data_file.dat-s&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;my_data_file.dat-s&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">smcp</span><span class="o">.</span><span class="n">misc</span><span class="o">.</span><span class="n">sdpa_write</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">A</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">blockstruct</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 </pre></div>
 </div>
 </dd></dl>
 
-</div>
-<div class="section" id="analysis-routines">
-<h2>Analysis routines<a class="headerlink" href="#analysis-routines" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
-<dt id="smcp.analysis.embed_SDP">
-<code class="descclassname">smcp.analysis.</code><code class="descname">embed_SDP</code><span class="sig-paren">(</span><em>P</em><span class="optional">[</span>, <em>order</em><span class="optional">[</span>, <em>cholmod</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.analysis.embed_SDP" title="Permalink to this definition">¶</a></dt>
+</section>
+<section id="analysis-routines">
+<h2>Analysis routines<a class="headerlink" href="#analysis-routines" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.analysis.embed_SDP">
+<span class="sig-prename descclassname"><span class="pre">smcp.analysis.</span></span><span class="sig-name descname"><span class="pre">embed_SDP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">P</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">cholmod</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.analysis.embed_SDP" title="Link to this definition"></a></dt>
 <dd><p>Computes chordal embedding and returns SDP object with chordal sparsity pattern.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>P</strong> (<a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal"><span class="pre">SDP</span></code></a>) &#8211; SDP object with problem data</li>
-<li><strong>order</strong> (<em>string</em>) &#8211; &#8216;AMD&#8217; (default) or &#8216;METIS&#8217;</li>
-<li><strong>cholmod</strong> (<em>boolean</em>) &#8211; use Cholmod to compute embedding (default is false)</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>P</strong> (<a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SDP</span></code></a>) – SDP object with problem data</p></li>
+<li><p><strong>order</strong> (<em>string</em>) – ‘AMD’ (default) or ‘METIS’</p></li>
+<li><p><strong>cholmod</strong> (<em>boolean</em>) – use Cholmod to compute embedding (default is false)</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">SDP object with chordal sparsity</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>SDP object with chordal sparsity</p>
+</dd>
+</dl>
 <p>Note that CVXOPT must be compiled and linked to METIS in order to use the METIS ordering.</p>
 </dd></dl>
 
 <p>The following routines require <a class="reference external" href="http://matplotlib.sourceforge.net">Matplotlib</a>:</p>
-<dl class="function">
-<dt id="smcp.analysis.spy">
-<code class="descclassname">smcp.analysis.</code><code class="descname">spy</code><span class="sig-paren">(</span><em>P</em><span class="optional">[</span>, <em>i</em><span class="optional">[</span>, <em>file</em><span class="optional">[</span>, <em>scale</em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.analysis.spy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plots aggregate sparsity pattern of SDP object <code class="docutils literal"><span class="pre">P</span></code> or sparsity pattern of <span class="math">\(A_i\)</span>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>P</strong> (<a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal"><span class="pre">SDP</span></code></a>) &#8211; SDP object with problem data</li>
-<li><strong>i</strong> (<em>integer</em>) &#8211; index between 0 and m</li>
-<li><strong>file</strong> (<em>string</em>) &#8211; saves plot to file</li>
-<li><strong>scale</strong> (<em>float</em>) &#8211; downsamples plot</li>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.analysis.spy">
+<span class="sig-prename descclassname"><span class="pre">smcp.analysis.</span></span><span class="sig-name descname"><span class="pre">spy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">P</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">file</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">scale</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smcp.analysis.spy" title="Link to this definition"></a></dt>
+<dd><p>Plots aggregate sparsity pattern of SDP object <code class="docutils literal notranslate"><span class="pre">P</span></code> or sparsity pattern of <span class="math notranslate nohighlight">\(A_i\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>P</strong> (<a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SDP</span></code></a>) – SDP object with problem data</p></li>
+<li><p><strong>i</strong> (<em>integer</em>) – index between 0 and m</p></li>
+<li><p><strong>file</strong> (<em>string</em>) – saves plot to file</p></li>
+<li><p><strong>scale</strong> (<em>float</em>) – downsamples plot</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="smcp.analysis.clique_hist">
-<code class="descclassname">smcp.analysis.</code><code class="descname">clique_hist</code><span class="sig-paren">(</span><em>P</em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.analysis.clique_hist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plots clique histogram if <code class="docutils literal"><span class="pre">P.ischordal</span></code> is true, and otherwise an exception is raised.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>P</strong> (<a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal"><span class="pre">SDP</span></code></a>) &#8211; SDP object with problem data</td>
-</tr>
-</tbody>
-</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.analysis.clique_hist">
+<span class="sig-prename descclassname"><span class="pre">smcp.analysis.</span></span><span class="sig-name descname"><span class="pre">clique_hist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">P</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.analysis.clique_hist" title="Link to this definition"></a></dt>
+<dd><p>Plots clique histogram if <code class="docutils literal notranslate"><span class="pre">P.ischordal</span></code> is true, and otherwise an exception is raised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>P</strong> (<a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SDP</span></code></a>) – SDP object with problem data</p>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="function">
-<dt id="smcp.analysis.nnz_hist">
-<code class="descclassname">smcp.analysis.</code><code class="descname">nnz_hist</code><span class="sig-paren">(</span><em>P</em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.analysis.nnz_hist" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plots histogram of number of nonzeros in lower triangle of <span class="math">\(A_1,\ldots,A_m\)</span>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>P</strong> (<a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal"><span class="pre">SDP</span></code></a>) &#8211; SDP object with problem data</td>
-</tr>
-</tbody>
-</table>
+<dl class="py function">
+<dt class="sig sig-object py" id="smcp.analysis.nnz_hist">
+<span class="sig-prename descclassname"><span class="pre">smcp.analysis.</span></span><span class="sig-name descname"><span class="pre">nnz_hist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">P</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smcp.analysis.nnz_hist" title="Link to this definition"></a></dt>
+<dd><p>Plots histogram of number of nonzeros in lower triangle of <span class="math notranslate nohighlight">\(A_1,\ldots,A_m\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>P</strong> (<a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SDP</span></code></a>) – SDP object with problem data</p>
+</dd>
+</dl>
 </dd></dl>
 
-</div>
-<div class="section" id="random-problem-generators">
-<h2>Random problem generators<a class="headerlink" href="#random-problem-generators" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
-<dt id="mtxnorm_SDP">
-<em class="property">class </em><code class="descname">mtxnorm_SDP</code><span class="sig-paren">(</span><em>p</em>, <em>q</em>, <em>r</em><span class="optional">[</span>, <em>density</em><span class="optional">[</span>, <em>seed</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mtxnorm_SDP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Inherits from <a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal"><span class="pre">SDP</span></code></a> class.</p>
-<p>Generates random data <span class="math">\(F_i,G \in \mathbf{R}^{p\times q}\)</span> for the matrix norm minimization problem</p>
-<div class="math">
+</section>
+<section id="random-problem-generators">
+<h2>Random problem generators<a class="headerlink" href="#random-problem-generators" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="mtxnorm_SDP">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mtxnorm_SDP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">density</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mtxnorm_SDP" title="Link to this definition"></a></dt>
+<dd><p>Inherits from <a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SDP</span></code></a> class.</p>
+<p>Generates random data <span class="math notranslate nohighlight">\(F_i,G \in \mathbf{R}^{p\times q}\)</span> for the matrix norm minimization problem</p>
+<div class="math notranslate nohighlight">
 \[\begin{array}{ll}
 \mbox{minimize} &amp; \lVert F(z) + G \rVert_2
 \end{array}\]</div>
-<p>with the variable <span class="math">\(z\in \mathbf{R}^r\)</span> and where <span class="math">\(F(z) = z_1F_1 + \cdots z_r F_r\)</span>. The problem is cast as an equivalent SDP:</p>
-<div class="math">
+<p>with the variable <span class="math notranslate nohighlight">\(z\in \mathbf{R}^r\)</span> and where <span class="math notranslate nohighlight">\(F(z) = z_1F_1 + \cdots z_r F_r\)</span>. The problem is cast as an equivalent SDP:</p>
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{ll}
 \mbox{minimize} &amp; t \\
 \mbox{subject to} &amp;
@@ -727,9 +714,9 @@ A description of the sparse SDPA file format can be found in the document <a cla
    F(z)+G &amp; tI
 \end{bmatrix} \succeq 0.
 \end{array}\end{split}\]</div>
-<p>The sparsity of <span class="math">\(F_i\)</span> can optionally be chosen by specifying the parameter <code class="docutils literal"><span class="pre">density</span></code> which must be a float between 0 and 1 (default is 1 which corresponds to dense matrices).</p>
+<p>The sparsity of <span class="math notranslate nohighlight">\(F_i\)</span> can optionally be chosen by specifying the parameter <code class="docutils literal notranslate"><span class="pre">density</span></code> which must be a float between 0 and 1 (default is 1 which corresponds to dense matrices).</p>
 <p>Example:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">smcp</span> <span class="k">import</span> <span class="n">mtxnorm_SDP</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">smcp</span><span class="w"> </span><span class="kn">import</span> <span class="n">mtxnorm_SDP</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">P</span> <span class="o">=</span> <span class="n">mtxnorm_SDP</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span><span class="n">q</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">r</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">P</span>
 <span class="go">&lt;SDP: n=210, m=201, nnz=2210&gt; mtxnorm_p200_q10_r200</span>
@@ -738,12 +725,12 @@ A description of the sparse SDPA file format can be found in the document <a cla
 </div>
 </dd></dl>
 
-<dl class="class">
-<dt id="base.band_SDP">
-<em class="property">class </em><code class="descclassname">base.</code><code class="descname">band_SDP</code><span class="sig-paren">(</span><em>n</em>, <em>m</em>, <em>bw</em><span class="optional">[</span>, <em>seed</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#base.band_SDP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates random SDP with band sparsity and <cite>m</cite> constraints, of order <cite>n</cite>, and with bandwidth <cite>bw</cite> (<cite>bw=0</cite> corresponds to a diagonal, <cite>bw=1</cite> is tridiagonal etc.). Returns <a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal"><span class="pre">SDP</span></code></a> object. The optional parameter <cite>seed</cite> sets the random number generator seed.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="base.band_SDP">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">base.</span></span><span class="sig-name descname"><span class="pre">band_SDP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bw</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#base.band_SDP" title="Link to this definition"></a></dt>
+<dd><p>Generates random SDP with band sparsity and <cite>m</cite> constraints, of order <cite>n</cite>, and with bandwidth <cite>bw</cite> (<cite>bw=0</cite> corresponds to a diagonal, <cite>bw=1</cite> is tridiagonal etc.). Returns <a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SDP</span></code></a> object. The optional parameter <cite>seed</cite> sets the random number generator seed.</p>
 <p>Example:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">smcp</span> <span class="k">import</span> <span class="n">band_SDP</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">smcp</span><span class="w"> </span><span class="kn">import</span> <span class="n">band_SDP</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">P</span> <span class="o">=</span> <span class="n">band_SDP</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">m</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">bw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">seed</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span> <span class="n">P</span>
 <span class="go">&lt;SDP: n=100, m=100, nnz=297&gt; band_n100_m100_bw2</span>
@@ -755,83 +742,49 @@ A description of the sparse SDPA file format can be found in the document <a cla
 </div>
 </dd></dl>
 
-<dl class="class">
-<dt id="base.rand_SDP">
-<em class="property">class </em><code class="descclassname">base.</code><code class="descname">rand_SDP</code><span class="sig-paren">(</span><em>V</em>, <em>m</em><span class="optional">[</span>, <em>density</em><span class="optional">[</span>, <em>seed</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#base.rand_SDP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Generates random SDP with sparsity pattern V and m constraints. Returns <a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal"><span class="pre">SDP</span></code></a> object.</p>
-<p>The sparsity of <span class="math">\(A_i\)</span> can optionally be chosen by specifying the parameter <code class="docutils literal"><span class="pre">density</span></code> which must be a float between 0 and 1 (default is 1 which corresponds to dense matrices).</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="base.rand_SDP">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">base.</span></span><span class="sig-name descname"><span class="pre">rand_SDP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">V</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">density</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#base.rand_SDP" title="Link to this definition"></a></dt>
+<dd><p>Generates random SDP with sparsity pattern V and m constraints. Returns <a class="reference internal" href="#SDP" title="SDP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SDP</span></code></a> object.</p>
+<p>The sparsity of <span class="math notranslate nohighlight">\(A_i\)</span> can optionally be chosen by specifying the parameter <code class="docutils literal notranslate"><span class="pre">density</span></code> which must be a float between 0 and 1 (default is 1 which corresponds to dense matrices).</p>
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
+           </div>
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../testproblems/index.html" class="btn btn-neutral float-right" title="Test problems">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="../download/index.html" class="btn btn-neutral" title="Download and installation"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../download/index.html" class="btn btn-neutral float-left" title="Download and installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../testproblems/index.html" class="btn btn-neutral float-right" title="Test problems" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; <a href="../copyright.html">Copyright</a> Martin S. Andersen and Lieven Vandenberghe.
-      Last updated on Dec 15, 2016.
-    </p>
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2010-2026, Martin S. Andersen and Lieven Vandenberghe.
+      <span class="lastupdated">Last updated on Mar 02, 2026.
+      </span></p>
   </div>
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0.4.3',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  false
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
-  
-  
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
     <div class="footer">
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 8.2.3.
     </div>
 
 </body>

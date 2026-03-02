@@ -1,4 +1,4 @@
-# Copyright 2010-2017 M. S. Andersen & L. Vandenberghe
+# Copyright 2010-2026 M. S. Andersen & L. Vandenberghe
 #
 # This file is part of SMCP.
 #
@@ -17,16 +17,19 @@
 
 import smcp
 
+
 # Generate random matrix norm minimization problem
-q = 5; p = 50-q; m = 40
-P = smcp.mtxnorm_SDP(p,q,m)
+q = 5
+p = 50 - q
+m = 40
+P = smcp.mtxnorm_SDP(p, q, m)
 
 #
 try:
     # try feasible solver
-    sol = P.solve_feas(kktsolver='qr',scaling='primal')
-except:
+    sol = P.solve_feas(kktsolver="qr", scaling="primal")
+except ArithmeticError:
     # solve phase 1 problem to find feasible starting point
-    X0,p1sol = P.solve_phase1(kktsolver='qr')
+    X0, p1sol = P.solve_phase1(kktsolver="qr")
     # try feasible solver with feasible starting point
-    sol = P.solve_feas(kktsolver='qr',primalstart={'x':X0})
+    sol = P.solve_feas(kktsolver="qr", primalstart={"x": X0})

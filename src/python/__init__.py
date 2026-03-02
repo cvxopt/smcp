@@ -1,4 +1,4 @@
-# Copyright 2010-2018 M. S. Andersen & L. Vandenberghe
+# Copyright 2010-2026 M. S. Andersen & L. Vandenberghe
 #
 # This file is part of SMCP.
 #
@@ -20,12 +20,8 @@ Python extension for chordal matrix cone programs.
 
 from smcp.base import SDP, mtxnorm_SDP, band_SDP, completion
 from cvxopt import matrix, spmatrix, sparse
-import smcp.analysis
-import smcp.solvers
+from smcp import analysis
+from smcp import solvers
 
-__all__ = ['solvers','analysis','SDP','mtxnorm_SDP','band_SDP','completion',\
-               'matrix','spmatrix','sparse']
-
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions
+__all__ = ['solvers', 'analysis', 'SDP', 'mtxnorm_SDP', 'band_SDP',
+           'completion', 'matrix', 'spmatrix', 'sparse']

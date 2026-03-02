@@ -1,124 +1,108 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" data-content_root="../">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Benchmarks &mdash; SMCP</title>
-  
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
 
   
-  
-
-  
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
-
-  
-  
-    
-
-  
-
-  
-  
-    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  
-
-  
-        <link rel="search" title="Search" href="../search.html"/>
-        <link rel="copyright" title="Copyright" href="../copyright.html"/>
-    <link rel="top" title="SMCP" href="../index.html"/>
-        <link rel="prev" title="Test problems" href="../testproblems/index.html"/> 
-
-  
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=16c547dc"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="copyright" title="Copyright" href="../copyright.html" />
+    <link rel="prev" title="Test problems" href="../testproblems/index.html" /> 
 </head>
 
-<body class="wy-body-for-nav" role="document">
-
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-nav-search">
-        <a href="../index.html" class="fa fa-home"> SMCP</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            SMCP
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        
-        
-            <ul class="current">
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright and license</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download and installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../download/index.html#installation-from-source">Installation from source</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../download/index.html#installation-with-pip">Installation with pip</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../documentation/index.html">Documentation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#overview">Overview</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#the-chordal-sdp-solvers">The chordal SDP solvers</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#solver-interfaces">Solver interfaces</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#the-sdp-object">The SDP object</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#auxiliary-routines">Auxiliary routines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#analysis-routines">Analysis routines</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../documentation/index.html#random-problem-generators">Random problem generators</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../download/index.html">Download and installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../documentation/index.html">Documentation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../testproblems/index.html">Test problems</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Benchmarks</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#sdp-solvers">SDP solvers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#error-measures">Error measures</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#experimental-setup">Experimental setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sdps-with-band-structure">SDPs with band structure</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#matrix-norm-minimization">Matrix norm minimization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#overlapping-cliqes">Overlapping cliqes</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#sdplib-problems">SDPLIB problems</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#nonchordal-sparsity-patterns">Nonchordal sparsity patterns</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#sdps-with-band-structure">SDPs with band structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiment-1">Experiment 1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiment-2">Experiment 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiment-3">Experiment 3</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#matrix-norm-minimization">Matrix norm minimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiment-4">Experiment 4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiment-5">Experiment 5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiment-6">Experiment 6:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#experiment-7">Experiment 7:</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#overlapping-cliqes">Overlapping cliqes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiment-8">Experiment 8</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sdplib-problems">SDPLIB problems</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiment-9">Experiment 9</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nonchordal-sparsity-patterns">Nonchordal sparsity patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experiment-10">Experiment 10</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
-        
+        </div>
       </div>
-      &nbsp;
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="../index.html">SMCP</a>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SMCP</a>
       </nav>
 
-
-      
       <div class="wy-nav-content">
         <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="../index.html">Docs</a> &raquo;</li>
-      
-    <li>Benchmarks</li>
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Benchmarks</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
   </ul>
   <hr/>
 </div>
-          <div role="main">
-            
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
   <script type="text/javascript">
 /* <![CDATA[ */
 /***********************************************
@@ -189,68 +173,68 @@ loadedobjects+=file+" " //Remember this object as being already added to page
 }
 }
 /* ]]> */
-</script><div class="section" id="benchmarks">
-<h1>Benchmarks<a class="headerlink" href="#benchmarks" title="Permalink to this headline">¶</a></h1>
+</script><section id="benchmarks">
+<h1>Benchmarks<a class="headerlink" href="#benchmarks" title="Link to this heading"></a></h1>
 <p>To assess the performance of our preliminary implementation of SMCP, we have conducted a series of numerical experiments.</p>
-<div class="section" id="sdp-solvers">
-<h2>SDP solvers<a class="headerlink" href="#sdp-solvers" title="Permalink to this headline">¶</a></h2>
+<section id="sdp-solvers">
+<h2>SDP solvers<a class="headerlink" href="#sdp-solvers" title="Link to this heading"></a></h2>
 <p>The following interior-point solvers were used in our experiments:</p>
 <ul class="simple">
-<li>Method <strong>M1</strong>   (SMCP 0.3a, feasible start solver with <cite>kktsolver=&#8217;chol&#8217;</cite>)</li>
-<li>Method <strong>M1c</strong>  (SMCP 0.3a, feasible start solver with <cite>kktsolver=&#8217;chol&#8217;</cite> and <cite>solvers.options[&#8216;cholmod&#8217;]=True</cite>)</li>
-<li>Method <strong>M2</strong>   (SMCP 0.3a, feasible start solver with <cite>kktsolver=&#8217;qr&#8217;</cite>)</li>
-<li>CSDP 6.0.1</li>
-<li>DSDP 5.8</li>
-<li>SDPA 7.3.1</li>
-<li>SDPA-C 6.2.1 (binary dist.)</li>
-<li>SDPT3 4.0b (64-bit Matlab)</li>
-<li>SeDuMi 1.2 (64-bit Matlab)</li>
+<li><p>Method <strong>M1</strong>   (SMCP 0.3a, feasible start solver with <cite>kktsolver=’chol’</cite>)</p></li>
+<li><p>Method <strong>M1c</strong>  (SMCP 0.3a, feasible start solver with <cite>kktsolver=’chol’</cite> and <cite>solvers.options[‘cholmod’]=True</cite>)</p></li>
+<li><p>Method <strong>M2</strong>   (SMCP 0.3a, feasible start solver with <cite>kktsolver=’qr’</cite>)</p></li>
+<li><p>CSDP 6.0.1</p></li>
+<li><p>DSDP 5.8</p></li>
+<li><p>SDPA 7.3.1</p></li>
+<li><p>SDPA-C 6.2.1 (binary dist.)</p></li>
+<li><p>SDPT3 4.0b (64-bit Matlab)</p></li>
+<li><p>SeDuMi 1.2 (64-bit Matlab)</p></li>
 </ul>
-</div>
-<div class="section" id="error-measures">
-<h2>Error measures<a class="headerlink" href="#error-measures" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="error-measures">
+<h2>Error measures<a class="headerlink" href="#error-measures" title="Link to this heading"></a></h2>
 <p>We report DIMACS error measures when available. The six error measures are defined as:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\begin{split}\epsilon_1(X,y,S) &amp;= \frac{\|\mathcal{A}(X) - b\|_2}{1+\|b\|_\infty} \\
 \epsilon_2(X,y,S) &amp;= \max\left\{0,\frac{-\lambda_{\min}(X)}{1+\|b\|_\infty } \right\} \\
 \epsilon_3(X,y,S) &amp;= \frac{\|\mathcal{A}^{\rm adj}(y)+S-C \|_F}{1+\|C\|_{\max}} \\
 \epsilon_4(X,y,S) &amp;= \max\left\{0, \frac{-\lambda_{\min}(S)}{1+\|C\|_{\max}} \right\} \\
 \epsilon_5(X,y,S) &amp;= \frac{C \bullet X - b^Ty}{1+|C\bullet X|+|b^Ty|} \\
 \epsilon_6(X,y,S) &amp;= \frac{S\bullet X}{1+|C\bullet X|+|b^Ty|}\end{split}\]</div>
-<p>Here <span class="math">\(\|C\|_{\max} = \max_{i,j} |C_{ij}|\)</span>, and <span class="math">\(C\bullet X = \mathbf{tr}(C^TX)\)</span>.</p>
-<p>Note that <span class="math">\(\epsilon_2(X,y,S)=0\)</span> and <span class="math">\(\epsilon_4(X,y,S)=0\)</span>
-since all iterates <span class="math">\((X,y,S)\)</span> satisfy <span class="math">\(X \in
-\mathbf{S}_{V,c++}^n\)</span> and <span class="math">\(S \in \mathbf{S}_{V,++}^n\)</span>.</p>
-</div>
-<div class="section" id="experimental-setup">
-<h2>Experimental setup<a class="headerlink" href="#experimental-setup" title="Permalink to this headline">¶</a></h2>
+<p>Here <span class="math notranslate nohighlight">\(\|C\|_{\max} = \max_{i,j} |C_{ij}|\)</span>, and <span class="math notranslate nohighlight">\(C\bullet X = \mathbf{tr}(C^TX)\)</span>.</p>
+<p>Note that <span class="math notranslate nohighlight">\(\epsilon_2(X,y,S)=0\)</span> and <span class="math notranslate nohighlight">\(\epsilon_4(X,y,S)=0\)</span>
+since all iterates <span class="math notranslate nohighlight">\((X,y,S)\)</span> satisfy <span class="math notranslate nohighlight">\(X \in
+\mathbf{S}_{V,c++}^n\)</span> and <span class="math notranslate nohighlight">\(S \in \mathbf{S}_{V,++}^n\)</span>.</p>
+</section>
+<section id="experimental-setup">
+<h2>Experimental setup<a class="headerlink" href="#experimental-setup" title="Link to this heading"></a></h2>
 <p>The following experiments were conducted on a desktop computer with an
 Intel Core 2 Quad Q6600 CPU (2.4 GHz), 4 GB of RAM, and running Ubuntu
 9.10 (64 bit).</p>
 <p>The problem instances used in the experiments are available for
 download <a class="reference internal" href="../testproblems/index.html"><span class="doc">here</span></a> and the SDPLIB problems are
 available <a class="reference external" href="http://www.nmt.edu/~borchers/sdplib">here</a>.</p>
-<p>We use the least-norm solution to the set of equations <span class="math">\(A_i
+<p>We use the least-norm solution to the set of equations <span class="math notranslate nohighlight">\(A_i
 \bullet X, i=1,\ldots,m,\)</span> as starting point when it is strictly
 feasible, and otherwise we solve the phase I problem</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{ll}
 \mbox{minimize}   &amp; s        \\
 \mbox{subject to} &amp; A_i \bullet X = b_i, \quad i=1,\ldots,m, \\
 &amp; \mathbf{tr}(X) \leq M  \\
 &amp; X + (s-\epsilon) I \succeq_{\rm c} 0, s \geq 0.
 \end{array}\end{split}\]</div>
-<p>Here <span class="math">\(\epsilon\)</span> is a small constant, and the constraint
-<span class="math">\(\mathbf{tr}(X) \leq M\)</span> is added to bound the feasible set.</p>
-</div>
-<div class="section" id="sdps-with-band-structure">
-<h2>SDPs with band structure<a class="headerlink" href="#sdps-with-band-structure" title="Permalink to this headline">¶</a></h2>
+<p>Here <span class="math notranslate nohighlight">\(\epsilon\)</span> is a small constant, and the constraint
+<span class="math notranslate nohighlight">\(\mathbf{tr}(X) \leq M\)</span> is added to bound the feasible set.</p>
+</section>
+<section id="sdps-with-band-structure">
+<h2>SDPs with band structure<a class="headerlink" href="#sdps-with-band-structure" title="Link to this heading"></a></h2>
 <p>We consider a family of SDP instances where the data matrices
-<span class="math">\(C,A_1,\ldots,A_m\)</span> are of order <span class="math">\(n\)</span> and banded with a
-common bandwidth <span class="math">\(2w+1\)</span>.</p>
-<div class="section" id="experiment-1">
-<h3>Experiment 1<a class="headerlink" href="#experiment-1" title="Permalink to this headline">¶</a></h3>
-<p><span class="math">\(m=100\)</span> constraints, bandwidth <span class="math">\(11\)</span> (<span class="math">\(w=5\)</span>), and variable order <span class="math">\(n\)</span></p>
+<span class="math notranslate nohighlight">\(C,A_1,\ldots,A_m\)</span> are of order <span class="math notranslate nohighlight">\(n\)</span> and banded with a
+common bandwidth <span class="math notranslate nohighlight">\(2w+1\)</span>.</p>
+<section id="experiment-1">
+<h3>Experiment 1<a class="headerlink" href="#experiment-1" title="Link to this heading"></a></h3>
+<p><span class="math notranslate nohighlight">\(m=100\)</span> constraints, bandwidth <span class="math notranslate nohighlight">\(11\)</span> (<span class="math notranslate nohighlight">\(w=5\)</span>), and variable order <span class="math notranslate nohighlight">\(n\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -269,10 +253,10 @@ common bandwidth <span class="math">\(2w+1\)</span>.</p>
 <div id="contentarea_2"></div>
 <script type="text/javascript">
    ajaxpage("../_static/benchmarks/band_ex2_timeperiter.html","contentarea_2")
-</script></div>
-<div class="section" id="experiment-2">
-<h3>Experiment 2<a class="headerlink" href="#experiment-2" title="Permalink to this headline">¶</a></h3>
-<p>order <span class="math">\(n = 500\)</span>, bandwidth <span class="math">\(7\)</span> (<span class="math">\(w=3\)</span>), and variable number of constraints <span class="math">\(m\)</span></p>
+</script></section>
+<section id="experiment-2">
+<h3>Experiment 2<a class="headerlink" href="#experiment-2" title="Link to this heading"></a></h3>
+<p>order <span class="math notranslate nohighlight">\(n = 500\)</span>, bandwidth <span class="math notranslate nohighlight">\(7\)</span> (<span class="math notranslate nohighlight">\(w=3\)</span>), and variable number of constraints <span class="math notranslate nohighlight">\(m\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -292,10 +276,10 @@ common bandwidth <span class="math">\(2w+1\)</span>.</p>
 <script type="text/javascript">
        ajaxpage("../_static/benchmarks/band_ex3_timeperiter.html","contentarea_3")
 </script><p>The problem <cite>band_n500_m800_w3</cite> required a phase I (M1 311.5 sec.; M2 47.8 sec.).</p>
-</div>
-<div class="section" id="experiment-3">
-<h3>Experiment 3<a class="headerlink" href="#experiment-3" title="Permalink to this headline">¶</a></h3>
-<p>order <span class="math">\(n = 200\)</span>, <span class="math">\(m=100\)</span> constraints, and variable bandwidth <span class="math">\(2w+1\)</span></p>
+</section>
+<section id="experiment-3">
+<h3>Experiment 3<a class="headerlink" href="#experiment-3" title="Link to this heading"></a></h3>
+<p>order <span class="math notranslate nohighlight">\(n = 200\)</span>, <span class="math notranslate nohighlight">\(m=100\)</span> constraints, and variable bandwidth <span class="math notranslate nohighlight">\(2w+1\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -315,17 +299,17 @@ common bandwidth <span class="math">\(2w+1\)</span>.</p>
 <script type="text/javascript">
        ajaxpage("../_static/benchmarks/band_ex1_timeperiter.html","contentarea_1")
 </script><p>Two problems required a phase I: <cite>band_n200_m100_w0</cite> (M1 1.12 sec.; M2 0.53 sec.) and <cite>band_n200_m100_w1</cite> (M1 3.18 sec.; M2 1.45 sec.).</p>
-</div>
-</div>
-<div class="section" id="matrix-norm-minimization">
-<h2>Matrix norm minimization<a class="headerlink" href="#matrix-norm-minimization" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="matrix-norm-minimization">
+<h2>Matrix norm minimization<a class="headerlink" href="#matrix-norm-minimization" title="Link to this heading"></a></h2>
 <p>We consider the matrix norm minimization problem</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\mbox{minimize} \ \| F(x) + G \|_2\]</div>
-<p>where <span class="math">\(F(x) = x_1 F_1 + \cdots + x_r F_r\)</span> and <span class="math">\(G,F_i \in
+<p>where <span class="math notranslate nohighlight">\(F(x) = x_1 F_1 + \cdots + x_r F_r\)</span> and <span class="math notranslate nohighlight">\(G,F_i \in
 \mathbf{R}^{p \times q}\)</span> are the problem data. The problem can be
 formulated as an SDP:</p>
-<div class="math">
+<div class="math notranslate nohighlight">
 \[\begin{split}\begin{array}{ll}
    \mbox{minimize} &amp; t \\
    \mbox{subject to} &amp;
@@ -333,16 +317,16 @@ formulated as an SDP:</p>
    (F(x)+G)^T &amp; tI
    \end{bmatrix} \succeq 0.
 \end{array}\end{split}\]</div>
-<p>This SDP has dimensions <span class="math">\(m=r+1\)</span> and <span class="math">\(n = p + q\)</span>.  We
-generate <span class="math">\(G\)</span> as a dense <span class="math">\(p\times q\)</span> matrix, and the
-matrices <span class="math">\(F_i\)</span> are generated such that the number of nonzero
-entries in each matrix is given by <span class="math">\(\max (1,dpq)\)</span> where the
-parameter <span class="math">\(d \in [0,1]\)</span> determines sparsity. The locations of
-nonzero entries in <span class="math">\(F_i\)</span> are random. Thus, the problem family is
-parameterized by the tuple <span class="math">\((p,q,r,d)\)</span>.</p>
-<div class="section" id="experiment-4">
-<h3>Experiment 4<a class="headerlink" href="#experiment-4" title="Permalink to this headline">¶</a></h3>
-<p>variable number of rows <span class="math">\(p\)</span>, <span class="math">\(q=10\)</span> columns, <span class="math">\(r=100\)</span> variables, and density <span class="math">\(d=1\)</span></p>
+<p>This SDP has dimensions <span class="math notranslate nohighlight">\(m=r+1\)</span> and <span class="math notranslate nohighlight">\(n = p + q\)</span>.  We
+generate <span class="math notranslate nohighlight">\(G\)</span> as a dense <span class="math notranslate nohighlight">\(p\times q\)</span> matrix, and the
+matrices <span class="math notranslate nohighlight">\(F_i\)</span> are generated such that the number of nonzero
+entries in each matrix is given by <span class="math notranslate nohighlight">\(\max (1,dpq)\)</span> where the
+parameter <span class="math notranslate nohighlight">\(d \in [0,1]\)</span> determines sparsity. The locations of
+nonzero entries in <span class="math notranslate nohighlight">\(F_i\)</span> are random. Thus, the problem family is
+parameterized by the tuple <span class="math notranslate nohighlight">\((p,q,r,d)\)</span>.</p>
+<section id="experiment-4">
+<h3>Experiment 4<a class="headerlink" href="#experiment-4" title="Link to this heading"></a></h3>
+<p>variable number of rows <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(q=10\)</span> columns, <span class="math notranslate nohighlight">\(r=100\)</span> variables, and density <span class="math notranslate nohighlight">\(d=1\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -361,10 +345,10 @@ parameterized by the tuple <span class="math">\((p,q,r,d)\)</span>.</p>
 <div id="contentarea_4"></div>
 <script type="text/javascript">
        ajaxpage("../_static/benchmarks/mtxnorm_ex1_timeperiter.html","contentarea_4")
-</script></div>
-<div class="section" id="experiment-5">
-<h3>Experiment 5<a class="headerlink" href="#experiment-5" title="Permalink to this headline">¶</a></h3>
-<p><span class="math">\(p=400\)</span> rows, <span class="math">\(q=10\)</span> columns, <span class="math">\(r=200\)</span> variables, and variable density</p>
+</script></section>
+<section id="experiment-5">
+<h3>Experiment 5<a class="headerlink" href="#experiment-5" title="Link to this heading"></a></h3>
+<p><span class="math notranslate nohighlight">\(p=400\)</span> rows, <span class="math notranslate nohighlight">\(q=10\)</span> columns, <span class="math notranslate nohighlight">\(r=200\)</span> variables, and variable density</p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -383,10 +367,10 @@ parameterized by the tuple <span class="math">\((p,q,r,d)\)</span>.</p>
 <div id="contentarea_5"></div>
 <script type="text/javascript">
        ajaxpage("../_static/benchmarks/mtxnorm_ex2_timeperiter.html","contentarea_5")
-</script></div>
-<div class="section" id="experiment-6">
-<h3>Experiment 6:<a class="headerlink" href="#experiment-6" title="Permalink to this headline">¶</a></h3>
-<p><span class="math">\(p=400\)</span> rows, <span class="math">\(q=10\)</span> columns, variable number of variables <span class="math">\(r\)</span>, and density <span class="math">\(d=1\)</span></p>
+</script></section>
+<section id="experiment-6">
+<h3>Experiment 6:<a class="headerlink" href="#experiment-6" title="Link to this heading"></a></h3>
+<p><span class="math notranslate nohighlight">\(p=400\)</span> rows, <span class="math notranslate nohighlight">\(q=10\)</span> columns, variable number of variables <span class="math notranslate nohighlight">\(r\)</span>, and density <span class="math notranslate nohighlight">\(d=1\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -405,10 +389,10 @@ parameterized by the tuple <span class="math">\((p,q,r,d)\)</span>.</p>
 <div id="contentarea_6"></div>
 <script type="text/javascript">
        ajaxpage("../_static/benchmarks/mtxnorm_ex3_timeperiter.html","contentarea_6")
-</script></div>
-<div class="section" id="experiment-7">
-<h3>Experiment 7:<a class="headerlink" href="#experiment-7" title="Permalink to this headline">¶</a></h3>
-<p><span class="math">\(p + q=1000\)</span>, <span class="math">\(r=10\)</span> variables, and density <span class="math">\(d = 1\)</span></p>
+</script></section>
+<section id="experiment-7">
+<h3>Experiment 7:<a class="headerlink" href="#experiment-7" title="Link to this heading"></a></h3>
+<p><span class="math notranslate nohighlight">\(p + q=1000\)</span>, <span class="math notranslate nohighlight">\(r=10\)</span> variables, and density <span class="math notranslate nohighlight">\(d = 1\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -427,19 +411,19 @@ parameterized by the tuple <span class="math">\((p,q,r,d)\)</span>.</p>
 <div id="contentarea_7"></div>
 <script type="text/javascript">
        ajaxpage("../_static/benchmarks/mtxnorm_ex4_timeperiter.html","contentarea_7")
-</script></div>
-</div>
-<div class="section" id="overlapping-cliqes">
-<h2>Overlapping cliqes<a class="headerlink" href="#overlapping-cliqes" title="Permalink to this headline">¶</a></h2>
-<p>We consider a family of SDPs which have an aggregate sparsity patterns <span class="math">\(V\)</span> with <span class="math">\(l\)</span> cliques of order <span class="math">\(N\)</span>. The cliques are given by</p>
-<div class="math">
+</script></section>
+</section>
+<section id="overlapping-cliqes">
+<h2>Overlapping cliqes<a class="headerlink" href="#overlapping-cliqes" title="Link to this heading"></a></h2>
+<p>We consider a family of SDPs which have an aggregate sparsity patterns <span class="math notranslate nohighlight">\(V\)</span> with <span class="math notranslate nohighlight">\(l\)</span> cliques of order <span class="math notranslate nohighlight">\(N\)</span>. The cliques are given by</p>
+<div class="math notranslate nohighlight">
 \[W_i = \{ (i-1)(N-u)+1,\ldots, (i-1)(N-u)+1+u \}, \quad i =1 ,\ldots, l\]</div>
-<p>where <span class="math">\(u\)</span> (<span class="math">\(0 \leq u \leq N-1\)</span>) is the overlap between neighboring cliques. The sparsity pattern is illustrated below:</p>
+<p>where <span class="math notranslate nohighlight">\(u\)</span> (<span class="math notranslate nohighlight">\(0 \leq u \leq N-1\)</span>) is the overlap between neighboring cliques. The sparsity pattern is illustrated below:</p>
 <img alt="../_images/cliqueoverlap.png" class="align-center" src="../_images/cliqueoverlap.png" />
-<p>Note that <span class="math">\(u=0\)</span> corresponds to a block diagonal sparsity pattern and <span class="math">\(u=N-1\)</span> corresponds to a band pattern.</p>
-<div class="section" id="experiment-8">
-<h3>Experiment 8<a class="headerlink" href="#experiment-8" title="Permalink to this headline">¶</a></h3>
-<p><span class="math">\(m = 100\)</span> constraints, clique size <span class="math">\(N=16\)</span>, and variable overlap <span class="math">\(u\)</span></p>
+<p>Note that <span class="math notranslate nohighlight">\(u=0\)</span> corresponds to a block diagonal sparsity pattern and <span class="math notranslate nohighlight">\(u=N-1\)</span> corresponds to a band pattern.</p>
+<section id="experiment-8">
+<h3>Experiment 8<a class="headerlink" href="#experiment-8" title="Link to this heading"></a></h3>
+<p><span class="math notranslate nohighlight">\(m = 100\)</span> constraints, clique size <span class="math notranslate nohighlight">\(N=16\)</span>, and variable overlap <span class="math notranslate nohighlight">\(u\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -458,14 +442,14 @@ parameterized by the tuple <span class="math">\((p,q,r,d)\)</span>.</p>
 <div id="contentarea_8"></div>
 <script type="text/javascript">
        ajaxpage("../_static/benchmarks/cliqueoverlap_timeperiter.html","contentarea_8")
-</script></div>
-</div>
-<div class="section" id="sdplib-problems">
-<h2>SDPLIB problems<a class="headerlink" href="#sdplib-problems" title="Permalink to this headline">¶</a></h2>
+</script></section>
+</section>
+<section id="sdplib-problems">
+<h2>SDPLIB problems<a class="headerlink" href="#sdplib-problems" title="Link to this heading"></a></h2>
 <p>The following experiment is based on problem instances from <span class="raw-html"><a href="http://www.nmt.edu/~sdplib/">SDPLIB</a></span>.</p>
-<div class="section" id="experiment-9">
-<h3>Experiment 9<a class="headerlink" href="#experiment-9" title="Permalink to this headline">¶</a></h3>
-<p>SDPLIB problems with <span class="math">\(n \geq 500\)</span></p>
+<section id="experiment-9">
+<h3>Experiment 9<a class="headerlink" href="#experiment-9" title="Link to this heading"></a></h3>
+<p>SDPLIB problems with <span class="math notranslate nohighlight">\(n \geq 500\)</span></p>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -485,13 +469,13 @@ parameterized by the tuple <span class="math">\((p,q,r,d)\)</span>.</p>
 <script type="text/javascript">
        ajaxpage("../_static/benchmarks/sdplib_timeperiter.html","contentarea_9")
 </script><p>Three problems required a phase I: <cite>thetaG11</cite> (M1 227.2 sec.; M1c 184.4 sec.), <cite>thetaG51</cite> (M1 64.8 sec.: M1c 58.0 sec.), and <cite>truss8</cite> (M1 17.9 sec.; M1c 17.9 sec.).</p>
-</div>
-</div>
-<div class="section" id="nonchordal-sparsity-patterns">
-<h2>Nonchordal sparsity patterns<a class="headerlink" href="#nonchordal-sparsity-patterns" title="Permalink to this headline">¶</a></h2>
-<p>The following problems are based on sparsity patterns from the <a class="reference external" href="http://www.cise.ufl.edu/research/sparse/matrices">University of Florida Sparse Matrix Collection</a> (UFSMC). We use as problem identifier the name <cite>rsX</cite> where <cite>X</cite> is the ID number of a sparsity pattern from UFSMC. Each problem instance has <span class="math">\(m\)</span> constraints and the number of nonzeros in the lower triangle of <span class="math">\(A_i\)</span> is <span class="math">\(\max\{1,\mathrm{round}(0.005 |V|)\}\)</span> where <span class="math">\(|V|\)</span> is the number of nonzeros in the lower triangle of the aggregate sparsity pattern <span class="math">\(V\)</span>, and <span class="math">\(C\)</span> has <span class="math">\(|V|\)</span> nonzeros.</p>
-<div class="section" id="experiment-10">
-<h3>Experiment 10<a class="headerlink" href="#experiment-10" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="nonchordal-sparsity-patterns">
+<h2>Nonchordal sparsity patterns<a class="headerlink" href="#nonchordal-sparsity-patterns" title="Link to this heading"></a></h2>
+<p>The following problems are based on sparsity patterns from the <a class="reference external" href="http://www.cise.ufl.edu/research/sparse/matrices">University of Florida Sparse Matrix Collection</a> (UFSMC). We use as problem identifier the name <cite>rsX</cite> where <cite>X</cite> is the ID number of a sparsity pattern from UFSMC. Each problem instance has <span class="math notranslate nohighlight">\(m\)</span> constraints and the number of nonzeros in the lower triangle of <span class="math notranslate nohighlight">\(A_i\)</span> is <span class="math notranslate nohighlight">\(\max\{1,\mathrm{round}(0.005 |V|)\}\)</span> where <span class="math notranslate nohighlight">\(|V|\)</span> is the number of nonzeros in the lower triangle of the aggregate sparsity pattern <span class="math notranslate nohighlight">\(V\)</span>, and <span class="math notranslate nohighlight">\(C\)</span> has <span class="math notranslate nohighlight">\(|V|\)</span> nonzeros.</p>
+<section id="experiment-10">
+<h3>Experiment 10<a class="headerlink" href="#experiment-10" title="Link to this heading"></a></h3>
 <h4> Results </h4>
 <table><tr>
 <td> Show: </td>
@@ -548,75 +532,42 @@ parameterized by the tuple <span class="math">\((p,q,r,d)\)</span>.</p>
    style7.innerHTML = '.colcaption { text-align:right;}';
    document.getElementsByTagName('head')[0].appendChild(style7);
 
-</script></div>
-</div>
-</div>
+</script></section>
+</section>
+</section>
 
 
+           </div>
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-      
-        <a href="../testproblems/index.html" class="btn btn-neutral" title="Test problems"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../testproblems/index.html" class="btn btn-neutral float-left" title="Test problems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &copy; <a href="../copyright.html">Copyright</a> Martin S. Andersen and Lieven Vandenberghe.
-      Last updated on Dec 15, 2016.
-    </p>
+    <p>&#169; <a href="../copyright.html">Copyright</a> 2010-2026, Martin S. Andersen and Lieven Vandenberghe.
+      <span class="lastupdated">Last updated on Mar 02, 2026.
+      </span></p>
   </div>
 
-  <a href="https://github.com/snide/sphinx_rtd_theme">Sphinx theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-
-  
-
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'../',
-            VERSION:'0.4.3',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  false
-        };
-    </script>
-      <script type="text/javascript" src="../_static/jquery.js"></script>
-      <script type="text/javascript" src="../_static/underscore.js"></script>
-      <script type="text/javascript" src="../_static/doctools.js"></script>
-      <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
-  
-
-  
-  
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-  
-
-  
-  
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
-          SphinxRtdTheme.StickyNav.enable();
+          SphinxRtdTheme.Navigation.enable(true);
       });
   </script>
-  
     <div class="footer">
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.4.9.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 8.2.3.
     </div>
 
 </body>

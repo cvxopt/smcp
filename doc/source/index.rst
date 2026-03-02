@@ -25,22 +25,12 @@ In its current form, SMCP is implemented in Python and C, and it relies on the P
 Current release
 --------------------
 
-Version 0.4.5 (December 2017) includes:
+Version 0.5 (March 2026) includes:
 
 * Nonsymmetric feasible start interior-point methods (primal and dual scaling methods)
 * Two KKT system solvers: one solves the symmetric indefinite augmented system and the other solves the positive definite system of normal equations
 * Read/write routines for SDPA sparse data files ('dat-s').
 * Simple interface to CVXOPT SDP solver
-
-
-Future releases
---------------------
-
-We plan to turn SMCP into a C library with Python and Matlab interfaces. Future releases may include additional functionality as listed below:
-
-* Explicitly handle free variables
-* Iterative solver for the KKT system
-* Automatic selection of KKT solver and chordal embedding technique
 
 
 Availability

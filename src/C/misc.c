@@ -1,4 +1,4 @@
-// Copyright 2010-2018 M. S. Andersen & L. Vandenberghe
+// Copyright 2010-2026 M. S. Andersen & L. Vandenberghe
 //
 // This file is part of SMCP.
 //
@@ -65,13 +65,8 @@ static PyObject* sdpa_readhead
   char *info;
 
   if (!PyArg_ParseTuple(args,"O",&f)) return NULL;
-#if PY_MAJOR_VERSION >= 3
     if (PyUnicode_Check(f)) {
       const char* fname = PyUnicode_AsUTF8AndSize(f,NULL);
-#else
-    if (PyString_Check(f)) {
-      const char* fname = PyString_AsString(f);
-#endif
       FILE *fp = fopen(fname,"r");
       if (!fp) {
         return NULL;
@@ -157,11 +152,7 @@ static PyObject* sdpa_read
   char *kwlist[] = {"f","neg",NULL};
 
   if (!PyArg_ParseTupleAndKeywords(args,kwrds,"O|O",kwlist,&f,&neg)) return NULL;
-  #if PY_MAJOR_VERSION >= 3
   if (PyUnicode_Check(f)) fname = PyUnicode_AsUTF8AndSize(f,NULL);
-  #elif PY_MAJOR_VERSION == 2
-  if (PyString_Check(f)) fname = PyString_AsString(f);
-  #endif
   FILE *fp = fopen(fname,"r");
   if (!fp) {
     return NULL;
@@ -304,11 +295,7 @@ static PyObject* sdpa_write
   double v;
 
   if (!PyArg_ParseTupleAndKeywords(args,kwrds, "OOOO|O", kwlist, &f, &A, &b, &bstruct,&neg)) return NULL;
-  #if PY_MAJOR_VERSION >= 3
   if (PyUnicode_Check(f)) fname = PyUnicode_AsUTF8AndSize(f,NULL);
-  #elif PY_MAJOR_VERSION == 2
-  if (PyString_Check(f)) fname = PyString_AsString(f);
-  #endif
   FILE *fp = fopen(fname,"r");
   if (!fp) {
     Py_DECREF(f);
@@ -1114,9 +1101,6 @@ static PyMethodDef misc_functions[] = {
   {NULL}  /* Sentinel */
 };
 
-
-#if PY_MAJOR_VERSION >= 3
-// Python 3.x
 static PyModuleDef misc_module = {
     PyModuleDef_HEAD_INIT,
     "misc",
@@ -1134,12 +1118,3 @@ PyMODINIT_FUNC PyInit_misc(void) {
     return NULL;
   return misc_mod;
 }
-#else
-// Python 2.x
-PyMODINIT_FUNC initmisc(void) {
-  PyObject *m;
-  m = Py_InitModule3("misc", misc_functions, misc__doc__);
-  if (import_cvxopt() < 0)
-    return;
-}
-#endif

@@ -1,4 +1,4 @@
-# Copyright 2010-2018 M. S. Andersen & L. Vandenberghe
+# Copyright 2010-2026 M. S. Andersen & L. Vandenberghe
 #
 # This file is part of SMCP.
 #
@@ -16,34 +16,21 @@
 # along with SMCP.  If not, see <http://www.gnu.org/licenses/>.
 
 from setuptools import setup, Extension
-import os, sys
-import versioneer
+import os
 
-if sys.version < '2.7':
-    sys.exit('ERROR: Sorry, python 2.7 is required for this extension.')
+LIBRARIES = os.environ.get("SMCP_LIBRARIES", [])
+if isinstance(LIBRARIES, str):
+    LIBRARIES = LIBRARIES.strip().split(";")
 
-LIBRARIES = os.environ.get("SMCP_LIBRARIES",[])
-if type(LIBRARIES) is str: LIBRARIES = LIBRARIES.strip().split(';')
+EXTRA_COMPILE_ARGS = os.environ.get("SMCP_EXTRA_COMPILE_ARGS", [])
+if isinstance(EXTRA_COMPILE_ARGS, str):
+    EXTRA_COMPILE_ARGS = EXTRA_COMPILE_ARGS.strip().split(";")
 
-EXTRA_COMPILE_ARGS = os.environ.get("SMCP_EXTRA_COMPILE_ARGS",[])
-if type(EXTRA_COMPILE_ARGS) is str: EXTRA_COMPILE_ARGS = EXTRA_COMPILE_ARGS.strip().split(';')
+misc = Extension(
+    "misc",
+    libraries=LIBRARIES,
+    extra_compile_args=EXTRA_COMPILE_ARGS,
+    sources=["src/C/misc.c"],
+)
 
-misc = Extension('misc',
-#                 include_dirs = [ CVXOPT_SRC ],
-                 libraries = LIBRARIES,
-                 extra_compile_args = EXTRA_COMPILE_ARGS,
-                 sources = ['src/C/misc.c'])
-
-setup(name="smcp",
-      version=versioneer.get_version(),
-      cmdclass=versioneer.get_cmdclass(),
-      description="Python extension for solving sparse matrix cone programs",
-      author="Martin S. Andersen and Lieven Vandenberghe",
-      author_email="martin.skovgaard.andersen@gmail.com, vandenbe@ee.ucla.edu",
-      url="http://cvxopt.github.io/smcp",
-      license = 'GNU GPL version 3',
-      packages = ['smcp',],
-      package_dir = {'smcp':'src/python'},
-      ext_package = "smcp",
-      ext_modules = [misc],
-      install_requires = ["cvxopt (>=1.1.9)","chompack (>=2.3.2)"])
+setup(ext_package="smcp", ext_modules=[misc])
