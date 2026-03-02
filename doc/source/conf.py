@@ -21,34 +21,6 @@ import sys, os
 # absolute, like shown here.
 #sys.path.append(os.path.abspath('.'))
 
-# -- Mock configuration
-
-import sys
-
-class Mock(object):
-
-    __all__ = []
-
-    def __init__(self, *args, **kwargs):
-        pass
-
-    def __call__(self, *args, **kwargs):
-        return Mock()
-
-    @classmethod
-    def __getattr__(cls, name):
-        if name in ('__file__', '__path__'):
-            return '/dev/null'
-        elif name[0] == name[0].upper():
-            mockType = type(name, (), {})
-            mockType.__module__ = __name__
-            return mockType
-        else:
-            return Mock()
-
-MOCK_MODULES = ['cvxopt','chompack']
-for mod_name in MOCK_MODULES:
-    sys.modules[mod_name] = Mock()
 
 # General configuration
 # ---------------------
@@ -126,9 +98,7 @@ pygments_style = 'sphinx'
 #html_style = 'default.css'
 #html_style = 'style.css'
 
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
-if not on_rtd: # only import and set the theme if we're building docs locally
-    html_theme = "sphinx_rtd_theme"
+html_theme = "sphinx_rtd_theme"
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
