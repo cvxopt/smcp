@@ -97,25 +97,11 @@ def chordalsolver_feas(A, b, primalstart=None, dualstart=None,
     )
     from smcp._version import __version__
     from smcp import misc
-
-    from sys import platform
-
-    if platform.startswith("win"):
-        from time import clock as time
-
-        def cputime():
-            return 0.0
-
-    else:
-        from time import time
-        from resource import getrusage, RUSAGE_SELF
-
-        def cputime():
-            return getrusage(RUSAGE_SELF).ru_utime + getrusage(RUSAGE_SELF).ru_stime
+    from time import perf_counter, process_time
 
     # Start time
-    T0wall = time()
-    T0 = cputime()
+    T0wall = perf_counter()
+    T0 = process_time()
 
     status = "unknown"
     # Number of constraints
@@ -619,9 +605,8 @@ def chordalsolver_feas(A, b, primalstart=None, dualstart=None,
             print("   Dual infeasibility:              % .8e" % (dres))
         if not iter == 0:
             print("   Iterations:                       %i" % (iter))
-            if not platform.startswith("win"):
-                print("   CPU time:                         %.2f" % (Tcpu))
-                print("   CPU time per iteration:           %.2f" % (Tcpu / iter))
+            print("   CPU time:                         %.2f" % (Tcpu))
+            print("   CPU time per iteration:           %.2f" % (Tcpu / iter))
             print("   Real time:                        %.2f" % (Twall))
             print("   Real time per iteration:          %.2f\n" % (Twall / iter))
         if DIMACS:
@@ -1289,8 +1274,8 @@ def chordalsolver_feas(A, b, primalstart=None, dualstart=None,
     #
 
     # Get cputime and realtime
-    Tcpu = cputime() - T0
-    Twall = time() - T0wall
+    Tcpu = process_time() - T0
+    Twall = perf_counter() - T0wall
 
     if DIMACS and (X is not None) and (y is not None) and (S is not None):
         DIMACS_err = matrix(0.0, (6, 1))
@@ -1394,21 +1379,7 @@ def chordalsolver_esd(
     )
     from smcp._version import __version__
     from smcp import misc
-
-    from sys import platform
-
-    if platform.startswith("win"):
-        from time import clock as time
-
-        def cputime():
-            return 0.0
-
-    else:
-        from time import time
-        from resource import getrusage, RUSAGE_SELF
-
-        def cputime():
-            return getrusage(RUSAGE_SELF).ru_utime + getrusage(RUSAGE_SELF).ru_stime
+    from time import perf_counter, process_time
 
     BETA = 0.7
     EXPON = 3.0
@@ -1416,8 +1387,8 @@ def chordalsolver_esd(
     MINSTEP = 1e-12
 
     # Start time
-    T0wall = time()
-    T0 = cputime()
+    T0wall = perf_counter()
+    T0 = process_time()
 
     status = "unknown"
     # Number of constraints
@@ -2188,9 +2159,8 @@ def chordalsolver_esd(
             print("   Dual infeasibility:              % .8e" % (dres))
         if not iter == 0:
             print("   Iterations:                       %i" % (iter))
-            if not platform.startswith("win"):
-                print("   CPU time:                         %.2f" % (Tcpu))
-                print("   CPU time per iteration:           %.2f" % (Tcpu / iter))
+            print("   CPU time:                         %.2f" % (Tcpu))
+            print("   CPU time per iteration:           %.2f" % (Tcpu / iter))
             print("   Real time:                        %.2f" % (Twall))
             print("   Real time per iteration:          %.2f\n" % (Twall / iter))
         if DIMACS:
@@ -2305,13 +2275,13 @@ def chordalsolver_esd(
                         dres,
                         kappa / tau,
                         step,
-                        cputime() - T0,
+                        process_time() - T0,
                     )
                 )
             else:
                 print(
                     "%3d % .4e % .4e %.1e %.1e %.1e %.1e         %7.1f"
-                    % (iter, pcost, dcost, gap, pres, dres, kappa / tau, cputime() - T0)
+                    % (iter, pcost, dcost, gap, pres, dres, kappa / tau, process_time() - T0)
                 )
 
         # Stopping criteria
@@ -2441,8 +2411,8 @@ def chordalsolver_esd(
     #
 
     # Get cputime and realtime
-    Tcpu = cputime() - T0
-    Twall = time() - T0wall
+    Tcpu = process_time() - T0
+    Twall = perf_counter() - T0wall
 
     if DIMACS and (X is not None) and (y is not None) and (S is not None):
         DIMACS_err = matrix(0.0, (6, 1))
